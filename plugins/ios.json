@@ -1,0 +1,23 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-ble-central": {
+      "IOS_INIT_ON_LOAD": "true",
+      "BLUETOOTH_USAGE_DESCRIPTION": " ",
+      "PACKAGE_NAME": "com.example.tofi"
+    },
+    "cordova-plugin-browsersync": {
+      "PACKAGE_NAME": "com.example.tofi"
+    },
+    "cordova-plugin-webpack": {
+      "PACKAGE_NAME": "com.example.tofi"
+    }
+  },
+  "dependent_plugins": {}
+}

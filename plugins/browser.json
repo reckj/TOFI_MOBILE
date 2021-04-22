@@ -1,0 +1,21 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "cordova-plugin-ble-central": {
+      "PACKAGE_NAME": "com.example.tofi"
+    },
+    "cordova-plugin-browsersync-gen2": {
+      "PACKAGE_NAME": "com.example.tofi"
+    },
+    "cordova-plugin-webpack": {
+      "PACKAGE_NAME": "com.example.tofi"
+    }
+  },
+  "dependent_plugins": {}
+}

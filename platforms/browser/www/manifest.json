@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "HelloWorld",
+  "short_name": "HelloWorld",
+  "version": "com.example.tofi",
+  "description": "The TOFI app connects with your TOFI trainer.",
+  "author": "Apache Cordova Team",
+  "icons": [],
+  "start_url": "index.html"
+}
