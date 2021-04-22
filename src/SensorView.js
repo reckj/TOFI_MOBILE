@@ -45,7 +45,7 @@ class SensorView extends View {
         if (sensorValues[i] > threshold) {
           p.fill(0)
         } else {
-          p.fill(255)
+          p.fill(200)
         }
         p.ellipse(0, 0, radius, radius)
         p.fill(255)
