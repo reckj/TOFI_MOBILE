@@ -35,7 +35,7 @@
     <author email="dev@cordova.apache.org" href="http://cordova.io">
         Apache Cordova Team
     </author>
-    <content src="http://10.130.128.159:8080" />
+    <content src="browser-sync-start.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -58,5 +58,24 @@
     <preference name="PageLength" value="0" />
     <preference name="PaginationBreakingMode" value="page" />
     <preference name="PaginationMode" value="unpaginated" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
+    <allow-navigation href="*" />
     <allow-navigation href="*" />
 </widget>

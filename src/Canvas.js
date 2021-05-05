@@ -1,13 +1,11 @@
-import P5 from 'p5'
-import View from './View'
 import Game_01_View from './Game_01_View.js'
 import SensorView from './SensorView.js'
 let viewNumber
 let blehandler
 let params
 let debug
+let Tone
 const Canvas = (p) => {
-
     let View
     let Views = [SensorView, Game_01_View]
     let myFont
@@ -25,7 +23,7 @@ const Canvas = (p) => {
         p.fill(255)
         p.noStroke()
         p.textAlign(p.CENTER, p.CENTER)
-        View = new Views[viewNumber](p)
+        View = new Views[viewNumber](p, Tone)
     }
 
     p.draw = function () {
@@ -46,10 +44,11 @@ const Canvas = (p) => {
         return sensorValues
     }
 }
-function defineSketch(_viewNumber, _blehandler, _params){
+function defineSketch(_viewNumber, _blehandler, _params, _tone){
     //blehandler
     params = _params
     blehandler = _blehandler
+    Tone = _tone
     if (blehandler.isConnected != null) {
         debug = false
     } else {

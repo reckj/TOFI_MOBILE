@@ -12,6 +12,10 @@ body {
    padding: 0;
  }
 
+.dg.ac {
+    z-index: 1000 !important;
+}
+
 .stats-icon {
     font-size: 40px;
     height: 1em;

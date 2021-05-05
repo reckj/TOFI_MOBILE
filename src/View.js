@@ -1,7 +1,8 @@
 
 class View {
-  constructor (p) {
+  constructor (p, Tone) {
     this.p = p
+    this.Tone = Tone
   }
   draw (p, sensorValues, options) {
   }

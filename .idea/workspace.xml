@@ -2,9 +2,35 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SensorView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SensorView.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/manifest.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/manifest.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/HelloWorld-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/HelloWorld-Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/Pods/Target Support Files/Pods-HelloWorld/Pods-HelloWorld-Info.plist" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/Pods/Target Support Files/Pods-HelloWorld/Pods-HelloWorld-Info.plist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CalibrationGUI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CalibrationGUI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Canvas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game_01_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game_01_View.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/View.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/Ble.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/game_01.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game_02_View.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/js/p5.sound.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +93,8 @@
       <workItem from="1618574465069" duration="3131000" />
       <workItem from="1618580118316" duration="141000" />
       <workItem from="1618585038095" duration="5092000" />
-      <workItem from="1618947600091" duration="37150000" />
+      <workItem from="1618947600091" duration="44061000" />
+      <workItem from="1619552858143" duration="8071000" />
     </task>
     <servers />
   </component>
@@ -75,6 +102,10 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="244" y="168" key="RollbackChangesDialog" timestamp="1620156694406">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="244" y="168" key="RollbackChangesDialog/0.0.1440.900@0.0.1440.900" timestamp="1620156694406" />
     <state x="393" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1618948962782">
       <screen x="0" y="0" width="1440" height="900" />
     </state>

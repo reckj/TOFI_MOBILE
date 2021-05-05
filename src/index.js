@@ -3,9 +3,12 @@ import defineSketch from './Canvas.js'
 import BLEhandler from './BLEhandler.js'
 import BLEParameters from './BLEParameters'
 import BleSimulator from './BleSimulator'
+import CalibrationGUI from './CalibrationGUI'
+import * as Tone from 'tone'
 
 let blehandler
 let currentView = 0
+let calibrationGUI
 let params =
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
@@ -17,8 +20,14 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
     // add gui
     createBLEDialog()
-    params = new BLEParameters(6) // myBLE.id
+    params = new BLEParameters(6) // myBLE.id // handles storage for paremeters for interpreting sensor values
     blehandler = new BleSimulator()
+    calibrationGUI = new CalibrationGUI(params)
+    calibrationGUI.toggle(false)
+    console.log('handling sounds')
+    //document.addEventListener("mouseClick", RunToneConext, false);
+    document.addEventListener("click", RunToneConext, false);
+    // document.addEventListener("touchstart", RunToneConext, false);
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,17 +41,39 @@ function DOMContentLoadedEvent() {
     // check for p5-container after onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
-        let PFIVE = new P5(defineSketch(currentView, blehandler, params), containerElement)
+        let PFIVE = new P5(defineSketch(currentView, blehandler, params, Tone), containerElement)
     }
-    console.log("currentView"+currentView);
+    // GUI
 }
 
+// sound
+function RunToneConext() {
+    if (Tone.context.state !== 'running') {
+        Tone.context.resume()
+        console.log("start sound")
+
+        const envelope = new Tone.AmplitudeEnvelope({
+            attack: 0.11,
+            decay: 0.21,
+            sustain: 0.5,
+            release: 1.2
+        }).toDestination()
+
+        const oscillator = new Tone.Oscillator({
+            partials: [3, 2, 1],
+            type: "custom",
+            frequency: "C#4",
+            volume: -8,
+        }).connect(envelope).start();
+        envelope.triggerAttack()
+    }
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// UI /////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// main  application Onsen Segment
+// main application Onsen Segment
 document.addEventListener('postchange', function (event) {
     console.log('postchange event', event);
 })
@@ -62,12 +93,18 @@ export function connectBLE() {
 }
 
 export function pushPage(page, anim) {
+
     if (anim) {
         document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title }, animation: anim });
     } else {
         console.log(document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title } }));
     }
     currentView = page.view;
+    if (currentView == 0) {
+        calibrationGUI.toggle(true)
+    } else {
+        calibrationGUI.toggle(false)
+    }
     console.log("set view" + page.title)
     console.log("set view" + page.view)
 }

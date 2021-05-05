@@ -21,8 +21,10 @@ class CalibrationGUI {
     this.gui.destroy()
   }
 
-  toggle () {
-    this.display = !this.display
+  toggle (bool) {
+
+    this.display = bool
+    console.log("toggle+"+this.display)
     if (this.display) {
       this.buildGUI(this.Cookie.params)
     } else {

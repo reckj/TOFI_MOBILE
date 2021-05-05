@@ -1,15 +1,114 @@
-<!doctype html>
-<html lang="en" dir="ltr">
-<head>
+<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src
 
-<meta charset="utf-8">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+         -->
+       <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline' ws: 'unsafe-inline'; worker-src blob:; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:; script-src 'self' 'unsafe-inline' http://localhost:3000 http://192.168.178.47:3000;">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+        <meta name="color-scheme" content="light dark">
+        <script type="text/javascript" src="js/p5.js"></script></head><body>&gt;
+        <script type="text/javascript" src="js/p5.ble.js"></script>
+        <link rel="stylesheet" href="css/onsenui.min.css">
+        <link rel="stylesheet" href="css/dark-onsen-css-components.min.css">
+        <link rel="stylesheet" href="css/style.css">
+        <script src="js/onsenui.min.js"></script>
+        <title>TOFI</title>
+    
+    
+    <div id="app">
 
-<meta http-equiv="refresh" content="0;URL=http://localhost:8080/">
+    </div>
+
+    <ons-navigator swipeable="" id="myNavigator" page="statistics.html">
+        <ons-page>
+        <ons-tabbar swipeable="" position="auto">
+            <!-- <ons-tab page="statistics.html" label="Settings and Statistics" class="stats-icon"></ons-tab> -->
+            <ons-tab page="statistics.html" label="Settings and Statistics" icon="md-settings" active-icon="md-settings"></ons-tab>
+            <ons-tab page="games.html" label="Training" icon="md-face" active-icon="md-face"></ons-tab>
+            <ons-tab page="sleepTracking.html" label="Sleeping" icon="md-hotel" active-icon="md-hotel"></ons-tab>
+        </ons-tabbar>
+
+        </ons-page>
+    </ons-navigator>
 
 
-</head>
-<body>
+        <template id="statistics.html">
+            <ons-page id="home">
+                <ul class="list">
+                    <li class="list-item list-item">
+                        <div class="list-item__center"><ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':0, 'title':'sensorview'})" id="push-button-00">Calibrate Trainer</ons-button></div>
+                    </li>
+                    <li class="list-item list-item">
+                        <div class="list-item__center"><ons-button modifier="large" id="push-button-01">Learn More</ons-button></div>
+                    </li>
+                    <li class="list-item list-item">
+                        <div class="list-item__center"><ons-button modifier="large" id="push-button-02">Using the TOFI Trainer</ons-button></div>
+                    </li>
+                    <li class="list-item list-item">
+                        <div class="list-item__center"><ons-button modifier="large" id="push-button-03">Track your sleep</ons-button></div>
+                    </li>
+                </ul>
+            </ons-page>
+        </template>
+    <template id="games.html">
 
+        <ons-page id="games">
+            <ons-card tappable="" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'game'})">
+                <div class="title">Game 01</div>
+                <div class="content">First Example</div>
+            </ons-card>
+            <ons-card>
+                <div class="title">Game 02</div>
+                <div class="content">Comming Soon</div>
+            </ons-card>
+            <ons-card>
+                <div class="title">Game 03</div>
+                <div class="content">Comming Soon</div>
+            </ons-card>
+        </ons-page>
+    </template>
+        <template id="sleepTracking.html">
+            <ons-page>
+                <ul class="list">
+                    <li class="list-item list-item">
+                        <div class="list-item__center">  <ons-button modifier="large">Learn More</ons-button></div>
+                    </li>
+                </ul>
+            </ons-page>
+        </template>
 
-</body>
-</html>
+    <template id="ble-alert-dialog.html">
+        <ons-alert-dialog id="my-alert-dialog" modifier="rowfooter">
+            <div class="alert-dialog-title">Alert</div>
+            <div class="alert-dialog-content">
+                The TOFI trainer is not connected.
+            </div>
+            <div class="alert-dialog-footer">
+                <ons-alert-dialog-button onclick="EntryPoint.connectBLE()">Connect</ons-alert-dialog-button>
+                <ons-alert-dialog-button onclick="EntryPoint.hideAlertDialog()">Skip</ons-alert-dialog-button>
+            </div>
+        </ons-alert-dialog>
+    </template>
+
+    <template id="calibrate.html">
+        <ons-page id="calibrate">
+            <backbutton onclick="EntryPoint.backButton()">←</backbutton>
+            <div id="p5-container"></div>
+        </ons-page>
+    </template>
+
+     <script src="cordova.js"></script>
+    <script src="js/game_01.js"></script>
+    <script src="index.bundle.js"></script>
+ 
+
+</body></html>

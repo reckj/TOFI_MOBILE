@@ -12,6 +12,9 @@ Built Using onsen UI framework and P5js
 setup ssl proxy for testing BLE in browser
 * Run `npm install -g local-ssl-proxy`
 
+Add this to the first line of p5.sound.js in node/p5 to fix an error
+
+`import p5 from "p5"`
 
 ## How to test
 

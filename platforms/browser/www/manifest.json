@@ -7,5 +7,5 @@
   "description": "The TOFI app connects with your TOFI trainer.",
   "author": "Apache Cordova Team",
   "icons": [],
-  "start_url": "index.html"
+  "start_url": "browser-sync-start.html"
 }
