@@ -12,6 +12,7 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
   module.exports.metadata = {
     "cordova-plugin-ble-central": "1.3.1",
     "cordova-plugin-browsersync": "0.1.7",
-    "cordova-plugin-webpack": "1.0.5"
+    "cordova-plugin-webpack": "1.0.5",
+    "cordova-plugin-splashscreen": "6.0.0"
   };
 });

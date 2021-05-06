@@ -18,8 +18,6 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
-        <script type="text/javascript" src="js/p5.js"></script>>
-        <script type="text/javascript" src="js/p5.ble.js"></script
         <link rel="stylesheet" href="css/index.css">
         <link rel="stylesheet" href="css/onsenui.min.css">
         <link rel="stylesheet" href="css/dark-onsen-css-components.min.css">
@@ -29,50 +27,41 @@
     </head>
     <body>
     <div id="app">
-
     </div>
-
     <ons-navigator swipeable id="myNavigator" page="statistics.html">
         <ons-page>
         <ons-tabbar swipeable position="auto">
             <!-- <ons-tab page="statistics.html" label="Settings and Statistics" class="stats-icon"></ons-tab> -->
-            <ons-tab page="statistics.html" label="Settings and Statistics" icon="md-settings" active-icon="md-settings"></ons-tab>
-            <ons-tab page="games.html" label="Training" icon="md-face" active-icon="md-face"></ons-tab>
-            <ons-tab page="sleepTracking.html" label="Sleeping" icon="md-hotel" active-icon="md-hotel"></ons-tab>
+            <ons-tab page="profile.html" label="Profile and Settings" icon="md-settings" active-icon="md-settings"></ons-tab>
+            <ons-tab page="training.html" label="Training" icon="md-face" active-icon="md-face"></ons-tab>
+            <ons-tab page="statistics.html" label="Statistics" icon="md-hotel" active-icon="md-hotel"></ons-tab>
         </ons-tabbar>
 
         </ons-page>
     </ons-navigator>
-
-
-        <template id="statistics.html">
-            <ons-page id="home">
-                <ul class="list">
-                    <li class="list-item list-item">
-                        <div class="list-item__center"><ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':0, 'title':'sensorview'})" id="push-button-00" >Calibrate Trainer</ons-button></div>
-                    </li>
-                    <li class="list-item list-item">
-                        <div class="list-item__center"><ons-button modifier="large" id="push-button-01">Learn More</ons-button></div>
-                    </li>
-                    <li class="list-item list-item">
-                        <div class="list-item__center"><ons-button modifier="large" id="push-button-02">Using the TOFI Trainer</ons-button></div>
-                    </li>
-                    <li class="list-item list-item">
-                        <div class="list-item__center"><ons-button modifier="large" id="push-button-03">Track your sleep</ons-button></div>
-                    </li>
-                </ul>
+        <template id="profile.html">
+            <ons-page id="profile">
+                <section style="padding: 10px">
+                    <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':0, 'title':'sensorview'})" id="push-button-00" >Calibrate Trainer</ons-button>
+                    <p></p>
+                    <ons-button modifier="large" id="push-button-01">Learn More</ons-button>
+                    <p></p>
+                    <ons-button modifier="large" id="push-button-02">Using the TOFI Trainer</ons-button>
+                    <p></p>
+                    <ons-button modifier="large" id="push-button-03">Track your sleep</ons-button>
+                </section>
             </ons-page>
         </template>
-    <template id="games.html">
+    <template id="training.html">
 
-        <ons-page id="games">
-            <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'game'})">
-                <div class="title">Game 01</div>
-                <div class="content">First Example</div>
+        <ons-page id="training">
+            <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'training'})">
+                <div class="title">Sonic Simon</div>
+                <div class="content">First Game Example</div>
             </ons-card>
-            <ons-card>
+            <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':2, 'title':'training'})">
                 <div class="title">Game 02</div>
-                <div class="content">Comming Soon</div>
+                <div class="content">Demo for testing purposes</div>
             </ons-card>
             <ons-card>
                 <div class="title">Game 03</div>
@@ -80,13 +69,13 @@
             </ons-card>
         </ons-page>
     </template>
-        <template id="sleepTracking.html">
+
+        <template id="statistics.html">
             <ons-page>
-                <ul class="list">
-                    <li class="list-item list-item">
-                        <div class="list-item__center">  <ons-button modifier="large">Learn More</ons-button></div>
-                    </li>
-                </ul>
+                <ons-card>
+                    <div class="title">Sleep and Training statistics</div>
+                    <div class="content">This feature is comming soon</div>
+                </ons-card>
             </ons-page>
         </template>
 

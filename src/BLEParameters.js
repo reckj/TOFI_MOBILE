@@ -1,8 +1,14 @@
+//import {boolean, int8Array} from "@sindresorhus/is";
+
 class BLEParameters {
+  //
+  // handles setting, saving and retrival of calibration settings
+  //
   constructor (id) {
     this.cookieID = id
     // construct calibration object
     this.noChannels = 8
+    this.noActive = 0;
     this.chanelNames = ['Battery', 'Reference', 'Ch 6', 'Ch 5', 'Ch 4', 'Ch 3', 'Ch 2', 'Ch 1']
     this.params = {
     }
@@ -37,6 +43,7 @@ class BLEParameters {
     return filters
   }
 
+
   objectToJsonCookie () {
     // creat Json object and set cookie
     console.log('object to json cookie set')
@@ -51,12 +58,22 @@ class BLEParameters {
     document.cookie = this.cookieID + '=' + cvalue + ';' + expires + ';path=/'
     // console.log(this.getCookie(this.cookieID))
   }
-
   getActive (i) {
+    // get the active channels only
     return this.params[Object.keys(this.params)[i]].active
+  }
+  getNoActive(i) {
+    return this.noActive
   }
   getThreshold (i) {
     return this.params[Object.keys(this.params)[i]].threshold
+  }
+  atThreshold (i) {
+    if (this.sensorValues[i] > this.getThreshold(i)) {
+      return true
+    } else {
+      return false
+    }
   }
   getMin (i) {
     return this.params[Object.keys(this.params)[i]].min
@@ -64,6 +81,55 @@ class BLEParameters {
   getMax (i) {
     return this.params[Object.keys(this.params)[i]].max
   }
+  setSensorValues(sensorValues) {
+    this.sensorValues = sensorValues;
+  }
+  getSensorValues(i) {
+    return this.sensorValues[i];
+  }
+  getNormalisedValues() {
+    let normaliseValues = []
+    this.noActive = 0;
+    for (let i = 0; i < this.sensorValues.length; i++) {
+      let active = this.getActive(i)
+      if (active) {
+        this.noActive++;
+      }
+      normaliseValues[i] = this.getNormalisedValue(i)
+    }
+    return normaliseValues;
+  }
+
+  getNormalisedActive() {
+    let normaliseValues = {}
+    for (let i = 0; i < this.sensorValues.length; i++) {
+      let active = this.getActive(i)
+      if (active) {
+        normaliseValues[i] = {"value": this.getNormalisedValue(i), "theshold": this.atThreshold(i)}
+      }
+    }
+    return normaliseValues;
+  }
+  getNormalisedValue(i) {
+    let normaliseValue
+    let active = this.getActive(i)
+    let min = this.getMin(i)
+    let max = this.getMax(i)
+    if (active) {
+      normaliseValue =  this.constrain(this.sensorValues[i], min, max)
+      normaliseValue = this.map(normaliseValue, min, max, 0.0, 1.0)
+    } else {
+      normaliseValue = 0;
+    }
+  return normaliseValue
+  }
+  map(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+  }
+  constrain(num, min, max){
+    return Math.min(Math.max(num, min), max)
+  }
+
   getCookie (cname) {
     let name = cname + '='
     let ca = document.cookie.split(';')

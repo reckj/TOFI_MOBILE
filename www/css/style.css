@@ -28,13 +28,18 @@ backButton {
     left: 5px;
     width: auto;
     height:auto;
+    color: white;
+    font-size: 10pt;
     line-height: 5pt;
     padding: 4px 4px 4px 4px;
-    background: #ffffff;
+    background: black;
     opacity: 1;
-    color: #000000;
     z-index: 10000;
 }
 backButton:hover {
     background: #eeeeff;
+}
+
+#p5-container {
+    background: linear-gradient(180deg, #00205b 0%, #FF3F6D 100%);
 }

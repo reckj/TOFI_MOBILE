@@ -1,24 +1,28 @@
 import P5 from 'p5'
 //import 'p5/lib/addons/p5.sound'
-import * as Tone from 'tone'
+//import * as Tone from 'tone'
 
 class Note {
-  constructor (P, Tone, midiNotes, x, y, diameter, color) {
+  constructor (P, Tone, midiNote, x, y, diameter, color, envelopes) {
     this.p = P
-    this.midiNotes = midiNotes
+    this.midiNote = midiNote
     this.NoteFlag = false // playing or notep
-    console.log(Tone);
+    this.envelope = new Tone.AmplitudeEnvelope({
+              attack: 0.11,
+              decay: 0.21,
+              sustain: 0.5,
+              release: 1.2,
+     }).toDestination()
 
+     this.oscillator = new Tone.Oscillator({
+              partials: [3, 2, 1],
+              type: "custom",
+              frequency: Tone.Midi(this.midiNote).toFrequency(),
+              volume: -8,
+     }).connect(this.envelope).start()
 
-    //this.envelope = new P5.Envelope()
-    //this.envelope.setADSR(0.2, 0.35, 0.04, 3) // quick decay
-    //this.envelope.setRange(0.6, 0.0)
-    //this.oscillator = new P5.Oscillator('sine')
-    //this.oscillator.amp(this.envelope) // set amplitude
-    //this.freq = this.p.midiToFreq(this.midiNotes)
-
+    envelopes.push(this.envelope)
     this.HSBColor = color
-
      this.freq = 261
     //this.oscillator.freq(this.freq)// set frequency
     //this.oscillator.start() // start oscillating
@@ -62,8 +66,7 @@ class Note {
   trigger () {
     if (this.NoteFlag === false) {
       this.NoteFlag = true
-      console.log('soundTriggered')
-      //this.envelope.triggerAttack()
+      this.envelope.triggerAttack()
      // this.envelope.play()
       this.amp = 100
       return true
@@ -73,7 +76,7 @@ class Note {
   release () {
     if (this.NoteFlag === true) {
       this.NoteFlag = false
-      //this.envelope.triggerRelease()
+      this.envelope.triggerRelease()
     }
   }
 }

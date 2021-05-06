@@ -3,10 +3,8 @@ import Note from './Note'
 import View from './View'
 
 class Game_01_View extends View {
-    constructor (p, Tone) {
-        super(p, Tone)
-        this.p = p
-        this.Tone = Tone
+    constructor (p, Tone, Timer, params) {
+        super(p, Tone, Timer, params)
         this.Notes = []
         this.interval = 700
         this.SimonSequencePlaying = false
@@ -19,11 +17,11 @@ class Game_01_View extends View {
         this.visualWidth = this.p.windowWidth * 0.7
         // this.visualWidth = this.p.windowWidth * 0.7
         this.isConnected = false
-        this.demoMode = true
+        this.demoMode = false
         // states
         this.GamePlayer = 0
         this.GameSimon = 1
-        this.state = this.GamePlayer
+        this.state = this.GameSimon
         this.p.colorMode(this.p.HSB)
         this.p.blendMode(this.p.SCREEN)
         // p.textFont(myFont)
@@ -35,14 +33,14 @@ class Game_01_View extends View {
         this.newSimonSequence()
     }
 
-    draw (p, sensorValues, params) {
+    draw () {
         // let newSensorValues = p.passSensorValues(sensorValues)
-        p.clear()
-        p.background(249, 60, 56)
+       this.p.clear()
+        this.p.background(249, 60, 20, 10)
         if (this.state === this.GamePlayer) {
-            this.drawGamePlayer(sensorValues, params)
+            this.drawGamePlayer(this.params)
         } else if (this.state === this.GameSimon) {
-            p.background(0, 50, 10)
+            this.p.background(30, 50, 10, 10)
             this.drawGameSimon()
         }
     }
@@ -73,7 +71,7 @@ class Game_01_View extends View {
         }
         if (this.SimonSequencePlaying === false) {
             this.SimonSequencePlaying = true
-            setTimeout(function () { this.playSequence() }.bind(this), this.interval)
+            this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         }
         for (let i = 0; i < this.noSensors; i++) {
             this.Notes[i].draw()
@@ -83,7 +81,7 @@ class Game_01_View extends View {
         if (this.SimonSequenceIndex < this.SimonSequenceLength) {
             this.releaseAllNotes()
             this.Notes[this.SimonSequence[this.SimonSequenceIndex]].trigger()
-            setTimeout(function () { this.playSequence() }.bind(this), this.interval)
+            this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
             this.SimonSequenceIndex++
         } else {
             this.SimonSequencePlaying = false
@@ -92,18 +90,19 @@ class Game_01_View extends View {
         }
     }
 
-    drawGamePlayer (sensorValues, params) {
+    drawGamePlayer (params) {
+        let sensorValues = params.getNormalisedValues()
         for (let i = 0; i < this.noSensors; i++) {
             this.Notes[i].draw()
             let sensorIndex = (sensorValues.length - 2) - i
             // let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
-            if (sensorValues[sensorIndex] >= params.getThreshold(sensorIndex)) {
+            if (params.atThreshold(sensorIndex)) {
                 if (this.Notes[i].trigger()) {
                     if (this.demoMode === false) {
                         this.checkSequence(i)
                     }
                 }
-            } else if (sensorValues[sensorIndex] < params.getThreshold(sensorIndex)) {
+            } else {
                 this.Notes[i].release()
             }
             this.p.stroke(255)
@@ -118,12 +117,12 @@ class Game_01_View extends View {
                 this.SimonSequenceIndex++
                 if (this.SimonSequenceIndex >= this.SimonSequenceLength) {
                     // sequence won
-                    setTimeout(function () { this.sequenceWon() }.bind(this), 500)
+                    this.Timer.event = setTimeout(function () { this.sequenceWon() }.bind(this), 500)
                 }
             } else {
                 console.log('incorrect')
                 // repeat
-                setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
+                this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
             }
         } else {
             console.log('no sequence')
@@ -156,7 +155,7 @@ class Game_01_View extends View {
         let spacing = this.visualWidth / this.noSensors
         initialOffsetX += spacing / 2
         for (let i = 0; i < this.noSensors; i++) {
-            this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i])
+            this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i], this.Timer.envelopes)
         }
     }
 

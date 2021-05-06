@@ -9,17 +9,17 @@ cordova.define('cordova/plugin_list', function(require, exports, module) {
       ]
     },
     {
-      "id": "cordova-plugin-sslsupport.CordovaPluginSslSupport",
-      "file": "plugins/cordova-plugin-sslsupport/www/sslsupport.js",
-      "pluginId": "cordova-plugin-sslsupport",
+      "id": "cordova-plugin-splashscreen.SplashScreen",
+      "file": "plugins/cordova-plugin-splashscreen/www/splashscreen.js",
+      "pluginId": "cordova-plugin-splashscreen",
       "clobbers": [
-        "window.sslHTTP"
+        "navigator.splashscreen"
       ]
     }
   ];
   module.exports.metadata = {
     "cordova-plugin-ble-central": "1.3.1",
     "cordova-plugin-browsersync": "0.1.7",
-    "cordova-plugin-sslsupport": "1.1.1"
+    "cordova-plugin-splashscreen": "6.0.0"
   };
 });

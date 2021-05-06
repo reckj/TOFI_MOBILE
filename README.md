@@ -18,9 +18,10 @@ Add this to the first line of p5.sound.js in node/p5 to fix an error
 
 ## How to test
 
-* Run `cordova run browser --live-reload`
+* Run `cordova prepare -- --livereload`
 
 In seperate termal window:
+
 * Run `local-ssl-proxy --source 9000 --target 8080`
 
 Open at https://localhost:9000/

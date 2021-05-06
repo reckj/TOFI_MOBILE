@@ -1,13 +1,15 @@
 import Game_01_View from './Game_01_View.js'
+import Game_02_View from './Game_02_View.js'
 import SensorView from './SensorView.js'
 let viewNumber
 let blehandler
 let params
 let debug
+let View
 let Tone
+let Timer = {"event":null, "envelopes":[]} // timeout object for game timing
 const Canvas = (p) => {
-    let View
-    let Views = [SensorView, Game_01_View]
+    let Views = [SensorView, Game_01_View, Game_02_View]
     let myFont
     let sensorValues = []
     p.preload = function () {
@@ -23,12 +25,13 @@ const Canvas = (p) => {
         p.fill(255)
         p.noStroke()
         p.textAlign(p.CENTER, p.CENTER)
-        View = new Views[viewNumber](p, Tone)
+        View = new Views[viewNumber](p, Tone, Timer, params)
     }
 
     p.draw = function () {
         sensorValues = p.updateSensorValues()
-        View.draw(p, sensorValues, params)
+        params.setSensorValues(sensorValues)
+        View.draw(p, params)
     }
 
     p.windowResized = function () {
@@ -36,26 +39,32 @@ const Canvas = (p) => {
     }
 
     p.updateSensorValues = function () {
-        let sensorValues = []
-            for (let i = 0; i < blehandler.sensorValues.length; i++) {
-                sensorValues.push(blehandler.sensorValues[i])
-            }
-            blehandler.updateFilters(params.getFilters())
+        let  sensorValues = blehandler.getSensorValues()
         return sensorValues
     }
 }
-function defineSketch(_viewNumber, _blehandler, _params, _tone){
+
+function defineSketch(options) {
     //blehandler
-    params = _params
-    blehandler = _blehandler
-    Tone = _tone
+    if (options.remove == null) {
+    params = options.params
+    blehandler = options.blehandler
+    Tone = options.tone
     if (blehandler.isConnected != null) {
         debug = false
     } else {
         debug = true
     }
-    viewNumber = _viewNumber
+    viewNumber = options.viewNumber
     return Canvas
+    } else {
+        console.log("remove timeout events")
+        clearTimeout(Timer.event)
+        // stop all sound oscilators and envelopes
+        Timer.envelopes.forEach(
+            item => item.dispose()
+        );
+        Tone.Transport.stop()
+    }
 }
-
 export default defineSketch

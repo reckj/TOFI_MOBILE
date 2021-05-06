@@ -1,5 +1,5 @@
 import P5 from 'p5'
-import defineSketch from './Canvas.js'
+import defineSketch from './views/Canvas.js'
 import BLEhandler from './BLEhandler.js'
 import BLEParameters from './BLEParameters'
 import BleSimulator from './BleSimulator'
@@ -7,9 +7,10 @@ import CalibrationGUI from './CalibrationGUI'
 import * as Tone from 'tone'
 
 let blehandler
-let currentView = 0
+let currentView = 1
 let calibrationGUI
-let params =
+let params
+let PFIVE
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
@@ -21,7 +22,7 @@ function onDeviceReady() {
     // add gui
     createBLEDialog()
     params = new BLEParameters(6) // myBLE.id // handles storage for paremeters for interpreting sensor values
-    blehandler = new BleSimulator()
+    blehandler = new BleSimulator(params)
     calibrationGUI = new CalibrationGUI(params)
     calibrationGUI.toggle(false)
     console.log('handling sounds')
@@ -29,6 +30,28 @@ function onDeviceReady() {
     document.addEventListener("click", RunToneConext, false);
     // document.addEventListener("touchstart", RunToneConext, false);
 }
+// user keyboard for debuging when device not connected
+document.addEventListener('keydown', function(event) {
+    if (blehandler instanceof BleSimulator) {
+        if (event.key == 1) {
+            blehandler.setSensorFake(0)
+        } else if (event.key == 2) {
+            blehandler.setSensorFake(1)
+        } else if (event.key == 3) {
+            blehandler.setSensorFake(2)
+        } else if (event.key == 4) {
+            blehandler.setSensorFake(3)
+        } else if (event.key == 5) {
+            blehandler.setSensorFake(4)
+        } else if (event.key == 6) {
+            blehandler.setSensorFake(5)
+        }else if (event.key == 7) {
+            blehandler.setSensorFake(6)
+        } else if (event.key == 8) {
+            blehandler.setSensorFake(7)
+        }
+    }
+});
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// Game /////////////////////////////////////////////////////////////
@@ -36,14 +59,15 @@ function onDeviceReady() {
 
 //
 document.addEventListener("init", DOMContentLoadedEvent, false)
-
 function DOMContentLoadedEvent() {
     // check for p5-container after onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
-        let PFIVE = new P5(defineSketch(currentView, blehandler, params, Tone), containerElement)
+        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone}), containerElement)
+        if (currentView == 0) {
+            calibrationGUI.toggle(true)
+        }
     }
-    // GUI
 }
 
 // sound
@@ -52,20 +76,6 @@ function RunToneConext() {
         Tone.context.resume()
         console.log("start sound")
 
-        const envelope = new Tone.AmplitudeEnvelope({
-            attack: 0.11,
-            decay: 0.21,
-            sustain: 0.5,
-            release: 1.2
-        }).toDestination()
-
-        const oscillator = new Tone.Oscillator({
-            partials: [3, 2, 1],
-            type: "custom",
-            frequency: "C#4",
-            volume: -8,
-        }).connect(envelope).start();
-        envelope.triggerAttack()
     }
 }
 
@@ -100,16 +110,13 @@ export function pushPage(page, anim) {
         console.log(document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title } }));
     }
     currentView = page.view;
-    if (currentView == 0) {
-        calibrationGUI.toggle(true)
-    } else {
-        calibrationGUI.toggle(false)
-    }
     console.log("set view" + page.title)
     console.log("set view" + page.view)
 }
 export function backButton() {
     document.querySelector('#myNavigator').popPage()
+    calibrationGUI.toggle(false)
+    defineSketch({"remove" : true})
 }
 export function changeButton() {
     document.getElementById('segment').setActiveButton(1)
@@ -145,7 +152,7 @@ let setupBLE = function() {
     let devicePlatform = cordova.platformId;
     console.log(devicePlatform);
     if (devicePlatform == "browser") {
-        blehandler = new BLEhandler()
+        blehandler = new BLEhandler(params)
         blehandler.connectAndStartNotify()
     } else if (devicePlatform == "iOS") {
 

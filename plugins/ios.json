@@ -17,6 +17,9 @@
     },
     "cordova-plugin-webpack": {
       "PACKAGE_NAME": "com.example.tofi"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.example.tofi"
     }
   },
   "dependent_plugins": {}

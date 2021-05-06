@@ -1,41 +1,49 @@
 let that
 
 class BleSimulator {
-  constructor () {
-    /*
-    let isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
-    if (!isChrome) {
-      window.alert('BLE may not work in your browser. Use Chrome or check for a list of compatible browsers here: https://developer.mozilla.org/en-US/docs/Web/API/Web_Bluetooth_API')
-    }
-    */
+  constructor (params) {
+    this.params = params
     this.noChannels = 8
     this.isConnected = true
     this.sensorValues = []
+    this.keyControl = []
     this.filters = []
     for (let i = 0; i < this.noChannels; i++) {
       this.sensorValues[i] = 0
+      this.keyControl[i] = this.params.getMin(i);
       this.filters[i] = 0
     }
     that = this
   }
 
-  updateFilters (newFilters) {
-    this.handleSensor()
-    for (let i = 0; i < this.noChannels; i++) {
-      this.filters[i] = newFilters[i]
+  setSensorFake(i) {
+    if (this.keyControl[i] <= this.params.getMax(i)) {
+      this.keyControl[i] += 2000;
     }
   }
 
+  getSensorValues() {
+    this.handleSensor ()
+    return this.sensorValues;
+  }
+
   handleSensor () {
+    for (let i = 0; i < this.noChannels; i++) {
+      if (this.keyControl[i] > this.params.getMin(i)) {
+        this.keyControl[i] -= 50;
+      }
+    }
     // apply filtering
-    for (let i = 0; i < that.noChannels; i++) {
+    let filters = this.params.getFilters();
+    for (let i = 0; i < this.noChannels; i++) {
       // let filter = that.chanelOptions[Object.keys(that.chanelOptions)[i]].filter
-      let filter = that.filters[i]
+      let filter = filters[i]
+      let noise  =  Math.floor(Math.random() * 10)
       if (filter > 0) {
-        that.sensorValues[i] = Math.floor(that.sensorValues[i] * filter)
-        that.sensorValues[i] += Math.floor(Math.random() * 30 * (1.0 - filter))
+        this.sensorValues[i] = Math.floor(this.sensorValues[i] * filter)
+        this.sensorValues[i] += Math.floor((this.keyControl[i] + noise) * (1.0 - filter))
       } else {
-        that.sensorValues[i] = Math.floor(Math.random() * 30)
+        this.sensorValues[i] = Math.floor(this.keyControl[i] + noise)
       }
     }
   }

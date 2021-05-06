@@ -102,6 +102,10 @@ h1 {
     -webkit-animation:fade 3000ms infinite;
 }
 
+.blink {
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite;
+}
 
 @media screen and (prefers-color-scheme: dark) {
     body {

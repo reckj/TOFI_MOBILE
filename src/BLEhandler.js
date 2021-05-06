@@ -1,9 +1,9 @@
 import P5 from 'p5'
 import P5ble from 'p5ble'
 let that
-
 class BLEhandler {
-  constructor () {
+  constructor (params) {
+    this.params = params
     /*
     let isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)
     if (!isChrome) {
@@ -18,10 +18,8 @@ class BLEhandler {
     this.noChannels = 8
     this.isConnected = false
     this.sensorValues = []
-    this.filters = []
     for (let i = 0; i < this.noChannels; i++) {
       this.sensorValues[i] = 0
-      this.filters[i] = 0
     }
     that = this
   }
@@ -67,18 +65,17 @@ class BLEhandler {
     this.isCjonnected = false
   }
 
-  updateFilters (newFilters) {
-    for (let i = 0; i < this.noChannels; i++) {
-      this.filters[i] = newFilters[i]
-    }
+  getSensorValues() {
+    return this.sensorValues;
   }
 
   handleSensor (data) {
     // apply filtering
+    let filters = that.params.getFilters();
     for (let i = 0; i < that.noChannels; i++) {
       let byteCount = i * 2
       // let filter = that.chanelOptions[Object.keys(that.chanelOptions)[i]].filter
-      let filter = that.filters[i]
+      let filter = filters[i];
       if (filter > 0) {
         that.sensorValues[i] = Math.floor(that.sensorValues[i] * filter)
         that.sensorValues[i] += Math.floor(data.getUint16(byteCount, true) * (1.0 - filter))
