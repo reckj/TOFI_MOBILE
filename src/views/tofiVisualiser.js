@@ -24,7 +24,7 @@ class tofiVisualiser {
         for (let i = 0; i < sensorValues.length; i++) {
             let x = this.sensorLocations[i].x * this.width;
             let y = this.sensorLocations[i].y * this.height;
-            if (sensorValues[i].theshold) {
+            if (sensorValues[i].threshold) {
                 this.p.fill(0, 255, 120)
             } else {
                 this.p.fill(180, 255, 120)

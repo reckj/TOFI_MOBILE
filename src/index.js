@@ -11,6 +11,14 @@ let currentView = 1
 let calibrationGUI
 let params
 let PFIVE
+
+class GUIInterface {
+    constructor(object) {
+        this.object = object;
+    }
+
+}
+let GUItoView = new GUIInterface({"default":false, "default2":false}) // an interface for comunicating between dom and Canvas elements
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
@@ -63,7 +71,7 @@ function DOMContentLoadedEvent() {
     // check for p5-container after onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
-        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone}), containerElement)
+        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone, "GUItoView":GUItoView}), containerElement)
         if (currentView == 0) {
             calibrationGUI.toggle(true)
         }
@@ -77,6 +85,11 @@ function RunToneConext() {
         console.log("start sound")
 
     }
+}
+
+export function toView(object) {
+    console.log(object)
+    object= object
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

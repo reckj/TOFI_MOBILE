@@ -7,6 +7,8 @@ let params
 let debug
 let View
 let Tone
+let GUItoView
+let removeSketch = false;
 let Timer = {"event":null, "envelopes":[]} // timeout object for game timing
 const Canvas = (p) => {
     let Views = [SensorView, Game_01_View, Game_02_View]
@@ -25,13 +27,16 @@ const Canvas = (p) => {
         p.fill(255)
         p.noStroke()
         p.textAlign(p.CENTER, p.CENTER)
-        View = new Views[viewNumber](p, Tone, Timer, params)
+        View = new Views[viewNumber](p, Tone, Timer, params, GUItoView)
     }
 
     p.draw = function () {
         sensorValues = p.updateSensorValues()
         params.setSensorValues(sensorValues)
         View.draw(p, params)
+        if (removeSketch) {
+            p.remove() // distroy sketch
+        }
     }
 
     p.windowResized = function () {
@@ -45,17 +50,20 @@ const Canvas = (p) => {
 }
 
 function defineSketch(options) {
-    //blehandler
+    removeSketch = false
     if (options.remove == null) {
-    params = options.params
-    blehandler = options.blehandler
-    Tone = options.tone
+        params = options.params
+        blehandler = options.blehandler
+        Tone = options.tone
+        //todo: GUItoView is not saving as a reference
+        GUItoView = options.GUItoView
     if (blehandler.isConnected != null) {
         debug = false
     } else {
         debug = true
     }
     viewNumber = options.viewNumber
+
     return Canvas
     } else {
         console.log("remove timeout events")
@@ -65,6 +73,7 @@ function defineSketch(options) {
             item => item.dispose()
         );
         Tone.Transport.stop()
+        removeSketch = true
     }
 }
 export default defineSketch

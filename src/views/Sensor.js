@@ -13,6 +13,8 @@ class Sensor {
         }
 
     draw (x,y) {
+        this.p.noFill()
+        this.p.ellipse(x,y,this.maxRadius,this.maxRadius)
         let SensorValue = this.params.setSensorValues(this.ID);
         let radius = 10+p.abs(map(SensorValue,this.min, this.max, 0, this.maxRadius))
         this.p.fill(100,100,100)

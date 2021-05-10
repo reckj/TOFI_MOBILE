@@ -3,8 +3,8 @@ import Note from './Note'
 import View from './View'
 
 class Game_01_View extends View {
-    constructor (p, Tone, Timer, params) {
-        super(p, Tone, Timer, params)
+    constructor (p, Tone, Timer, params, GUItoView) {
+        super(p, Tone, Timer, params, GUItoView)
         this.Notes = []
         this.interval = 700
         this.SimonSequencePlaying = false
@@ -17,11 +17,11 @@ class Game_01_View extends View {
         this.visualWidth = this.p.windowWidth * 0.7
         // this.visualWidth = this.p.windowWidth * 0.7
         this.isConnected = false
-        this.demoMode = false
+        this.demoMode = true
         // states
         this.GamePlayer = 0
         this.GameSimon = 1
-        this.state = this.GameSimon
+        this.state = this.GamePlayer
         this.p.colorMode(this.p.HSB)
         this.p.blendMode(this.p.SCREEN)
         // p.textFont(myFont)
@@ -31,6 +31,7 @@ class Game_01_View extends View {
         this.p.textAlign(this.p.CENTER, this.p.CENTER)
         this.setupSoundObjects()
         this.newSimonSequence()
+        this.addPlayBtn()
     }
 
     draw () {
@@ -42,6 +43,10 @@ class Game_01_View extends View {
         } else if (this.state === this.GameSimon) {
             this.p.background(30, 50, 10, 10)
             this.drawGameSimon()
+        }
+        if (this.demoMode && this.GUItoView.object.startgame === true) {
+            this.startGame()
+            console.log(this.GUItoView.object)
         }
     }
 
@@ -148,6 +153,14 @@ class Game_01_View extends View {
         this.state = this.GameSimon
     }
 
+    addPlayBtn () {
+        let myDiv = this.p.createDiv('<ons-button modifier=\"large\" onclick=\"EntryPoint.toView({\'startgame\': true})\" id=\"push-button-01\">StartGame</ons-button>')
+          myDiv.position(100, 100);
+    }
+    startGame () {
+        this.state = this.GameSimon
+        this.demoMode = true;
+    }
     setupSoundObjects () {
         // sound
         let initialOffsetX = (this.p.windowWidth - this.visualWidth) / 2

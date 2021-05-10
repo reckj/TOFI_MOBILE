@@ -101,11 +101,13 @@ class BLEParameters {
   }
 
   getNormalisedActive() {
-    let normaliseValues = {}
+    let normaliseValues = [{"value": 0, "threshold": false}]
+    this.noActive = 0;
     for (let i = 0; i < this.sensorValues.length; i++) {
       let active = this.getActive(i)
       if (active) {
-        normaliseValues[i] = {"value": this.getNormalisedValue(i), "theshold": this.atThreshold(i)}
+        normaliseValues[this.noActive] = {"value": this.getNormalisedValue(i), "threshold": this.atThreshold(i)}
+        this.noActive++;
       }
     }
     return normaliseValues;

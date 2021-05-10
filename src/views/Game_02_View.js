@@ -4,8 +4,8 @@ import tofi from './tofiVisualiser'
 
 
 class Game_02_View extends View {
-    constructor (p, Tone, Timer, params) {
-        super(p, Tone, Timer, params)
+    constructor (p, Tone, Timer, params, GUItoView) {
+        super(p, Tone, Timer, params, GUItoView)
         p.createCanvas(p.windowWidth, p.windowHeight)
         p.colorMode(p.HSB)
         p.blendMode(p.SCREEN)

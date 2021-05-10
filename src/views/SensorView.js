@@ -15,7 +15,6 @@ class SensorView extends View {
     this.p.textSize(15)
   }
   draw () {
-
     this.p.background(50);
     let normalisedValues = this.params.getNormalisedValues();
     let spacing = this.p.windowHeight / normalisedValues.length
@@ -24,32 +23,31 @@ class SensorView extends View {
       let active = this.params.getActive(i)
 
       this.p.push()
-        let radius = normalisedValues[i]*spacing * 0.9
-        radius = this.p.constrain(radius, 10, spacing * 0.9)
+          let radius = normalisedValues[i]*spacing * 0.9
+          radius = this.p.constrain(radius, 10, spacing * 0.9)
 
-        this.p.translate(0,spacing * i)
-      if (active) {
-        this.drawHistogram (i, radius)
-        if (this.params.atThreshold(i)) {
-          this.p.fill(0)
+          this.p.translate(0,spacing * i)
+        if (active) {
+          this.drawHistogram (i, radius)
+          if (this.params.atThreshold(i)) {
+            this.p.fill(0)
+          } else {
+            this.p.fill(200)
+          }
+          this.p.ellipse(0, 0, radius, radius)
         } else {
-          this.p.fill(200)
+          let radius = spacing * 0.2
+          this.p.fill(100)
+          this.p.noStroke()
+          this.p.ellipse(0, 0, radius, radius)
         }
-        this.p.ellipse(0, 0, radius, radius)
-      } else {
-        let radius = spacing * 0.2
-        this.p.fill(100)
-        this.p.noStroke()
-        this.p.ellipse(0, 0, radius, radius)
-      }
-
-      //label
-      this.p.fill(255)
-        this.p.noStroke()
-        this.p.translate(90, 0)
-        this.p.text(this.params.getSensorValues(i), 0, 0)
-        this.p.translate(0, this.p.textSize()+6)
-        this.p.text(this.params.chanelNames[i], 0, 0)
+        //label
+          this.p.fill(255)
+          this.p.noStroke()
+          this.p.translate(90, 0)
+          this.p.text(this.params.getSensorValues(i), 0, 0)
+          this.p.translate(0, this.p.textSize()+6)
+          this.p.text(this.params.chanelNames[i], 0, 0)
         this.p.pop()
     }
   }
