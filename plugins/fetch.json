@@ -39,10 +39,10 @@
     "is_top_level": true,
     "variables": {}
   },
-  "cordova-plugin-splashscreen": {
+  "cordova-plugin-statusbar": {
     "source": {
       "type": "registry",
-      "id": "cordova-plugin-splashscreen@^6.0.0"
+      "id": "cordova-plugin-statusbar@2.4.3"
     },
     "is_top_level": true,
     "variables": {}

@@ -19,6 +19,7 @@
 		6AFF5BF91D6E424B00AB3073 /* CDVLaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6AFF5BF81D6E424B00AB3073 /* CDVLaunchScreen.storyboard */; };
 		99901299F0B9C78CFD422EF6 /* libPods-HelloWorld.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DF5F894054D76C9C68352BF /* libPods-HelloWorld.a */; };
 		E3DF0665B8EE4F288FDA0B34 /* CBPeripheral+Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 7E6EC1DAAA364B34BC2471FD /* CBPeripheral+Extensions.m */; };
+		45BDA07D9C864D24995BF2D0 /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A33D026721144739BF0D9812 /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,8 @@
 		ED33DF2A687741AEAF9F8254 /* Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = HelloWorld/config.xml; sourceTree = "<group>"; };
 		FE758F342409EF670D308F23 /* Pods-HelloWorld.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HelloWorld.debug.xcconfig"; path = "Target Support Files/Pods-HelloWorld/Pods-HelloWorld.debug.xcconfig"; sourceTree = "<group>"; };
+		A33D026721144739BF0D9812 /* CDVStatusBar.m */ = {isa = PBXFileReference; name = "CDVStatusBar.m"; path = "cordova-plugin-statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; explicitFileType = undefined; includeInIndex = 0; };
+		5BB3AE0CE66142FE8E6385C1 /* CDVStatusBar.h */ = {isa = PBXFileReference; name = "CDVStatusBar.h"; path = "cordova-plugin-statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +194,8 @@
 				A7E4B6988F1D4B729EC416BF /* BLECentralPlugin.h */,
 				A5038DB9C42B4999A6E1D107 /* CBPeripheral+Extensions.h */,
 				C8595085EC704C85A2FF9648 /* BLECommandContext.h */,
+				A33D026721144739BF0D9812 /* CDVStatusBar.m */,
+				5BB3AE0CE66142FE8E6385C1 /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = HelloWorld/Plugins;
@@ -356,6 +361,7 @@
 				5AAE1CA63F824F5CB8F93D34 /* BLECentralPlugin.m in Sources */,
 				E3DF0665B8EE4F288FDA0B34 /* CBPeripheral+Extensions.m in Sources */,
 				2105176015C54CDDB4C2A8CB /* BLECommandContext.m in Sources */,
+				45BDA07D9C864D24995BF2D0 /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

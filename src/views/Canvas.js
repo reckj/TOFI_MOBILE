@@ -1,39 +1,43 @@
 import Game_01_View from './Game_01_View.js'
 import Game_02_View from './Game_02_View.js'
-import SensorView from './SensorView.js'
+import SensorHistogram from './SensorHistogram.js'
+import CalibrationView from './CalibrationView.js'
 let viewNumber
 let blehandler
 let params
 let debug
 let View
 let Tone
-let GUItoView
 let removeSketch = false;
 let Timer = {"event":null, "envelopes":[]} // timeout object for game timing
 const Canvas = (p) => {
-    let Views = [SensorView, Game_01_View, Game_02_View]
+    let Views = [SensorHistogram, CalibrationView, Game_01_View, Game_02_View]
     let myFont
     let sensorValues = []
     p.preload = function () {
         //todo: fix font load
        // myFont = p.loadFont('../static/fonts/inconsolata.otf')
-        console.log()
     }
 
     p.setup = function () {
-        p.createCanvas(p.windowWidth, p.windowHeight)
+        p.createCanvas(document.documentElement.clientWidth, document.documentElement.clientHeight)
+        p.windowWidth = document.documentElement.clientWidth
+        p.windowHeight = document.documentElement.clientHeight
+        p.width = p.windowWidth // correcting for bug in p5js
+        p.height = p.windowHeight // correcting for bug in p5js
+        console.log(document.documentElement.clientWidth+"new view"+ p.windowWidth)
        // p.textFont(myFont)
         p.textSize(p.width / 100)
         p.fill(255)
         p.noStroke()
         p.textAlign(p.CENTER, p.CENTER)
-        View = new Views[viewNumber](p, Tone, Timer, params, GUItoView)
+        View = new Views[viewNumber](p, Tone, Timer, params)
     }
 
     p.draw = function () {
         sensorValues = p.updateSensorValues()
         params.setSensorValues(sensorValues)
-        View.draw(p, params)
+        View.draw()
         if (removeSketch) {
             p.remove() // distroy sketch
         }
@@ -41,6 +45,7 @@ const Canvas = (p) => {
 
     p.windowResized = function () {
         p.resizeCanvas(p.windowWidth, p.windowHeight)
+        console.log("resize")
     }
 
     p.updateSensorValues = function () {
@@ -55,8 +60,6 @@ function defineSketch(options) {
         params = options.params
         blehandler = options.blehandler
         Tone = options.tone
-        //todo: GUItoView is not saving as a reference
-        GUItoView = options.GUItoView
     if (blehandler.isConnected != null) {
         debug = false
     } else {

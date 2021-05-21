@@ -18,7 +18,6 @@ class GUIInterface {
     }
 
 }
-let GUItoView = new GUIInterface({"default":false, "default2":false}) // an interface for comunicating between dom and Canvas elements
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
@@ -71,32 +70,36 @@ function DOMContentLoadedEvent() {
     // check for p5-container after onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
-        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone, "GUItoView":GUItoView}), containerElement)
+        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone}), containerElement)
         if (currentView == 0) {
             calibrationGUI.toggle(true)
         }
     }
 }
-
 // sound
 function RunToneConext() {
     if (Tone.context.state !== 'running') {
         Tone.context.resume()
         console.log("start sound")
-
     }
 }
 
-export function toView(object) {
-    console.log(object)
-    object= object
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////// UI /////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // main application Onsen Segment
+
+export function splash(time) {
+    let t = time
+    setTimeout(function () {
+        document
+            .getElementById('splashscreen')
+            .hide()
+     }, t)
+}
+
 document.addEventListener('postchange', function (event) {
     console.log('postchange event', event);
 })
@@ -112,7 +115,7 @@ export function hideAlertDialog() {
 }
 export function connectBLE() {
     setupBLE()
-    document.getElementById('my-alert-dialog').hide()
+    hideAlertDialog()
 }
 
 export function pushPage(page, anim) {

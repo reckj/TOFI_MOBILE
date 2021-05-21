@@ -10,8 +10,8 @@ class Note {
     this.envelope = new Tone.AmplitudeEnvelope({
               attack: 0.11,
               decay: 0.21,
-              sustain: 0.5,
-              release: 1.2,
+              sustain: .9,
+              release: 2.6,
      }).toDestination()
 
      this.oscillator = new Tone.Oscillator({

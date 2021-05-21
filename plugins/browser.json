@@ -16,7 +16,7 @@
     "cordova-plugin-webpack": {
       "PACKAGE_NAME": "com.example.tofi"
     },
-    "cordova-plugin-splashscreen": {
+    "cordova-plugin-statusbar": {
       "PACKAGE_NAME": "com.example.tofi"
     }
   },

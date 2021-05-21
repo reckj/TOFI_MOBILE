@@ -4,18 +4,17 @@ import tofi from './tofiVisualiser'
 
 
 class Game_02_View extends View {
-    constructor (p, Tone, Timer, params, GUItoView) {
-        super(p, Tone, Timer, params, GUItoView)
-        p.createCanvas(p.windowWidth, p.windowHeight)
+    constructor (p, Tone, Timer, params) {
+        super(p, Tone, Timer, params)
         p.colorMode(p.HSB)
         p.blendMode(p.SCREEN)
-        this.tofiTrainer = new tofi (p,p.width/2, p.height/2, p.width*0.6)
+        this.tofiTrainer = new tofi (p,p.width/2, p.height/2, p.width*0.5, this.params, this.Tone)
     }
 
     draw () {
         this.p.clear()
         // p.background(80, 120, 30)
-        this.tofiTrainer.draw(this.params);
+        this.tofiTrainer.display();
     }
 }
 export default Game_02_View

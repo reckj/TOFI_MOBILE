@@ -40,6 +40,17 @@ backButton:hover {
     background: #eeeeff;
 }
 
+#splashscreen {
+    z-index: 10000 !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: hidden;
+    background: linear-gradient(180deg, #00205b 0%, #FF3F6D 100%);
+}
+
 #p5-container {
     background: linear-gradient(180deg, #00205b 0%, #FF3F6D 100%);
 }

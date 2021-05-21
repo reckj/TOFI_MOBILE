@@ -18,7 +18,7 @@ class BleSimulator {
 
   setSensorFake(i) {
     if (this.keyControl[i] <= this.params.getMax(i)) {
-      this.keyControl[i] += 2000;
+      this.keyControl[i] = this.params.getMax(i)
     }
   }
 
@@ -29,8 +29,10 @@ class BleSimulator {
 
   handleSensor () {
     for (let i = 0; i < this.noChannels; i++) {
+      let step = this.params.getMax(i)-this.params.getMin(i)
+      step = step*0.05
       if (this.keyControl[i] > this.params.getMin(i)) {
-        this.keyControl[i] -= 50;
+        this.keyControl[i] -= step
       }
     }
     // apply filtering
@@ -38,12 +40,12 @@ class BleSimulator {
     for (let i = 0; i < this.noChannels; i++) {
       // let filter = that.chanelOptions[Object.keys(that.chanelOptions)[i]].filter
       let filter = filters[i]
-      let noise  =  Math.floor(Math.random() * 10)
+     // let noise  =  Math.floor(Math.random() * 10)
       if (filter > 0) {
         this.sensorValues[i] = Math.floor(this.sensorValues[i] * filter)
-        this.sensorValues[i] += Math.floor((this.keyControl[i] + noise) * (1.0 - filter))
+        this.sensorValues[i] += Math.floor((this.keyControl[i]) * (1.0 - filter))
       } else {
-        this.sensorValues[i] = Math.floor(this.keyControl[i] + noise)
+        this.sensorValues[i] = Math.floor(this.keyControl[i])
       }
     }
   }

@@ -8,13 +8,10 @@ Built Using onsen UI framework and P5js
 * Run `sudo npm install -g cordova`
 * Run `cordova platform add browser`
 * Run `cordova plugin add cordova-plugin-browsersync-gen2`
+* Run `npm i cordova-plugin-webpack`
 
 setup ssl proxy for testing BLE in browser
 * Run `npm install -g local-ssl-proxy`
-
-Add this to the first line of p5.sound.js in node/p5 to fix an error
-
-`import p5 from "p5"`
 
 ## How to test
 
@@ -37,12 +34,9 @@ Open at https://localhost:9000/
 
 ##  TODO
 
-integrate with https://github.com/apache/cordova-js
 integrate with https://github.com/don/cordova-plugin-ble-central
 integrate with https://www.npmjs.com/package/cordova-plugin-webpack
 
-replace onclick events
-
-Switch to monaca for development workflow 
-https://monaca.io/
+Modify status bar apearance on different platforms
+https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-statusbar/
 

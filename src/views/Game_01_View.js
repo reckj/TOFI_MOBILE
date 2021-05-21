@@ -2,9 +2,11 @@
 import Note from './Note'
 import View from './View'
 
+// a simple version of the "Simon" audio game using the Tofi Trainer
+//todo: notes sound shorter when player controlling than when simon is
 class Game_01_View extends View {
-    constructor (p, Tone, Timer, params, GUItoView) {
-        super(p, Tone, Timer, params, GUItoView)
+    constructor (p, Tone, Timer, params) {
+        super(p, Tone, Timer, params)
         this.Notes = []
         this.interval = 700
         this.SimonSequencePlaying = false
@@ -15,7 +17,6 @@ class Game_01_View extends View {
         this.colorPallet = [196, 330, 36, 159, 312]
         this.noSensors = 5
         this.visualWidth = this.p.windowWidth * 0.7
-        // this.visualWidth = this.p.windowWidth * 0.7
         this.isConnected = false
         this.demoMode = true
         // states
@@ -44,22 +45,6 @@ class Game_01_View extends View {
             this.p.background(30, 50, 10, 10)
             this.drawGameSimon()
         }
-        if (this.demoMode && this.GUItoView.object.startgame === true) {
-            this.startGame()
-            console.log(this.GUItoView.object)
-        }
-    }
-
-    passSensorValues (sensorValues, params) {
-        // todo: this these should be global function that enables easy access to relavent sensor and param values
-        let newSensorValues = []
-        for (let i = 0; i < this.sensorValues.length; i++) {
-            let active = params.getActive(i)
-            if (active) {
-                newSensorValues.push(this.sensorValues[i])
-            }
-        }
-        return newSensorValues
     }
 
     newSimonSequence () {
@@ -108,7 +93,7 @@ class Game_01_View extends View {
                     }
                 }
             } else {
-                this.Notes[i].release()
+                 this.Notes[i].release()
             }
             this.p.stroke(255)
             // this.p.text(sensorValues[sensorIndex], this.Notes[i].x, this.p.height - 50)
@@ -154,12 +139,22 @@ class Game_01_View extends View {
     }
 
     addPlayBtn () {
-        let myDiv = this.p.createDiv('<ons-button modifier=\"large\" onclick=\"EntryPoint.toView({\'startgame\': true})\" id=\"push-button-01\">StartGame</ons-button>')
-          myDiv.position(100, 100);
+        const containerElement = document.getElementById('p5-container')
+        let div = document.createElement("div");
+        div.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);'
+        let btn = document.createElement("ons-button");
+        // btn.onclick = "EntryPoint.toView({\'startgame\': true})\"
+        btn.innerHTML = "StartGame";                   // Insert text
+        btn.onclick = function () {
+            containerElement.removeChild(div);
+            this.startGame()
+        }.bind(this);
+        div.appendChild(btn);
+        containerElement.appendChild(div);
     }
     startGame () {
         this.state = this.GameSimon
-        this.demoMode = true;
+        this.demoMode = false;
     }
     setupSoundObjects () {
         // sound
@@ -171,7 +166,6 @@ class Game_01_View extends View {
             this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i], this.Timer.envelopes)
         }
     }
-
     mouseClicked() {
         for (let i = 0; i < this.noSensors; i++) {
               this.Notes[i].trigger();
