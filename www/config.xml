@@ -23,4 +23,7 @@
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
     </platform>
+    <platform name="browser">
+        <hook type="after_build" src="hooks/after_build/010_copy_browser_to_docs.js" />
+    </platform>
 </widget>

@@ -15,5 +15,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <hook src="hooks/after_build/010_copy_browser_to_docs.js" type="after_build" />
     <preference name="StatusBarOverlaysWebView" value="true" />
 </widget>
