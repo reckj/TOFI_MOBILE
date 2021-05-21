@@ -3,7 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,19 +45,19 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/www" />
-      <recent name="$PROJECT_DIR$/www/img" />
-      <recent name="$PROJECT_DIR$/src/views" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/views" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$/www/static" />
       <recent name="$PROJECT_DIR$/www/js" />
       <recent name="$PROJECT_DIR$/www/css" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/www" />
+      <recent name="$PROJECT_DIR$/www/img" />
+      <recent name="$PROJECT_DIR$/src/views" />
+      <recent name="$PROJECT_DIR$/src" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -85,7 +91,7 @@
       <workItem from="1620201202484" duration="798000" />
       <workItem from="1620202367906" duration="57915000" />
       <workItem from="1621421445541" duration="13289000" />
-      <workItem from="1621598818897" duration="3166000" />
+      <workItem from="1621598818897" duration="4283000" />
     </task>
     <servers />
   </component>
