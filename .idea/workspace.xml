@@ -2,57 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/CalibrationView.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/www/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/android.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/android.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/java/org/apache/cordova/splashscreen/SplashScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/platform_www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/browser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/platform_www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld.xcodeproj/project.pbxproj" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld.xcodeproj/project.pbxproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/ios.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/platform_www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/platform_www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/www/cordova_plugins.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/cordova_plugins.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/android.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/android.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/browser.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/browser.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/CONTRIBUTING.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/NOTICE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/RELEASENOTES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/plugin.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/src/android/SplashScreen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/src/browser/SplashScreenProxy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/src/windows/SplashScreenProxy.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/types/index.d.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/cordova-plugin-splashscreen/www/splashscreen.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/fetch.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/fetch.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/ios.json" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/ios.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/BleSimulator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BleSimulator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Canvas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Game_01_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_01_View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Game_02_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_02_View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Note.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Note.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Sensor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Sensor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/SensorView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SensorHistogram.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/tofiVisualiser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/tofiVisualiser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/www/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.bundle.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -134,7 +92,7 @@
       <workItem from="1620201202484" duration="798000" />
       <workItem from="1620202367906" duration="57915000" />
       <workItem from="1621421445541" duration="13289000" />
-      <workItem from="1621598818897" duration="1352000" />
+      <workItem from="1621598818897" duration="2057000" />
     </task>
     <servers />
   </component>
