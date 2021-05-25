@@ -5,6 +5,7 @@ import BLEParameters from './BLEParameters'
 import BleSimulator from './BleSimulator'
 import CalibrationGUI from './CalibrationGUI'
 import * as Tone from 'tone'
+let ons = require('onsenui')
 
 let blehandler
 let currentView = 1
@@ -16,7 +17,6 @@ class GUIInterface {
     constructor(object) {
         this.object = object;
     }
-
 }
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
