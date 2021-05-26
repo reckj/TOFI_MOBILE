@@ -6,7 +6,7 @@ class CalibrationGUI {
   }
 
   writeCookie () {
-    this.Cookie.objectToJsonCookie()
+    this.Cookie.save()
   }
   // automaticly building dat gui taken from:  https://gist.github.com/heaversm/b159b51f4e68603b05dc417dfadb43c5
   buildGUI (config) {

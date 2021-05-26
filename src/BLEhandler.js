@@ -26,6 +26,7 @@ class BLEhandler {
 
   connectAndStartNotify () {
     // Connect to a device by passing the service UUID
+    this.myBLE.disconnect()
     this.myBLE.connect(this.serviceUuid, this.gotCharacteristics)
   }
   gotCharacteristics (error, characteristics) {
@@ -36,13 +37,12 @@ class BLEhandler {
       // console.log('address: ' + that.myBLE.address)
       console.log(characteristics[0])
       // Check if myBLE is connected
-      console.log('check connection.')
+
       that.isConnected = that.myBLE.isConnected()
-      // console.log()
+      console.log('BLE connected: '+that.isConnected )
       that.id = that.myBLE.device.id
       // Add a event handler when the device is disconnected
       that.myBLE.onDisconnected(that.onDisconnected)
-
       for (let i = 0; i < characteristics.length; i++) {
         if (i === 0) {
           const sensorCharacteristic = characteristics[i]

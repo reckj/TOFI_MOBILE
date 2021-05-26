@@ -141,7 +141,7 @@ class Game_01_View extends View {
     addPlayBtn () {
         const containerElement = document.getElementById('p5-container')
         let div = document.createElement("div");
-        div.style.cssText = 'position:absolute; top:50%; left:50%; transform:translate(-50%, -50%);'
+        div.style.cssText = 'position:absolute; top:80%; left:50%; transform:translate(-50%, -50%);'
         let btn = document.createElement("ons-button");
         // btn.onclick = "EntryPoint.toView({\'startgame\': true})\"
         btn.innerHTML = "StartGame";                   // Insert text

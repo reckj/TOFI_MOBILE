@@ -28,7 +28,7 @@ function onDeviceReady() {
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
     // add gui
     createBLEDialog()
-    params = new BLEParameters(6) // myBLE.id // handles storage for paremeters for interpreting sensor values
+    params = BLEParameters // myBLE.id // handles storage for paremeters for interpreting sensor values
     blehandler = new BleSimulator(params)
     calibrationGUI = new CalibrationGUI(params)
     calibrationGUI.toggle(false)
@@ -139,7 +139,7 @@ export function changeButton() {
 }
 
 
-let createBLEDialog = function() {
+export function createBLEDialog() {
     var dialog = document.getElementById('my-alert-dialog')
 
     if (dialog) {

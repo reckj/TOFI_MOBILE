@@ -5,18 +5,27 @@ import Sensor from './Sensor'
 
 class tofiVisualiser {
 
-    constructor (p, x, y, width, params, Tone) {
+    constructor (p, x, y, width, height, params, Tone) {
         this.p = p
         this.width = width
+        this.height = height
         this.params = params
         this.Tone = Tone
-        this.sensorLocations = [{"x": 0.3, "y": 0.8}, {"x": 0.5, "y": 0.8}, {"x": 0.5, "y": 0.33}, {"x": 0.5, "y": 0.55}, {"x": 0.7, "y": 0.8}];
+        this.sensorLocations = [{"x": 0.3, "y": 0.8}, {"x": 0.5, "y": 0.8}, {"x": 0.5, "y": 0.33}, {"x": 0.5, "y": 0.55}, {"x": 0.7, "y": 0.8}, {"x": 0.9, "y": 0.8}]; // todo: move these coordinates into local storage
         this.sensorDisplays = []
         this.x = x
         this.y = y
         // load and resize image
         this.img = this.p.loadImage('./img/tofiTopDown.png', img => {
-            this.height = img.height * (this.width / img.width)
+            // fit and presserve aspect ratio pattern
+            let ratio = (this.width / img.width)
+            let newHeight = img.height * ratio
+            if (newHeight < this.height) {
+                this.height = newHeight
+            } else {
+                ratio = (this.height / img.height)
+                this.width = img.width*ratio
+            }
             img.resize(this.width, this.height); //
         });
     }
