@@ -8,10 +8,10 @@ class Note {
     this.midiNote = midiNote
     this.NoteFlag = false // playing or notep
     this.envelope = new Tone.AmplitudeEnvelope({
-              attack: 0.11,
-              decay: 0.21,
-              sustain: .9,
-              release: 2.6,
+              attack: 0.1,
+              decay: 0.2,
+              sustain: 0.3,
+              release: 0.4,
      }).toDestination()
 
      this.oscillator = new Tone.Oscillator({
@@ -66,7 +66,7 @@ class Note {
   trigger () {
     if (this.NoteFlag === false) {
       this.NoteFlag = true
-      this.envelope.triggerAttack()
+      this.envelope.triggerAttackRelease(1.0)
      // this.envelope.play()
       this.amp = 100
       return true
@@ -76,7 +76,7 @@ class Note {
   release () {
     if (this.NoteFlag === true) {
       this.NoteFlag = false
-      this.envelope.triggerRelease()
+     // this.envelope.triggerRelease()
     }
   }
 }

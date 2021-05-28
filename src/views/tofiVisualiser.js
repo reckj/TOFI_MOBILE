@@ -30,8 +30,8 @@ class tofiVisualiser {
         });
     }
 
-    display(option0,option1,option2,option3,option4) {
-        let sensorValues = this.params.getNormalisedActive()
+    display(option0,option1,option2,option3,option4, option5, option6) {
+        let sensorValues = this.params.getNormalisedActiveValues()
         if (this.sensorDisplays.length < 1) {
             // add sensors if they don't exist already
             for (let i = 0; i < sensorValues.length; i++) {
@@ -55,7 +55,7 @@ class tofiVisualiser {
             // convert from normalised to cartesian coordinates
             let x = this.sensorLocations[i].x * this.width;
             let y = this.sensorLocations[i].y * this.height;
-            this.sensorDisplays[i].display(x,y,sensorValues[i].value, 0.8)
+            this.sensorDisplays[i].display(x,y,sensorValues[i], 0.8)
             /*
             if (sensorValues[i].threshold) {
                 this.p.fill(0, 255, 120)

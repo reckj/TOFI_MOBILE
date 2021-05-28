@@ -13,7 +13,6 @@ class Sensor {
     display(x,y, normalisedValue, threshold) {
         let newRadius = this.p.map(normalisedValue,0.0, 1.0, this.radius*0.1, this.radius)
         // this.tone(normalisedValue)
-
         if (this.hiden) {
             this.p.fill(255,255,255,100)
             this.p.stroke(255)

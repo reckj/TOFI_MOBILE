@@ -14,10 +14,11 @@ class Game_01_View extends View {
         this.SimonSequenceLength = 4
         this.SimonSequenceIndex = 0
         this.midiNotes = [60, 62, 64, 67, 69, 72, 74] // C D E G A C
-        this.colorPallet = [196, 330, 36, 159, 312]
-        this.noSensors = 5
+        this.colorPallet = [196, 330, 36, 159, 312, 60, 250]
+        this.totalSensors = this.params.getNoActive()
         this.visualWidth = this.p.windowWidth * 0.7
         this.isConnected = false
+        this.sequenceCorrectSofar = true
         this.demoMode = true
         // states
         this.GamePlayer = 0
@@ -40,9 +41,9 @@ class Game_01_View extends View {
        this.p.clear()
         this.p.background(249, 60, 20, 10)
         if (this.state === this.GamePlayer) {
-            this.drawGamePlayer(this.params)
+            this.drawGamePlayer()
         } else if (this.state === this.GameSimon) {
-            this.p.background(30, 50, 10, 10)
+            this.p.background(30, 60, 20, 10)
             this.drawGameSimon()
         }
     }
@@ -50,7 +51,7 @@ class Game_01_View extends View {
     newSimonSequence () {
         this.SimonSequence = []
         for (let i = 0; i < this.SimonSequenceLength; i++) {
-            this.SimonSequence.push(this.p.floor(this.p.random(this.noSensors)))
+            this.SimonSequence.push(this.p.floor(this.p.random(this.totalSensors)))
         }
     }
 
@@ -63,7 +64,7 @@ class Game_01_View extends View {
             this.SimonSequencePlaying = true
             this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         }
-        for (let i = 0; i < this.noSensors; i++) {
+        for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i].draw()
         }
     }
@@ -80,20 +81,19 @@ class Game_01_View extends View {
         }
     }
 
-    drawGamePlayer (params) {
-        let sensorValues = params.getNormalisedValues()
-        for (let i = 0; i < this.noSensors; i++) {
+    drawGamePlayer () {
+        let sensorValues = this.params.getNormalisedActiveValues()
+        for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i].draw()
-            let sensorIndex = (sensorValues.length - 2) - i
-            // let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
-            if (params.atThreshold(sensorIndex)) {
+            //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
+            if (sensorValues[i]> 0.5) {
                 if (this.Notes[i].trigger()) {
                     if (this.demoMode === false) {
                         this.checkSequence(i)
                     }
                 }
             } else {
-                 this.Notes[i].release()
+                this.Notes[i].release()
             }
             this.p.stroke(255)
             // this.p.text(sensorValues[sensorIndex], this.Notes[i].x, this.p.height - 50)
@@ -102,17 +102,23 @@ class Game_01_View extends View {
 
     checkSequence (i) {
         if (this.SimonSequence.length > 0) {
-            if (i === this.SimonSequence[this.SimonSequenceIndex]) {
-                console.log('correct_' + this.SimonSequenceIndex + ' of' + this.SimonSequence.length)
-                this.SimonSequenceIndex++
-                if (this.SimonSequenceIndex >= this.SimonSequenceLength) {
-                    // sequence won
-                    this.Timer.event = setTimeout(function () { this.sequenceWon() }.bind(this), 500)
+                // checking last note
+                if (i === this.SimonSequence[this.SimonSequenceIndex]) {
+                    console.log('correct_' + this.SimonSequenceIndex + ' of' + this.SimonSequence.length)
+                } else {
+                    console.log('incorrect')
+                    // repeat
+                    this.sequenceCorrectSofar = false
                 }
-            } else {
-                console.log('incorrect')
-                // repeat
-                this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
+            this.SimonSequenceIndex++
+            if (this.SimonSequenceIndex >= this.SimonSequenceLength)  {
+                // sequence won
+                if (this.sequenceCorrectSofar === true) {
+                    this.Timer.event = setTimeout(function () { this.sequenceWon() }.bind(this), 500)
+                } else {
+                    // sequence lost
+                    this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
+                }
             }
         } else {
             console.log('no sequence')
@@ -120,7 +126,7 @@ class Game_01_View extends View {
     }
 
     releaseAllNotes () {
-        for (let i = 0; i < this.noSensors; i++) {
+        for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i].release()
         }
     }
@@ -128,12 +134,14 @@ class Game_01_View extends View {
     sequenceWon () {
         console.log('sequence won')
         this.SimonSequenceIndex = 0
+        this.sequenceCorrectSofar = true
         this.newSimonSequence()
         this.state = this.GameSimon
     }
 
     sequenceLost () {
         this.SimonSequenceIndex = 0
+        this.sequenceCorrectSofar = true
         console.log('repeat:' + this.SimonSequence)
         this.state = this.GameSimon
     }
@@ -159,15 +167,15 @@ class Game_01_View extends View {
     setupSoundObjects () {
         // sound
         let initialOffsetX = (this.p.windowWidth - this.visualWidth) / 2
-        let diameter = this.visualWidth / (this.noSensors / 2) // slightly overlaping
-        let spacing = this.visualWidth / this.noSensors
+        let diameter = this.visualWidth / (this.totalSensors / 2) // slightly overlaping
+        let spacing = this.visualWidth / this.totalSensors
         initialOffsetX += spacing / 2
-        for (let i = 0; i < this.noSensors; i++) {
+        for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i], this.Timer.envelopes)
         }
     }
     mouseClicked() {
-        for (let i = 0; i < this.noSensors; i++) {
+        for (let i = 0; i < this.totalSensors; i++) {
               this.Notes[i].trigger();
         }
     }

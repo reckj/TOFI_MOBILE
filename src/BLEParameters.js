@@ -75,12 +75,7 @@ class BLEParameters {
   }
   getNormalisedValues() {
     let normaliseValues = []
-    this.noActive = 0;
     for (let i = 0; i < this.sensorValues.length; i++) {
-      let active = this.getIsActive(i)
-      if (active) {
-        this.noActive++;
-      }
       normaliseValues[i] = this.getNormalisedValue(i)
     }
     return normaliseValues;
@@ -142,15 +137,10 @@ class BLEParameters {
   ////////////
   // methods for active chanels
   ///////////
-  getNormalisedActive() {
-    let normaliseValues = [{"value": 0, "threshold": false}]
-    this.noActive = 0;
-    for (let i = 0; i < this.sensorValues.length; i++) {
-      let active = this.getIsActive(i)
-      if (active) {
-        normaliseValues[this.noActive] = {"value": this.getNormalisedValue(i), "threshold": this.atThreshold(i)}
-        this.noActive++;
-      }
+  getNormalisedActiveValues() {
+    let normaliseValues = []
+    for (let i = 0; i < this.noActive; i++) {
+      normaliseValues[i] = this.getNormalisedValue(this.activeChanels[i])
     }
     return normaliseValues;
   }
@@ -163,6 +153,14 @@ class BLEParameters {
   getActive (i) {
     // get active chanel
     return this.sensorValues[this.activeChanels[i]];
+  }
+
+  getActiveAtThreshold (i) {
+    if (this.sensorValues[this.activeChanels[i]]> this.getThreshold(this.activeChanels[i])) {
+      return true
+    } else {
+      return false
+    }
   }
 
   checkNoActive() {
@@ -190,8 +188,6 @@ class BLEParameters {
     let index = this.activeChanels[i]
     this.params[Object.keys(this.params)[index]].max = value
   }
-
 }
-
 const instance = new BLEParameters(6);
 export default instance
