@@ -6,8 +6,6 @@ import tofi from './tofiVisualiser'
 class Game_02_View extends View {
     constructor (p, Tone, Timer, params) {
         super(p, Tone, Timer, params)
-        p.colorMode(p.HSB)
-        p.blendMode(p.SCREEN)
         this.tofiTrainer = new tofi (p,p.width/2, p.height/2, p.width*0.5,p.height*0.8, this.params, this.Tone)
     }
 

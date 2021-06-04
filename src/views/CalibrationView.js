@@ -55,6 +55,7 @@ class CalibrationView extends View {
             //this.statesMachine.dispatch('next')
             let state = this.statesMachineNew.value
             state = this.statesMachineNew.transition(state, 'next')
+            this.counter = Math.floor(this.p.millis() / 1000) + 7
             this.textBox.setText('Press the following sensor with your maximum strength until the counter is finished')
         }.bind(this),"I am ready!")
     }
@@ -187,7 +188,7 @@ class CalibrationView extends View {
                             binding.addBtn(function () {
                                 let state = this.statesMachineNew.value
                                 state = this.statesMachineNew.transition(state, 'next')
-                                this.counter = Math.floor(this.p.millis() / 1000) + 1
+                                this.counter = Math.floor(this.p.millis() / 1000) + 7
                             }.bind(binding), "I'M READY")
                         } else {
                             //this.transition(this.value, 'last')
@@ -221,6 +222,10 @@ class CalibrationView extends View {
                         console.log('finished: onEnter')
                         binding.textBox.setText('Callibration complete!')
                         for (let i = 0; i<binding.totalSensors;i++) {
+                            // as 5% to min
+                            let buffer = binding.maxValues[i]-binding.minValues[i]
+                            buffer *= 0.05
+                            binding.minValues[i] += buffer
                             if (binding.minValues[i]<binding.maxValues[i]) {
                                 binding.params.setMin(i, binding.minValues[i])
                                 binding.params.setMax(i, binding.maxValues[i])

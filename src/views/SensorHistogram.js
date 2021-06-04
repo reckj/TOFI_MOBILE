@@ -21,7 +21,6 @@ class SensorHistogram extends View {
     this.p.translate((this.p.windowWidth / 2), (spacing / 2))
     for (let i = 0; i < normalisedValues.length; i++) {
       let active = this.params.getIsActive(i)
-
       this.p.push()
           let radius = normalisedValues[i]*spacing * 0.9
           radius = this.p.constrain(radius, 10, spacing * 0.9)
