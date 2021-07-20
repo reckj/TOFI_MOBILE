@@ -1,11 +1,12 @@
 import P5 from 'p5'
 import defineSketch from './views/Canvas.js'
 import BLEhandler from './BLEhandler.js'
-import BLEParameters from './BLEParameters'
+import Parameters from './Parameters'
 import BleSimulator from './BleSimulator'
 import CalibrationGUI from './CalibrationGUI'
 import * as Tone from 'tone'
 let ons = require('onsenui')
+ons.disableIconAutoPrefix() // Disable adding fa- prefix automatically to ons-icon classes. Useful when including custom icon packs.
 
 let blehandler
 let currentView = 1
@@ -24,11 +25,12 @@ document.addEventListener('deviceready', onDeviceReady, false)
 
 
 function onDeviceReady() {
+
     // Cordova is now initialized. Have fun!
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
     // add gui
     createBLEDialog()
-    params = BLEParameters // myBLE.id // handles storage for paremeters for interpreting sensor values
+    params = Parameters // myBLE.id // handles storage for paremeters for interpreting sensor values
     blehandler = new BleSimulator(params)
     calibrationGUI = new CalibrationGUI(params)
     calibrationGUI.toggle(false)

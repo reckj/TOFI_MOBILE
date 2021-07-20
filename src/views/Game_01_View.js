@@ -1,15 +1,20 @@
 // import 'p5/lib/addons/p5.sound'
 import Note from './Note'
 import View from './View'
+import tofi from './tofiVisualiser'
+import TextBox from './TextBox'
+import { createMachine } from './StateMachine.js'
+import * as EntryPoint from "../index";
 
 // a simple version of the "Simon" audio game using the Tofi Trainer
+
 //todo: notes sound shorter when player controlling than when simon is
 class Game_01_View extends View {
     constructor (p, Tone, Timer, params) {
         super(p, Tone, Timer, params)
         this.Notes = []
         this.interval = 700
-        this.SimonSequencePlaying = false
+        this.sequenceStartFlag = false
         this.SimonSequence = []
         this.SimonSequenceLength = 4
         this.SimonSequenceIndex = 0
@@ -19,32 +24,40 @@ class Game_01_View extends View {
         this.visualWidth = this.p.windowWidth * 0.7
         this.isConnected = false
         this.sequenceCorrectSofar = true
-        this.demoMode = true
         // states
-        this.GamePlayer = 0
-        this.GameSimon = 1
-        this.state = this.GamePlayer
+        this.statesMachineNew = this.stateMachine();
+        //this.GamePlayer = 0
+        //this.GameSimon = 1
+        //this.state = this.GamePlayer
         this.p.colorMode(this.p.HSB)
         this.p.blendMode(this.p.SCREEN)
         // p.textFont(myFont)
-        this.p.textSize(p.width / 100)
-        this.p.fill(255)
-        this.p.noStroke()
-        this.p.textAlign(this.p.CENTER, this.p.CENTER)
-        this.setupSoundObjects()
+        this.textBox = new TextBox(this.p,'Please put your TOFI-TRAINER on',0,0,p.width/2,p.height/2)
+        //  create new tofi visualization just for getting sensor locations.
+        this.tofiTrainer = new tofi(p,p.width/2, p.height/2, p.width*0.5,p.height*0.8, this.params, this.Tone)
+        this.setupSoundObjects(this.tofiTrainer.sensorLocations)
         this.newSimonSequence()
-        this.addPlayBtn()
+        this.addBtn(function(){
+            //this.statesMachine.dispatch('next')
+            let state = this.statesMachineNew.value
+            state = this.statesMachineNew.transition(state, 'next')
+        }.bind(this),"Play Simon")
     }
 
     draw () {
-        // let newSensorValues = p.passSensorValues(sensorValues)
-       this.p.clear()
+        this.p.clear()
         this.p.background(249, 60, 20, 10)
-        if (this.state === this.GamePlayer) {
+        this.textBox.display(this.p.width/2, this.p.height*.2)
+        if (this.statesMachineNew.value === 'intro') {
+            this.drawDemo()
+        } else if (this.statesMachineNew.value === 'player') {
             this.drawGamePlayer()
-        } else if (this.state === this.GameSimon) {
-            this.p.background(30, 60, 20, 10)
+        } else if (this.statesMachineNew.value === 'simon') {
             this.drawGameSimon()
+        } if (this.statesMachineNew.value === 'won') {
+            this.drawDemo()
+        } if (this.statesMachineNew.value === 'lost') {
+            this.drawDemo()
         }
     }
 
@@ -60,38 +73,39 @@ class Game_01_View extends View {
             this.newSimonSequence()
             console.log('this.newSimonSequence')
         }
-        if (this.SimonSequencePlaying === false) {
-            this.SimonSequencePlaying = true
+        if (this.sequenceStartFlag === false) {
+            this.sequenceStartFlag = true
+            console.log("SimonSequenceIndex"+this.SimonSequenceIndex)
             this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         }
         for (let i = 0; i < this.totalSensors; i++) {
-            this.Notes[i].draw()
+            this.Notes[i].display(1)
         }
     }
     playSequence () {
         if (this.SimonSequenceIndex < this.SimonSequenceLength) {
             this.releaseAllNotes()
             this.Notes[this.SimonSequence[this.SimonSequenceIndex]].trigger()
-            this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
+            console.log(this.SimonSequence[this.SimonSequenceIndex])
             this.SimonSequenceIndex++
+            this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         } else {
-            this.SimonSequencePlaying = false
-            this.SimonSequenceIndex = 0
-            this.state = this.GamePlayer
+            // sequence finished
+            this.sequenceStartFlag = false
+            let state = this.statesMachineNew.value
+            this.statesMachineNew.transition(state, 'next')
         }
     }
 
-    drawGamePlayer () {
+    drawDemo () {
         let sensorValues = this.params.getNormalisedActiveValues()
         for (let i = 0; i < this.totalSensors; i++) {
-            this.Notes[i].draw()
+            this.Notes[i].display(0)
             //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
-            if (sensorValues[i]> 0.5) {
-                if (this.Notes[i].trigger()) {
-                    if (this.demoMode === false) {
-                        this.checkSequence(i)
-                    }
-                }
+            let threshold  = 0.5
+            if (sensorValues[i]> threshold) {
+                this.Notes[i].trigger()
+                console.log(i)
             } else {
                 this.Notes[i].release()
             }
@@ -99,25 +113,42 @@ class Game_01_View extends View {
             // this.p.text(sensorValues[sensorIndex], this.Notes[i].x, this.p.height - 50)
         }
     }
-
+    drawGamePlayer () {
+        let sensorValues = this.params.getNormalisedActiveValues()
+        for (let i = 0; i < this.totalSensors; i++) {
+            this.Notes[i].display(0)
+            //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
+            let threshold  = 0.5
+            if (sensorValues[i]> threshold) {
+                if (this.Notes[i].trigger()) {
+                        console.log(i)
+                        this.checkSequence(i)
+                }
+            } else {
+                this.Notes[i].release()
+            }
+            this.p.stroke(255)
+        }
+    }
     checkSequence (i) {
         if (this.SimonSequence.length > 0) {
                 // checking last note
                 if (i === this.SimonSequence[this.SimonSequenceIndex]) {
                     console.log('correct_' + this.SimonSequenceIndex + ' of' + this.SimonSequence.length)
                 } else {
-                    console.log('incorrect')
+                    console.log( i +'incorrect' + this.SimonSequenceIndex + "index:" + this.SimonSequence)
                     // repeat
                     this.sequenceCorrectSofar = false
+                    // this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
+                    this.sequenceLost()
                 }
             this.SimonSequenceIndex++
             if (this.SimonSequenceIndex >= this.SimonSequenceLength)  {
                 // sequence won
                 if (this.sequenceCorrectSofar === true) {
-                    this.Timer.event = setTimeout(function () { this.sequenceWon() }.bind(this), 500)
-                } else {
-                    // sequence lost
-                    this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
+                    console.log('sequence won')
+                    let state = this.statesMachineNew.value
+                    this.statesMachineNew.transition(state, 'won')
                 }
             }
         } else {
@@ -131,53 +162,169 @@ class Game_01_View extends View {
         }
     }
 
-    sequenceWon () {
-        console.log('sequence won')
-        this.SimonSequenceIndex = 0
-        this.sequenceCorrectSofar = true
-        this.newSimonSequence()
-        this.state = this.GameSimon
-    }
 
     sequenceLost () {
-        this.SimonSequenceIndex = 0
-        this.sequenceCorrectSofar = true
-        console.log('repeat:' + this.SimonSequence)
-        this.state = this.GameSimon
+        for (let i = 0; i < this.totalSensors; i++) {
+                this.Notes[i].trigger()
+        }
+        let state = this.statesMachineNew.value
+        this.statesMachineNew.transition(state, 'lost')
     }
 
-    addPlayBtn () {
+    addBtn(callback, label) {
         const containerElement = document.getElementById('p5-container')
         let div = document.createElement("div");
-        div.style.cssText = 'position:absolute; top:80%; left:50%; transform:translate(-50%, -50%);'
-        let btn = document.createElement("ons-button");
-        // btn.onclick = "EntryPoint.toView({\'startgame\': true})\"
-        btn.innerHTML = "StartGame";                   // Insert text
+        div.style.cssText = 'position:absolute; top:85%; left:50%; transform:translate(-50%, -50%);'
+        let btn = document.createElement("ons-button")
+        btn.innerHTML = label
         btn.onclick = function () {
-            containerElement.removeChild(div);
-            this.startGame()
+            containerElement.removeChild(div)
+            callback()
         }.bind(this);
         div.appendChild(btn);
-        containerElement.appendChild(div);
+        containerElement.appendChild(div)
     }
+
     startGame () {
-        this.state = this.GameSimon
-        this.demoMode = false;
+        //todo: this.state = this.GameSimon
+        let state = this.statesMachineNew.value
+        this.statesMachineNew.transition(state, 'next')
     }
-    setupSoundObjects () {
-        // sound
-        let initialOffsetX = (this.p.windowWidth - this.visualWidth) / 2
-        let diameter = this.visualWidth / (this.totalSensors / 2) // slightly overlaping
-        let spacing = this.visualWidth / this.totalSensors
-        initialOffsetX += spacing / 2
+
+    setupSoundObjects (sensorLocations) {
+       // let initialOffsetX = (this.p.windowWidth - this.visualWidth) / 2
+        let diameter = this.visualWidth / 5 // slightly overlaping
+       // let spacing = this.visualWidth / this.totalSensors
+       // initialOffsetX += spacing / 2
         for (let i = 0; i < this.totalSensors; i++) {
-            this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i], this.Timer.envelopes)
+            let x =  sensorLocations[i].x * this.p.width
+            let y =  (sensorLocations[i].y - 0.05) * this.p.height
+           // this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], (spacing * i) + initialOffsetX, this.p.windowHeight / 2, diameter, this.colorPallet[i], this.Timer.envelopes)
+            this.Notes[i] = new Note(this.p, this.Tone, this.midiNotes[i], x, y, diameter, this.colorPallet[i], this.Timer.envelopes)
         }
     }
-    mouseClicked() {
-        for (let i = 0; i < this.totalSensors; i++) {
-              this.Notes[i].trigger();
-        }
+
+    stateMachine() {
+        let binding = this
+        const FSM = createMachine({
+            initialState: 'intro',
+            intro: {
+                actions: {
+                    onEnter() {
+                        console.log('intro: onEnter')
+                    },
+                    onExit() {
+                        console.log('intro: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'simon',
+                        action() {
+                            console.log('transitionig to Simon')
+                        },
+                    },
+                },
+            },
+            simon: {
+                actions: {
+                    onEnter() {
+                        binding.SimonSequenceIndex = 0
+                        binding.textBox.setText('Listen to the melody')
+                        console.log('simon: onEnter')
+                    },
+                    onExit() {
+                        console.log('simon: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'player',
+                        action() {
+                            console.log('transition to player')
+                        },
+                    }
+                },
+            },
+            player: {
+                actions: {
+                    onEnter() {
+                        binding.SimonSequenceIndex = 0
+                        binding.sequenceCorrectSofar = true
+                        console.log('player: onEnter')
+                        binding.textBox.setText('Repeat the melody you just heard')
+                    },
+                    onExit() {
+                        console.log('player: onExit')
+                    },
+                },
+                transitions: {
+                    won: {
+                        target: 'won',
+                        action() {
+                            console.log('transition to won')
+                        },
+                    },
+                    lost: {
+                        target: 'lost',
+                        action() {
+                            console.log('transition to lost')
+                        },
+                    },
+                },
+            },
+            won: {
+                actions: {
+                    onEnter() {
+                        console.log('won: onEnter')
+                        binding.textBox.setText('Well done!')
+                        binding.newSimonSequence()
+                        binding.addBtn(function(){
+                            //this.statesMachine.dispatch('next')
+                            let state = this.statesMachineNew.value
+                            state = this.statesMachineNew.transition(state, 'next')
+                        }.bind(binding),"Next Round")
+                    },
+                    onExit() {
+                        console.log('finished: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'simon',
+                        action() {
+                            console.log('next level')
+                        },
+                    },
+                },
+            },
+            lost: {
+                actions: {
+                    onEnter() {
+                        console.log('lost: onEnter')
+                        binding.textBox.setText('oops!')
+                        console.log('repeat:' + binding.SimonSequence)
+                        binding.addBtn(function(){
+                            //this.statesMachine.dispatch('next')
+                            let state = this.statesMachineNew.value
+                            state = this.statesMachineNew.transition(state, 'next')
+                        }.bind(binding),"Try Again")
+                    },
+                    onExit() {
+                        console.log('finished: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'simon',
+                        action() {
+                            console.log('repeat round')
+                        },
+                    },
+                },
+            },
+        })
+        return FSM
     }
 }
 export default Game_01_View

@@ -3,33 +3,8 @@ require('../index.js')
 import View from './View'
 import TextBox from './TextBox'
 import tofi from './tofiVisualiser'
-import * as EntryPoint from "../index";
-
-// state machine based on https://kentcdodds.com/blog/implementing-a-simple-state-machine-library-in-javascript
-function createMachine(stateMachineDefinition) {
-    const FSM = {
-        value: stateMachineDefinition.initialState,
-        transition(currentState, event) {
-            const currentStateDefinition = stateMachineDefinition[currentState]
-            const destinationTransition = currentStateDefinition.transitions[event]
-            if (!destinationTransition) {
-                return
-            }
-            const destinationState = destinationTransition.target
-            const destinationStateDefinition =
-                stateMachineDefinition[destinationState]
-
-            destinationTransition.action()
-            currentStateDefinition.actions.onExit()
-            destinationStateDefinition.actions.onEnter()
-
-            FSM.value = destinationState
-
-            return FSM.value
-        },
-    }
-    return FSM
-}
+import * as EntryPoint from "../index"
+import { createMachine } from './StateMachine.js'
 
 
 class CalibrationView extends View {
@@ -191,8 +166,6 @@ class CalibrationView extends View {
                                 this.counter = Math.floor(this.p.millis() / 1000) + 7
                             }.bind(binding), "I'M READY")
                         } else {
-                            //this.transition(this.value, 'last')
-                            // todo: there must be a better way to internally transistion between states
                             let state = binding.statesMachineNew.value
                             state = binding.statesMachineNew.transition(state, 'last')
                         }

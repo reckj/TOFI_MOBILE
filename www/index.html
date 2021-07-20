@@ -35,9 +35,9 @@
        <ons-page>
        <ons-tabbar swipeable position="auto">
            <!-- <ons-tab page="statistics.html" label="Settings and Statistics" class="stats-icon"></ons-tab> -->
-            <ons-tab page="profile.html" label="Profile and Settings" icon="md-settings" active-icon="md-settings"></ons-tab>
-            <ons-tab page="training.html" label="Training" icon="md-face" active-icon="md-face"></ons-tab>
-            <ons-tab page="statistics.html" label="Statistics" icon="md-hotel" active-icon="md-hotel"></ons-tab>
+            <ons-tab page="profile.html" label="Settings" icon="icon-equalizer" active-icon="icon-equalizer"></ons-tab>
+            <ons-tab page="training.html" label="Training" icon="icon-tofi" active-icon="icon-tofi"></ons-tab>
+            <ons-tab page="statistics.html" label="Statistics" icon="icon-stats-bars" active-icon="icon-stats-bars"></ons-tab>
         </ons-tabbar>
 
         </ons-page>
@@ -49,7 +49,9 @@
                     <p></p>
                     <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'calibration'})" id="push-button-01" >Calibrate Trainer</ons-button>
                     <p></p>
-                    <ons-button modifier="large" onclick="EntryPoint.connectBLE()" id="push-button-02" >Reconnect to Device</ons-button>
+                    <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':4, 'title':'Fitness Test'})" id="push-button-02" >Tongue Fitness Test</ons-button>
+                    <p></p>
+                    <ons-button modifier="large" onclick="EntryPoint.connectBLE()" id="push-button-03" >Reconnect to Device</ons-button>
                 </section>
             </ons-page>
         </template>
@@ -62,7 +64,7 @@
             </ons-card>
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':3, 'title':'training'})">
                 <div class="title">Game 02</div>
-                <div class="content">Demo for testing purposes</div>
+                <div class="content">Demo for trying out your TOFI trainer</div>
             </ons-card>
             <ons-card>
                 <div class="title">Game 03</div>
@@ -74,7 +76,7 @@
         <template id="statistics.html">
             <ons-page>
                 <ons-card>
-                    <div class="title">Sleep and Training statistics</div>
+                    <div class="title">Training statistics</div>
                     <div class="content">This feature is comming soon</div>
                 </ons-card>
             </ons-page>
@@ -92,14 +94,6 @@
             </div>
         </ons-alert-dialog>
     </template>
-
-    <template id="calibrate.html">
-        <ons-page id="calibrate">
-            <backButton onclick="EntryPoint.backButton()">←</backButton>
-            <div id="p5-container"></div>
-        </ons-page>
-    </template>
-
     <script src="index.bundle.js"></script>
  </body>
 </html>

@@ -23,16 +23,18 @@ class Note {
 
     envelopes.push(this.envelope)
     this.HSBColor = color
-     this.freq = 261
+    this.freq = 261
     //this.oscillator.freq(this.freq)// set frequency
     //this.oscillator.start() // start oscillating
     this.diameter = diameter
     this.amp = 0 // simulate amplitude
     this.x = x
     this.y = y
+    this.state = 0
   }
 
-  draw () {
+  display (state) {
+  this.state = state
     let offset = 0
     if (this.amp > 5) {
       this.amp *= 0.99
@@ -48,9 +50,18 @@ class Note {
         this.p.fill(this.HSBColor, 255, 5)
       }
     */
-    this.p.fill(this.HSBColor, 255, this.amp)
-    this.p.noStroke()
-    this.p.ellipse(this.x, this.y + offset, this.diameter, this.diameter)
+    if (this.state == 0) {
+    // Player Mode
+        this.p.fill(this.HSBColor, 255, this.amp)
+        this.p.noStroke()
+        this.p.ellipse(this.x, this.y + offset, this.diameter, this.diameter)
+    } else {
+       // Simon Mode
+           this.p.strokeWeight(4)
+           this.p.noFill()
+           this.p.stroke(this.HSBColor, 255, this.amp)
+           this.p.ellipse(this.x, this.y + offset, this.diameter, this.diameter)
+    }
   }
 
   checkMouseOver () {
@@ -68,7 +79,7 @@ class Note {
       this.NoteFlag = true
       this.envelope.triggerAttackRelease(1.0)
      // this.envelope.play()
-      this.amp = 100
+      this.amp = 50
       return true
     }
   }

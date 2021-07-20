@@ -16,6 +16,8 @@ class TextBox {
         if (y){
             this.y = y
         }
+        this.p.fill(255);
+        this.p.noStroke();
         this.p.textSize(this.size);
         this.p.rectMode(this.p.CENTER)
         this.p.text(this.text, this.x, this.y, this.w, this.h); // Text wraps within

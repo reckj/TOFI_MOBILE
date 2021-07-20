@@ -4,14 +4,15 @@ import Sensor from './Sensor'
 // a simple visualisation of the Tofi trainer, and sensor activation for guiding it's use in varous contexts
 
 class tofiVisualiser {
-
     constructor (p, x, y, width, height, params, Tone) {
         this.p = p
         this.width = width
         this.height = height
         this.params = params
         this.Tone = Tone
-        this.sensorLocations = [{"x": 0.3, "y": 0.8}, {"x": 0.5, "y": 0.8}, {"x": 0.5, "y": 0.33}, {"x": 0.5, "y": 0.55}, {"x": 0.7, "y": 0.8}, {"x": 0.9, "y": 0.8}]; // todo: move these coordinates into local storage
+       // this.sensorLocations = [{"x": 0.3, "y": 0.8}, {"x": 0.5, "y": 0.8}, {"x": 0.5, "y": 0.33}, {"x": 0.5, "y": 0.55}, {"x": 0.7, "y": 0.8}, {"x": 0.9, "y": 0.8}]; // todo: make these configurable in front end
+        this.sensorLocations = this.params.getActiveSensorLocations()
+        console.log(this.sensorLocations)
         this.sensorDisplays = []
         this.x = x
         this.y = y
@@ -35,7 +36,7 @@ class tofiVisualiser {
         if (this.sensorDisplays.length < 1) {
             // add sensors if they don't exist already
             for (let i = 0; i < sensorValues.length; i++) {
-                this.sensorDisplays[i] = new Sensor(this.p,this.width/7, this.Tone)
+                this.sensorDisplays[i] = new Sensor(this.p,this.width * 0.16, this.Tone)
             }
         }
         // turn on and off sensor display
