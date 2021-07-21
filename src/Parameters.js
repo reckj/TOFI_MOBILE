@@ -8,7 +8,7 @@ class Parameters {
   constructor (key) {
     if(!Parameters.instance){
         this.setupCookie(key)
-        this.setupDataLoger(key)
+       // this.setupDataLoger(key)
         Parameters.instance = this;
       }
     this.checkNoActive() // run once to count active channels
