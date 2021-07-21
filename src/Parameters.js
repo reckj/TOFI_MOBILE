@@ -8,6 +8,7 @@ class Parameters {
   constructor (key) {
     if(!Parameters.instance){
         this.setupCookie(key)
+        this.setupDataLoger(key)
         Parameters.instance = this;
       }
     this.checkNoActive() // run once to count active channels
@@ -45,13 +46,10 @@ class Parameters {
 
     let cookieData = this.getCookie(this.cookieID)
     if (cookieData !== '' && cookieData !== 'undefined') {
-      console.log('last cookie:')
-      console.log(cookieData)
       let obj = JSON.parse(cookieData)
       console.log('old cookie')
       console.log(obj)
       Object.assign(this.params, obj)
-      // this.chanelOptions = obj
     } else {
       console.log('no cookie')
     }
@@ -88,162 +86,179 @@ class Parameters {
     return ''
   }
   // localStorage
-  setupDataLoger(key) {
-    let d = new Date();
-    let n = d.getDate();
+    setupDataLoger(key) {
+    let Storage = window.localStorage;
+      let n = Date.now()
+      this.sessionKeys = JSON.parse(Storage.getItem(key))
+      this.thisSession  = {'start': n}
+      // save a list of all prevous sessions
+      if (this.sessionKeys !== null && this.sessionKeys !== '' && this.sessionKeys !== 'undefined') {
+        this.sessionKeys[this.sessionKeys.length] =  this.thisSession.start
+      } else {
+        this.sessionKeys[0] =  this.thisSession.start
+      }
+      Storage.setItem(key, JSON.stringify(this.sessionKeys))
+      //
+      console.log("local storage"+this.sessionKeys)
+    /*
     this.sensorData = {
       'sessionDate': n,
-
     }
     let storage = window.localStorage;
     let value = storage.getItem(key); // Pass a key name to get its value.
     storage.setItem(key, value) // Pass a key name and its value to add or update that key.
     //storage.removeItem(key) // Pass a key name to remove that key from storage.
+   */
   }
-  logdata(sensorValues) {
+logdata(sensorValues) {
+  let millis = Date.now() - this.thisSession.start;
+  this.thisSession.log[millis] = sensorValues;
+}
+saveLocal() {
+  Storage.setItem(this.thisSession.start, JSON.stringify(this.thisSession.log))
+}
 
-  }
-  saveLocal() {
+recalLoca() {
+  // this.sessionKeys = JSON.parse(Storage.getItem(key))
+}
 
-  }
+//////
+// General Utilities
+/////
 
-  //////
-  // General Utilities
-  /////
+getFilters () {
+let filters = []
+for (let i = 0; i < this.noChannels; i++) {
+  filters[i] = this.params[Object.keys(this.params)[i]].filter
+}
+return filters
+}
+getThreshold (i) {
+return this.params[Object.keys(this.params)[i]].threshold
+}
+atThreshold (i) {
+if (this.sensorValues[i] > this.getThreshold(i)) {
+  return true
+} else {
+  return false
+}
+}
+getMin (i) {
+return this.params[Object.keys(this.params)[i]].min
+}
+getMax (i) {
+return this.params[Object.keys(this.params)[i]].max
+}
 
-  getFilters () {
-    let filters = []
-    for (let i = 0; i < this.noChannels; i++) {
-      filters[i] = this.params[Object.keys(this.params)[i]].filter
-    }
-    return filters
-  }
-  getThreshold (i) {
-    return this.params[Object.keys(this.params)[i]].threshold
-  }
-  atThreshold (i) {
-    if (this.sensorValues[i] > this.getThreshold(i)) {
-      return true
-    } else {
-      return false
-    }
-  }
-  getMin (i) {
-    return this.params[Object.keys(this.params)[i]].min
-  }
-  getMax (i) {
-    return this.params[Object.keys(this.params)[i]].max
-  }
+setSensorValues(sensorValues) {
+this.sensorValues = sensorValues;
+}
+getSensorValues(i) {
+return this.sensorValues[i];
+}
+getNormalisedValues() {
+let normaliseValues = []
+for (let i = 0; i < this.sensorValues.length; i++) {
+  normaliseValues[i] = this.getNormalisedValue(i)
+}
+return normaliseValues;
+}
 
-  setSensorValues(sensorValues) {
-    this.sensorValues = sensorValues;
-  }
-  getSensorValues(i) {
-    return this.sensorValues[i];
-  }
-  getNormalisedValues() {
-    let normaliseValues = []
-    for (let i = 0; i < this.sensorValues.length; i++) {
-      normaliseValues[i] = this.getNormalisedValue(i)
-    }
-    return normaliseValues;
-  }
+getNormalisedValue(i) {
+let normaliseValue
+let active = this.getIsActive(i)
+let min = this.getMin(i)
+let max = this.getMax(i)
+if (active) {
+  normaliseValue =  this.constrain(this.sensorValues[i], min, max)
+  normaliseValue = this.map(normaliseValue, min, max, 0.0, 1.0)
+} else {
+  normaliseValue = 0;
+}
+return normaliseValue
+}
+map(value, low1, high1, low2, high2) {
+return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
+}
+constrain(num, min, max){
+return Math.min(Math.max(num, min), max)
+}
 
-  getNormalisedValue(i) {
-    let normaliseValue
-    let active = this.getIsActive(i)
-    let min = this.getMin(i)
-    let max = this.getMax(i)
-    if (active) {
-      normaliseValue =  this.constrain(this.sensorValues[i], min, max)
-      normaliseValue = this.map(normaliseValue, min, max, 0.0, 1.0)
-    } else {
-      normaliseValue = 0;
-    }
-    return normaliseValue
-  }
-  map(value, low1, high1, low2, high2) {
-    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
-  }
-  constrain(num, min, max){
-    return Math.min(Math.max(num, min), max)
-  }
+////////////
+// methods for active chanels
+///////////
+getNormalisedActiveValues() {
+let normaliseValues = []
+for (let i = 0; i < this.noActive; i++) {
+  normaliseValues[i] = this.getNormalisedValue(this.activeChanels[i])
+}
+return normaliseValues;
+}
 
-  ////////////
-  // methods for active chanels
-  ///////////
-  getNormalisedActiveValues() {
-    let normaliseValues = []
-    for (let i = 0; i < this.noActive; i++) {
-      normaliseValues[i] = this.getNormalisedValue(this.activeChanels[i])
-    }
-    return normaliseValues;
-  }
-
-  getNormalisedActive(i) {
-    return this.getNormalisedValue(this.activeChanels[i])
-  }
-
-
-  getIsActive (i) {
-    // get if the chanel is active
-    return this.params[Object.keys(this.params)[i]].active
-  }
-
-  getActive (i) {
-    // get active chanel
-    return this.sensorValues[this.activeChanels[i]];
-  }
+getNormalisedActive(i) {
+return this.getNormalisedValue(this.activeChanels[i])
+}
 
 
+getIsActive (i) {
+// get if the chanel is active
+return this.params[Object.keys(this.params)[i]].active
+}
 
-  getActiveAtThreshold (i) {
-    if (this.sensorValues[this.activeChanels[i]]> this.getThreshold(this.activeChanels[i])) {
-      return true
-    } else {
-      return false
-    }
-  }
+getActive (i) {
+// get active chanel
+return this.sensorValues[this.activeChanels[i]];
+}
 
-  checkNoActive() {
-    this.noActive = 0;
-    this.activeChanels = []
-    for (let i = 0; i < this.noChannels; ++i) {
-      let active = this.getIsActive(i)
-      if (active) {
-        this.activeChanels[this.noActive] = i
-        this.activeSensorLocations[this.noActive] = i
-        this.noActive++
-      }
-    }
-    return this.noActive
-  }
 
-  getActiveSensorLocations() {
-    this.checkNoActive()
-    let noActive = 0;
-    for (let i = 0; i < this.noChannels; ++i) {
-      let active = this.getIsActive(i)
-      if (active) {
-        this.activeSensorLocations[noActive] = this.sensorLocations[i]
-        noActive++
-      }
-    }
-    return this.activeSensorLocations
-  }
 
-  getNoActive() {
-    return this.noActive
-  }
+getActiveAtThreshold (i) {
+if (this.sensorValues[this.activeChanels[i]]> this.getThreshold(this.activeChanels[i])) {
+  return true
+} else {
+  return false
+}
+}
 
-  setMin(i, value) {
-    let index = this.activeChanels[i]
-    this.params[Object.keys(this.params)[index]].min = value
+checkNoActive() {
+this.noActive = 0;
+this.activeChanels = []
+for (let i = 0; i < this.noChannels; ++i) {
+  let active = this.getIsActive(i)
+  if (active) {
+    this.activeChanels[this.noActive] = i
+    this.activeSensorLocations[this.noActive] = i
+    this.noActive++
   }
-  setMax(i, value) {
-    let index = this.activeChanels[i]
-    this.params[Object.keys(this.params)[index]].max = value
+}
+return this.noActive
+}
+
+getActiveSensorLocations() {
+this.checkNoActive()
+let noActive = 0;
+for (let i = 0; i < this.noChannels; ++i) {
+  let active = this.getIsActive(i)
+  if (active) {
+    this.activeSensorLocations[noActive] = this.sensorLocations[i]
+    noActive++
   }
+}
+return this.activeSensorLocations
+}
+
+getNoActive() {
+return this.noActive
+}
+
+setMin(i, value) {
+let index = this.activeChanels[i]
+this.params[Object.keys(this.params)[index]].min = value
+}
+setMax(i, value) {
+let index = this.activeChanels[i]
+this.params[Object.keys(this.params)[index]].max = value
+}
 }
 const instance = new Parameters(6);
 export default instance

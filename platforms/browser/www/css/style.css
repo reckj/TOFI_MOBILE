@@ -1,3 +1,5 @@
+@import url("./icomoon/style.css");
+
 /* basic set up for p5js full screen */
 canvas {
   display: block;
@@ -16,11 +18,6 @@ body {
     z-index: 1000 !important;
 }
 
-.stats-icon {
-    font-size: 40px;
-    height: 1em;
-    background: url('/www/img/tofiIcon.svg') center/contain no-repeat;
-}
 /* back button show during gameing */
 backButton {
     position: absolute;
@@ -31,8 +28,8 @@ backButton {
     color: white;
     font-size: 10pt;
     line-height: 5pt;
-    padding: 4px 4px 4px 4px;
-    background: black;
+    padding: 6px 6px 6px 6px;
+    background: #10C5C1;;
     opacity: 1;
     z-index: 10000;
 }

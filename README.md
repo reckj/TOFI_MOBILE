@@ -27,6 +27,10 @@ Open at https://localhost:9000/
 
 * Run `cordova build`
 
+## Updating github pages
+
+* Run `cordova build browser`
+
 ## Emulation 
 
 * Run `cordova emulate android`
