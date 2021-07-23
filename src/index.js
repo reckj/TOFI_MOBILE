@@ -4,8 +4,10 @@ import BLEhandler from './BLEhandler.js'
 import Parameters from './Parameters'
 import BleSimulator from './BleSimulator'
 import CalibrationGUI from './CalibrationGUI'
+import Stats from './Stats.js'
 import * as Tone from 'tone'
 let ons = require('onsenui')
+//
 ons.disableIconAutoPrefix() // Disable adding fa- prefix automatically to ons-icon classes. Useful when including custom icon packs.
 
 let blehandler
@@ -13,6 +15,7 @@ let currentView = 1
 let calibrationGUI
 let params
 let PFIVE
+let userStats
 
 class GUIInterface {
     constructor(object) {
@@ -76,6 +79,11 @@ function DOMContentLoadedEvent() {
         if (currentView == 0) {
             calibrationGUI.toggle(true)
         }
+    }
+    let ctx = document.getElementById('myChart')
+    if (ctx) {
+        console.log("userStats")
+        userStats = new Stats(ctx, params)
     }
 }
 // sound

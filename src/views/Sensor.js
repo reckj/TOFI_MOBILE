@@ -1,4 +1,5 @@
 import P5 from 'p5'
+//import TextBox from './TextBox'
 
 class Sensor {
     constructor (p, radius, Tone) {
@@ -9,29 +10,36 @@ class Sensor {
         this.Tone = Tone
         this.hiden = false
         this.color = this.p.color(180, 255, 120);
+        //this.textBox = new TextBox(this.p,'0.00%',0,0,p.width/2,p.height/2)
         }
-
     display(x,y, normalisedValue, threshold) {
-        let newRadius = this.p.map(normalisedValue,0.0, 1.0, this.radius*0.1, this.radius)
         if (this.hiden) {
             this.p.fill(255,255,255,100)
-            this.p.stroke(255)
-            this.p.strokeWeight(1)
+            this.p.noStroke()
+            this.p.ellipse(x,y,this.radius+1,this.radius+1)
+            this.p.fill(255,255,255)
         } else {
-            this.p.fill(255,0,0,100)
-            this.p.stroke(255,0,0)
+            this.p.fill(254,62,108,140)
+            this.p.noStroke()
             this.p.strokeWeight(3)
-        }
-        //outline
-        this.p.ellipse(x,y,this.radius+2,this.radius+1)
-        if (threshold) {
-            this.p.fill(this.color)
-        } else {
-            this.p.fill(180, 255, 120)
+            this.p.ellipse(x,y,this.radius+1,this.radius+1)
+            this.p.fill(97, 231, 134)
         }
         this.p.noStroke()
+
+        let newRadius = this.p.map(normalisedValue,0.0, 1.0, this.radius*0.1, this.radius)
+        let acivationRate = Math.floor(normalisedValue*100)
         this.p.ellipse(x,y,newRadius,newRadius)
 
+         // this.textBox.setText(Math.floor(normalisedValue*100)+" %")
+        //this.textBox.display(x,y)
+        if (acivationRate>0 && !this.hiden) {
+            this.p.fill(255);
+            this.p.noStroke();
+            this.p.textSize(this.radius / 4);
+            this.p.rectMode(this.p.CENTER)
+            this.p.text(acivationRate, x, y);
+        }
     }
     hide(bool) {
         this.hiden = bool

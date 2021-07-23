@@ -51,3 +51,11 @@ backButton:hover {
 #p5-container {
     background: linear-gradient(180deg, #00205b 0%, #FF3F6D 100%);
 }
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 80vh;
+    width: 80vw;
+}
+

@@ -32,6 +32,8 @@ class tofiVisualiser {
     }
 
     display(option0,option1,option2,option3,option4, option5, option6) {
+        let x = this.x*this.p.width
+        let y = this.y*this.p.height
         let sensorValues = this.params.getNormalisedActiveValues()
         if (this.sensorDisplays.length < 1) {
             // add sensors if they don't exist already
@@ -41,16 +43,18 @@ class tofiVisualiser {
         }
         // turn on and off sensor display
         if (arguments.length>0) {
-            for (let i = 0; i < sensorValues.length; i++) {
+            for (let i = 0; i <  this.sensorDisplays.length; i++) {
                 this.sensorDisplays[i].hide(true)
             }
             for (let i = 0, j = arguments.length; i < j; i++) {
+                if (arguments[i] < this.sensorDisplays.length) {
                 this.sensorDisplays[arguments[i]].hide(false)
+               }
             }
         }
         // draw from middle
         this.p.push();
-        this.p.translate(this.x-(this.width/2), this.y-(this.height/2));
+        this.p.translate(x-(this.width/2), y-(this.height/2));
         this.p.image(this.img, 0, 0);
         for (let i = 0; i < sensorValues.length; i++) {
             // convert from normalised to cartesian coordinates

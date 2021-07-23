@@ -27,6 +27,8 @@
   },
   "dependencies": {
     "@sindresorhus/is": "^4.0.0",
+    "@util.js/numbers": "^0.41.0",
+    "chart.js": "^3.4.1",
     "create-html": "^4.1.0",
     "csp-parse": "^0.0.2",
     "dat.gui": "^0.7.7",

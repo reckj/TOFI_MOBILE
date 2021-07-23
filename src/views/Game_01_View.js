@@ -34,7 +34,7 @@ class Game_01_View extends View {
         // p.textFont(myFont)
         this.textBox = new TextBox(this.p,'Please put your TOFI-TRAINER on',0,0,p.width/2,p.height/2)
         //  create new tofi visualization just for getting sensor locations.
-        this.tofiTrainer = new tofi(p,p.width/2, p.height/2, p.width*0.5,p.height*0.8, this.params, this.Tone)
+        this.tofiTrainer = new tofi(p,.5, .5, p.width*0.5,p.height*0.8, this.params, this.Tone)
         this.setupSoundObjects(this.tofiTrainer.sensorLocations)
         this.newSimonSequence()
         this.addBtn(function(){

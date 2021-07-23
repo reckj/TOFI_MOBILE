@@ -21,73 +21,85 @@ class ExamView extends View {
         this.counter = 10
         // speed
         this.speedTotal  = 0;
-        this.tofiTrainer = new tofi(p,p.width/2, p.height*.6, p.width*0.5,p.height*0.6, this.params, this.Tone)
+        this.totalTouches  = 30;
+        this.remaningTouches  = this.totalTouches ;
+        this.tofiTrainer = new tofi(p,0.5, 0.6, p.width*0.5,p.height*0.6, this.params, this.Tone)
         this.addBtn(function(){
             //this.statesMachine.dispatch('next')
             let state = this.statesMachineNew.value
             state = this.statesMachineNew.transition(state, 'next')
             this.counter = Math.floor(this.p.millis() / 1000) + 7
-        }.bind(this),"I am ready!")
+        }.bind(this),"Speed Test")
     }
 
     draw () {
         this.p.clear()
         if (this.statesMachineNew.value === 'intro') {
             this.intro()
-        } else if (this.statesMachineNew.value === 'dexterity') {
-            this.dexterity()
         } else if (this.statesMachineNew.value === 'speed') {
             this.speed()
-        } if (this.statesMachineNew.value === 'endurance') {
-            this.intro()
+        } else if (this.statesMachineNew.value === 'sandBox') {
+            this.sandBox()
+        } else {
+            this.feedBack()
         }
     }
 
+    sandBox() {
+        this.tofiTrainer.display()
+    }
     intro() {
         this.p.fill(255);
         this.textBox.display(this.p.width/2, this.p.height*.2)
-        this.tofiTrainer.display(this.currentSensor)
+        this.tofiTrainer.display()
     }
 
     dexterity() {
         this.p.fill(255);
         this.textBox.display(this.p.width/2, this.p.height*.2)
         this.tofiTrainer.display(this.currentSensor)
-
     }
     speed() {
         this.p.fill(255);
         this.textBox.display(this.p.width/2, this.p.height*.2)
         this.tofiTrainer.display(this.currentSensor)
-        /*
-        if (this.p.millis()-this.counter> 2000 ) {
-            if (this.currentSensor < this.totalSensors - 1) {
-                this.currentSensor++
-                this.counter = this.p.millis()
-            } else {
-                this.currentSensor = 0;
-            }
-        }
-         */
+
         let threshold = 0.5
         let currentSensorValue = this.params.getNormalisedActive(this.currentSensor)
 
         if (currentSensorValue > threshold) {
             if (this.currentSensor < this.totalSensors - 1) {
-                this.currentSensor = this.p.floor(this.p.random(this.totalSensors))
-                // keep a runnong count of time to reach points.
+                let newRandom = 0
+                // avoid the same sensor twice
+                do {
+                    newRandom = this.p.floor(this.p.random(this.totalSensors))
+                } while (this.currentSensor == newRandom);
+                this.currentSensor = newRandom
+                this.remaningTouches--
+                // keep a running count of time to reach points.
                 this.speedTotal += this.p.millis()-this.counter
                 this.counter = this.p.millis()
+                this.textBox.setText('Remaining targets: '+this.remaningTouches)
             } else {
                 this.currentSensor = 0;
             }
         }
+        if (this.remaningTouches<=0) {
+            let state = this.statesMachineNew.value
+            state = this.statesMachineNew.transition(state, 'next')
+        }
+    }
+
+    feedBack() {
+        this.p.fill(255);
+        this.textBox.display(this.p.width/2, this.p.height*.2)
+        this.tofiTrainer.display()
     }
 
     addBtn(callback, label) {
         const containerElement = document.getElementById('p5-container')
         let div = document.createElement("div");
-        div.style.cssText = 'position:absolute; top:85%; left:50%; transform:translate(-50%, -50%);'
+        div.style.cssText = 'position:absolute; top:90%; left:50%; transform:translate(-50%, -50%);'
         let btn = document.createElement("ons-button")
         btn.innerHTML = label
         btn.onclick = function () {
@@ -102,11 +114,36 @@ class ExamView extends View {
     stateMachine() {
         let binding = this
         const FSM = createMachine({
-            initialState: 'intro',
+            initialState: 'sandBox',
+            sandBox: {
+                actions: {
+                    onEnter() {
+                        console.log('sandBox: onEnter')
+                    },
+                    onExit() {
+                        console.log('sandBox: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'intro',
+                        action() {
+                            console.log('transitionig to intro')
+                        },
+                    },
+                },
+            },
             intro: {
                 actions: {
                     onEnter() {
-
+                        binding.remaningTouches  = binding.totalTouches;
+                        binding.counter = binding.p.millis()
+                        binding.textBox.setText('Move your tongue to the target indicated as fast as possible.')
+                        binding.addBtn(function () {
+                            let state = this.statesMachineNew.value
+                            state = this.statesMachineNew.transition(state, 'next')
+                            this.counter = Math.floor(this.p.millis() / 1000) + 7
+                        }.bind(binding), "start")
                         console.log('intro: onEnter')
                     },
                     onExit() {
@@ -115,9 +152,56 @@ class ExamView extends View {
                 },
                 transitions: {
                     next: {
-                        target: 'dexterity',
+                        target: 'speed',
                         action() {
                             console.log('transitionig to Dexterity')
+                        },
+                    },
+                },
+            },
+            speed: {
+                actions: {
+                    onEnter() {
+                        binding.textBox.setText('Remaining targets: '+binding.remaningTouches)
+                        console.log('Speed: onEnter')
+                    },
+                    onExit() {
+                        console.log('Speed: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'feedback',
+                        action() {
+                            console.log('transition to sandBox')
+                        },
+                    },
+                },
+            },
+            feedback: {
+                actions: {
+                    onEnter() {
+                        binding.tofiTrainer.display(0,1,2,3,4,5)
+                        let average = binding.speedTotal/ binding.totalTouches  // millis
+                        average = average/1000 // seconds
+                        let rounded = Math.round((average + Number.EPSILON) * 100) / 100;
+                        binding.textBox.setText('your average speed was: '+rounded+' seconds')
+                        binding.addBtn(function () {
+                            let state = this.statesMachineNew.value
+                            state = this.statesMachineNew.transition(state, 'next')
+                            this.counter = Math.floor(this.p.millis() / 1000) + 7
+                        }.bind(binding), "repeat speed test")
+                        console.log('feedback: onEnter')
+                    },
+                    onExit() {
+                        console.log('feedback: onExit')
+                    },
+                },
+                transitions: {
+                    next: {
+                        target: 'intro',
+                        action() {
+                            console.log('transition to intro')
                         },
                     },
                 },
@@ -146,25 +230,7 @@ class ExamView extends View {
                     },
                 },
             },
-            speed: {
-                actions: {
-                    onEnter() {
-                        binding.counter = binding.p.millis()
-                        binding.textBox.setText('Move your tongue to the areas indicated as fast as possible.')
-                    },
-                    onExit() {
-                        console.log('Speed: onExit')
-                    },
-                },
-                transitions: {
-                    next: {
-                        target: 'strength',
-                        action() {
-                            console.log('transition to Strength')
-                        },
-                    },
-                },
-            },
+
             strength: {
                 actions: {
                     onEnter() {
