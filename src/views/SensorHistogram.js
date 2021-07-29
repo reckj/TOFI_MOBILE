@@ -43,7 +43,7 @@ class SensorHistogram extends View {
           this.p.fill(255)
           this.p.noStroke()
           this.p.translate(90, 0)
-          this.p.text(this.params.getSensorValues(i), 0, 0)
+          this.p.text(this.params.getSensorValue(i), 0, 0)
           this.p.translate(0, this.p.textSize()+6)
           this.p.text(this.params.chanelNames[i], 0, 0)
         this.p.pop()

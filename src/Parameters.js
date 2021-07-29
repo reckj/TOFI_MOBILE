@@ -46,7 +46,6 @@ class Parameters {
     if (cookieData !== '' && cookieData !== 'undefined') {
       let obj = JSON.parse(cookieData)
       console.log('old cookie')
-      console.log(obj)
       Object.assign(this.params, obj)
     } else {
       console.log('no cookie')
@@ -104,7 +103,7 @@ class Parameters {
       }
       Storage.setItem(key, JSON.stringify(this.sessionKeys))
       //
-      console.log("local storage" + this.sessionKeys)
+      // console.log("local storage" + this.sessionKeys)
     }
   }
 
@@ -187,8 +186,12 @@ class Parameters {
     }
   }
 
-  getSensorValues(i) {
-    return this.sensorValues[i];
+  getSensorValue(i) {
+    return this.sensorValues[i]
+  }
+
+  getSensorValues() {
+    return this.sensorValues
   }
 
   getNormalisedValues() {

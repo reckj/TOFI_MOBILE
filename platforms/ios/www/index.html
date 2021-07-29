@@ -49,7 +49,7 @@
                     <p></p>
                     <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'calibration'})" id="push-button-01" >Calibrate Trainer</ons-button>
                     <p></p>
-                    <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':4, 'title':'Fitness Test'})" id="push-button-02" >Tongue Fitness Test</ons-button>
+                    <ons-button modifier="large" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':4, 'title':'Test Center'})" id="push-button-02" >Test Center</ons-button>
                     <p></p>
                     <ons-button modifier="large" onclick="EntryPoint.connectBLE()" id="push-button-03" >Reconnect to Device</ons-button>
                 </section>
@@ -60,15 +60,15 @@
         <ons-page id="training">
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':2, 'title':'training'})">
                 <div class="title">Sonic Simon</div>
-                <div class="content">First Game Example</div>
+                <div class="content">A simple game for getting to know the TOFI Trainer</div>
+            </ons-card>
+            <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':5, 'title':'training'})">
+                <div class="title">Medidation</div>
+                <div class="content">Free flowing play</div>
             </ons-card>
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':3, 'title':'training'})">
-                <div class="title">Game 02</div>
-                <div class="content">Demo for trying out your TOFI trainer</div>
-            </ons-card>
-            <ons-card>
-                <div class="title">Game 03</div>
-                <div class="content">Comming Soon</div>
+                <div class="title">Sandbox</div>
+                <div class="content">A sandbox for trying the TOFI Trainer</div>
             </ons-card>
         </ons-page>
     </template>

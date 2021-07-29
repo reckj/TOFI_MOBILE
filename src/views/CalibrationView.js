@@ -25,7 +25,7 @@ class CalibrationView extends View {
         this.counterTextBox = new TextBox(this.p,'0',0,0,p.width/4,p.height/4)
         this.counterTextBox.settextSize(40)
         this.counter = 10
-        this.tofiTrainer = new tofi(p,0.5, 0.6, p.width*0.5,p.height*0.6, this.params, this.Tone)
+        this.tofiTrainer = new tofi(p,0.5, 0.6, p.width*0.8,p.height*0.8, this.params, this.Tone)
         this.addBtn(function(){
             //this.statesMachine.dispatch('next')
             let state = this.statesMachineNew.value
@@ -195,10 +195,11 @@ class CalibrationView extends View {
                         console.log('finished: onEnter')
                         binding.textBox.setText('Callibration complete!')
                         for (let i = 0; i<binding.totalSensors;i++) {
-                            // as 5% to min
                             let buffer = binding.maxValues[i]-binding.minValues[i]
-                            buffer *= 0.05
-                            binding.minValues[i] += buffer
+                            // add 5% to min
+                            binding.minValues[i] += (buffer*0.05)
+                            // add 15% to max
+                            binding.maxValues[i] +=  (buffer * 0.15)
                             if (binding.minValues[i]<binding.maxValues[i]) {
                                 binding.params.setMin(i, binding.minValues[i])
                                 binding.params.setMax(i, binding.maxValues[i])

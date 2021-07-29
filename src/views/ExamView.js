@@ -15,20 +15,17 @@ class ExamView extends View {
         this.statesMachineNew = this.stateMachine();
         this.totalSensors = this.params.getNoActive()
         this.currentSensor = 0
-        this.textBox = new TextBox(this.p,'Please put your TOFI-TRAINER on',0,0,p.width/2,p.height/2)
-        this.counterTextBox = new TextBox(this.p,'0',0,0,p.width/4,p.height/4)
-        this.counterTextBox.settextSize(40)
-        this.counter = 10
+        this.textBox = new TextBox(this.p,'Please put your TOFI-TRAINER on',0,0,p.width/3,p.height/3)
+        this.counter = 0
         // speed
         this.speedTotal  = 0;
         this.totalTouches  = 30;
         this.remaningTouches  = this.totalTouches ;
-        this.tofiTrainer = new tofi(p,0.5, 0.6, p.width*0.5,p.height*0.6, this.params, this.Tone)
+        this.tofiTrainer = new tofi(p,0.5, 0.5, p.width*0.8,p.height*0.8, this.params, this.Tone)
         this.addBtn(function(){
             //this.statesMachine.dispatch('next')
             let state = this.statesMachineNew.value
             state = this.statesMachineNew.transition(state, 'next')
-            this.counter = Math.floor(this.p.millis() / 1000) + 7
         }.bind(this),"Speed Test")
     }
 
@@ -54,39 +51,35 @@ class ExamView extends View {
         this.tofiTrainer.display()
     }
 
-    dexterity() {
-        this.p.fill(255);
-        this.textBox.display(this.p.width/2, this.p.height*.2)
-        this.tofiTrainer.display(this.currentSensor)
-    }
     speed() {
         this.p.fill(255);
         this.textBox.display(this.p.width/2, this.p.height*.2)
         this.tofiTrainer.display(this.currentSensor)
-
-        let threshold = 0.5
-        let currentSensorValue = this.params.getNormalisedActive(this.currentSensor)
-
-        if (currentSensorValue > threshold) {
-            if (this.currentSensor < this.totalSensors - 1) {
+        if (this.remaningTouches<=0) {
+            let state = this.statesMachineNew.value
+            state = this.statesMachineNew.transition(state, 'next')
+        } else {
+            let threshold = 0.5
+            let currentSensorValue = this.params.getNormalisedActive(this.currentSensor)
+            if (currentSensorValue > threshold) {
+                if (this.remaningTouches === this.totalTouches) {
+                    //set timer from first press
+                    this.counter = this.p.millis()
+                    console.log('timer start')
+                } else if (this.remaningTouches < this.totalTouches) {
+                    // keep a running count of time to reach points.
+                    this.speedTotal += this.p.millis() - this.counter
+                    this.counter = this.p.millis()
+                }
                 let newRandom = 0
                 // avoid the same sensor twice
                 do {
                     newRandom = this.p.floor(this.p.random(this.totalSensors))
-                } while (this.currentSensor == newRandom);
+                } while (this.currentSensor === newRandom)
                 this.currentSensor = newRandom
                 this.remaningTouches--
-                // keep a running count of time to reach points.
-                this.speedTotal += this.p.millis()-this.counter
-                this.counter = this.p.millis()
-                this.textBox.setText('Remaining targets: '+this.remaningTouches)
-            } else {
-                this.currentSensor = 0;
+                this.textBox.setText('Remaining targets: ' + this.remaningTouches)
             }
-        }
-        if (this.remaningTouches<=0) {
-            let state = this.statesMachineNew.value
-            state = this.statesMachineNew.transition(state, 'next')
         }
     }
 
@@ -94,6 +87,12 @@ class ExamView extends View {
         this.p.fill(255);
         this.textBox.display(this.p.width/2, this.p.height*.2)
         this.tofiTrainer.display()
+    }
+
+    dexterity() {
+        this.p.fill(255);
+        this.textBox.display(this.p.width/2, this.p.height*.2)
+        this.tofiTrainer.display(this.currentSensor)
     }
 
     addBtn(callback, label) {
@@ -136,13 +135,12 @@ class ExamView extends View {
             intro: {
                 actions: {
                     onEnter() {
-                        binding.remaningTouches  = binding.totalTouches;
+                        binding.remaningTouches  = binding.totalTouches
                         binding.counter = binding.p.millis()
                         binding.textBox.setText('Move your tongue to the target indicated as fast as possible.')
                         binding.addBtn(function () {
                             let state = this.statesMachineNew.value
                             state = this.statesMachineNew.transition(state, 'next')
-                            this.counter = Math.floor(this.p.millis() / 1000) + 7
                         }.bind(binding), "start")
                         console.log('intro: onEnter')
                     },
@@ -162,7 +160,7 @@ class ExamView extends View {
             speed: {
                 actions: {
                     onEnter() {
-                        binding.textBox.setText('Remaining targets: '+binding.remaningTouches)
+                        binding.textBox.setText('The timer will begin when you press the first target')
                         console.log('Speed: onEnter')
                     },
                     onExit() {
@@ -182,14 +180,13 @@ class ExamView extends View {
                 actions: {
                     onEnter() {
                         binding.tofiTrainer.display(0,1,2,3,4,5)
-                        let average = binding.speedTotal/ binding.totalTouches  // millis
+                        let average = binding.speedTotal / binding.totalTouches  // millis
                         average = average/1000 // seconds
                         let rounded = Math.round((average + Number.EPSILON) * 100) / 100;
                         binding.textBox.setText('your average speed was: '+rounded+' seconds')
                         binding.addBtn(function () {
                             let state = this.statesMachineNew.value
                             state = this.statesMachineNew.transition(state, 'next')
-                            this.counter = Math.floor(this.p.millis() / 1000) + 7
                         }.bind(binding), "repeat speed test")
                         console.log('feedback: onEnter')
                     },
@@ -213,7 +210,6 @@ class ExamView extends View {
                         binding.addBtn(function () {
                             let state = this.statesMachineNew.value
                             state = this.statesMachineNew.transition(state, 'next')
-                            this.counter = Math.floor(this.p.millis() / 1000) + 7
                         }.bind(binding), "next")
                         console.log('Dexterity: onEnter')
                     },
@@ -234,18 +230,14 @@ class ExamView extends View {
             strength: {
                 actions: {
                     onEnter() {
-                        binding.textBox.setText('Press the sensor indicated with your maximum strength until the counter is finished')
-                        console.log('calibrating: onEnter')
                     },
                     onExit() {
-                        console.log('Strength: onExit')
                     },
                 },
                 transitions: {
                     next: {
                         target: 'endurance',
                         action() {
-                            console.log('transition to Endurance')
                         },
                     },
                 },
@@ -253,17 +245,14 @@ class ExamView extends View {
             endurance: {
                 actions: {
                     onEnter() {
-                        binding.textBox.setText('Press the sensor indicated with your maximum strength until the counter is finished')
                     },
                     onExit() {
-                        console.log('Endurance: onExit')
                     },
                 },
                 transitions: {
                     next: {
                         target: 'fatigue',
                         action() {
-                            console.log('transition to Fatigue')
                         },
                     },
                 },

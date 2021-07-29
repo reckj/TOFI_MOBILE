@@ -27,7 +27,6 @@ const Canvas = (p) => {
         p.windowHeight = document.documentElement.clientHeight
         p.width = p.windowWidth // correcting for bug in p5js
         p.height = p.windowHeight // correcting for bug in p5js
-        console.log(document.documentElement.clientWidth+"new view"+ p.windowWidth)
        // p.textFont(myFont)
         p.textSize(p.width / 100)
         p.fill(255)
@@ -65,11 +64,11 @@ function defineSketch(options) {
         params = options.params
         blehandler = options.blehandler
         Tone = options.tone
-    if (blehandler.isConnected != null) {
-        debug = false
-    } else {
-        debug = true
-    }
+        if (blehandler.isConnected != null) {
+            debug = false
+        } else {
+            debug = true
+        }
     viewNumber = options.viewNumber
     return Canvas
     } else {
@@ -80,9 +79,9 @@ function defineSketch(options) {
         );
         if (Tone !== undefined) {
             Tone.Transport.stop()
-            removeSketch = true
-             params.saveLocal()
         }
+        params.saveLocal()
+        removeSketch = true
     }
 }
 export default defineSketch

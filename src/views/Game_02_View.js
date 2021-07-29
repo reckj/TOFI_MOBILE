@@ -6,7 +6,7 @@ import tofi from './tofiVisualiser'
 class Game_02_View extends View {
     constructor (p, Tone, Timer, params) {
         super(p, Tone, Timer, params)
-        this.tofiTrainer = new tofi (p,.5, .5, p.width*0.5,p.height*0.8, this.params, this.Tone)
+        this.tofiTrainer = new tofi (p,.5, .5, p.width*0.8,p.height*0.8, this.params, this.Tone)
     }
     draw () {
         this.p.clear()

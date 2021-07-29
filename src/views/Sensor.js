@@ -36,7 +36,7 @@ class Sensor {
         if (acivationRate>0 && !this.hiden) {
             this.p.fill(255);
             this.p.noStroke();
-            this.p.textSize(this.radius / 4);
+            this.p.textSize(this.radius / 3);
             this.p.rectMode(this.p.CENTER)
             this.p.text(acivationRate, x, y);
         }

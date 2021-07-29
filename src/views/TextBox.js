@@ -16,10 +16,12 @@ class TextBox {
         if (y){
             this.y = y
         }
-        this.p.fill(255);
-        this.p.noStroke();
         this.p.textSize(this.size);
         this.p.rectMode(this.p.CENTER)
+        // this.p.fill(0,0,0,100);
+        // this.p.rect(this.x, this.y, this.w+10, this.h)
+        this.p.fill(255);
+        this.p.noStroke();
         this.p.text(this.text, this.x, this.y, this.w, this.h); // Text wraps within
     }
     setText(text) {
