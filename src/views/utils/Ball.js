@@ -98,7 +98,7 @@ class Ball {
     this.synth.connect(this.FX1)
     envelopes.push(this.synth)
   }
-  move(x, y ) {
+  move(x, y) {
     x = this.p.constrain(x, 0, 1)
     y = this.p.constrain(y, 0, 1)
     // use the x and y values to set the note and vibrato

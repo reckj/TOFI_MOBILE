@@ -1,6 +1,7 @@
 import Game_01_View from './Game_01_View.js'
 import Game_02_View from './Game_02_View.js'
 import Game_03_View from './Game_03_View.js'
+import Game_04_View from './Game_04_View.js'
 import FitnesTest from './ExamView.js'
 import SensorHistogram from './SensorHistogram.js'
 import CalibrationView from './CalibrationView.js'
@@ -13,7 +14,7 @@ let Tone
 let removeSketch = false;
 let Timer = {"event":null, "envelopes":[]} // timeout object for game timing
 const Canvas = (p) => {
-    let Views = [SensorHistogram, CalibrationView, Game_01_View, Game_02_View, FitnesTest, Game_03_View]
+    let Views = [SensorHistogram, CalibrationView, Game_01_View, Game_02_View, FitnesTest, Game_03_View, Game_04_View]
     let myFont
     let sensorValues = []
     p.preload = function () {

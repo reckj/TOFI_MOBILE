@@ -1,6 +1,6 @@
 import P5 from 'p5'
 import View from './View'
-import Sensor from './Sensor'
+import Sensor from './utils/Sensor'
 
 
 class SensorHistogram extends View {

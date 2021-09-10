@@ -2,7 +2,7 @@ import P5 from 'p5'
 require('../index.js')
 import View from './View'
 import TextBox from './TextBox'
-import tofi from './tofiVisualiser'
+import tofi from './utils/tofiVisualiser'
 import * as EntryPoint from "../index"
 import { createMachine } from './StateMachine.js'
 

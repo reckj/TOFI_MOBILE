@@ -28,6 +28,7 @@
   "dependencies": {
     "@sindresorhus/is": "^4.0.0",
     "@util.js/numbers": "^0.41.0",
+    "ajax": "^0.0.4",
     "chart.js": "^3.4.1",
     "create-html": "^4.1.0",
     "csp-parse": "^0.0.2",

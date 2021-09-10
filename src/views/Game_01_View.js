@@ -1,7 +1,7 @@
 // import 'p5/lib/addons/p5.sound'
 import Note from './Note'
 import View from './View'
-import tofi from './tofiVisualiser'
+import Tofi from './utils/tofiVisualiser'
 import TextBox from './TextBox'
 import { createMachine } from './StateMachine.js'
 import * as EntryPoint from "../index";
@@ -34,7 +34,7 @@ class Game_01_View extends View {
         // p.textFont(myFont)
         this.textBox = new TextBox(this.p,'Please put your TOFI-TRAINER on',0,0,p.width/2,p.height/2)
         //  create new tofi visualization just for getting sensor locations.
-        this.tofiTrainer = new tofi(p,.5, .5, p.width*0.5,p.height*0.8, this.params, this.Tone)
+        this.tofiTrainer = new Tofi(p,.5, .5, p.width*0.5,p.height*0.8, this.params, this.Tone)
         this.setupSoundObjects(this.tofiTrainer.sensorLocations)
         this.newSimonSequence()
         this.addBtn(function(){
@@ -99,10 +99,10 @@ class Game_01_View extends View {
 
     drawDemo () {
         let sensorValues = this.params.getNormalisedActiveValues()
+        let threshold  = 0.5
         for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i].display(0)
             //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
-            let threshold  = 0.5
             if (sensorValues[i]> threshold) {
                 this.Notes[i].trigger()
                 console.log(i)
@@ -115,10 +115,10 @@ class Game_01_View extends View {
     }
     drawGamePlayer () {
         let sensorValues = this.params.getNormalisedActiveValues()
+        let threshold  = 0.5
         for (let i = 0; i < this.totalSensors; i++) {
             this.Notes[i].display(0)
             //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
-            let threshold  = 0.5
             if (sensorValues[i]> threshold) {
                 if (this.Notes[i].trigger()) {
                         console.log(i)

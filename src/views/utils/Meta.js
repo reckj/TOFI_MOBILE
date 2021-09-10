@@ -3,6 +3,7 @@ import Ball from './Ball.js'
 // https://openprocessing.org/sketch/1229865
 
 let ballCount = 11
+// online shader editor http://editor.thebookofshaders.com/
 
 let vertexShader = `
 attribute vec3 aPosition;
@@ -14,7 +15,7 @@ void main() {
 `;
 
 let fragmentShader = `
-precision highp float;
+precision lowp float; // set low float precision. lowp, mediump, highp
 uniform vec2 dim;
 uniform vec3 balls[${ballCount}];
 varying vec2 vPos;
@@ -27,9 +28,11 @@ void main() {
 		amplitude += exp(-1.0/balls[i].z * (pow(coord.x - balls[i].x,2.0) + pow(coord.y - balls[i].y,2.0)));
 	}
 	amplitude = amplitude / 4.0;
-	if (amplitude>1.0) {
-	  amplitude = 1.0;
-	}
+	// if (amplitude>1.0) {
+	//  amplitude = 1.0;
+	// }
+	// todo: compare performance of clamp functions to conditionals 
+	amplitude = clamp(amplitude,0.0,1.0);
 	float alpha = 1.0;
 	
 	if (amplitude<0.2) {
@@ -66,6 +69,7 @@ class Meta {
     this.t = 0;
     this.u = 0;
     this.o = 0;
+    //
   }
 
   //panner.frequency.value = parseFloat(e.target.value));
@@ -75,25 +79,27 @@ class Meta {
     let centerW = this.width/2
     let centerH = this.height/2
     // p.translate(centerW, centerH)
-    let modifier1 = sensorValues[0]
-    let modifier2 = sensorValues[1]
-    let modifier3 = sensorValues[2]
-    let modifier4 = sensorValues[3]
-    let modifier5 = sensorValues[4]
+    // todo: this is a very messy fix for cases with less than 5 sensors
+    let modifier = [];
+    modifier[0] = sensorValues[0]
+    modifier[1] = sensorValues[0]
+    modifier[2] = sensorValues[0]
+    modifier[3] = sensorValues[0]
+    modifier[4] = sensorValues[0]
+    for(let i = 0; i<sensorValues.length;i++) {
+        modifier[i] = sensorValues[i]
+    }
     let averagePos = this.p.createVector(0, 0);
     for (let i = 0; i < this.balls.length; i++) {
-      this.balls[i].addXamp((modifier4+modifier5)*(this.width))
-      this.balls[i].addYamp((modifier3+modifier5)*(this.height))
-      this.balls[i].addRadius(modifier2)
-      this.balls[i].addSpeed(modifier1*0.5)
+      this.balls[i].addXamp((modifier[3]+modifier[4])*(this.width))
+      this.balls[i].addYamp((modifier[2]+modifier[4])*(this.height))
+      this.balls[i].addRadius(modifier[1])
+      this.balls[i].addSpeed(modifier[0]*0.5)
       this.balls[i].update()
-      // p.ellipse(this.balls[i].x, this.balls[i].y, this.balls[i].r, this.balls[i].r)
       averagePos.add(this.balls[i].x, this.balls[i].y)
     }
     averagePos.div(this.balls.length)
     averagePos.div(this.width,this.height)
-    // p.pop()
-    ///this.move(averagePos.x, averagePos.y)
     let ballsUniformArray = [];
     for (const ball of this.balls) {
       ballsUniformArray.push((ball.x+centerW))

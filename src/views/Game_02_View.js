@@ -1,6 +1,6 @@
 import P5 from 'p5'
 import View from './View'
-import tofi from './tofiVisualiser'
+import tofi from './utils/tofiVisualiser'
 
 
 class Game_02_View extends View {
