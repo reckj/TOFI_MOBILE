@@ -71,11 +71,11 @@ class Game_01_View extends View {
     drawGameSimon () {
         if (this.SimonSequence.length === 0) {
             this.newSimonSequence()
-            console.log('this.newSimonSequence')
+            //console.log('this.newSimonSequence')
         }
         if (this.sequenceStartFlag === false) {
             this.sequenceStartFlag = true
-            console.log("SimonSequenceIndex"+this.SimonSequenceIndex)
+            //console.log("SimonSequenceIndex"+this.SimonSequenceIndex)
             this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         }
         for (let i = 0; i < this.totalSensors; i++) {
@@ -86,7 +86,7 @@ class Game_01_View extends View {
         if (this.SimonSequenceIndex < this.SimonSequenceLength) {
             this.releaseAllNotes()
             this.Notes[this.SimonSequence[this.SimonSequenceIndex]].trigger()
-            console.log(this.SimonSequence[this.SimonSequenceIndex])
+            //console.log(this.SimonSequence[this.SimonSequenceIndex])
             this.SimonSequenceIndex++
             this.Timer.event = setTimeout(function () { this.playSequence() }.bind(this), this.interval)
         } else {
@@ -105,7 +105,7 @@ class Game_01_View extends View {
             //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
             if (sensorValues[i]> threshold) {
                 this.Notes[i].trigger()
-                console.log(i)
+                //console.log(i)
             } else {
                 this.Notes[i].release()
             }
@@ -121,7 +121,7 @@ class Game_01_View extends View {
             //let radius = p.map(sensorValues[i], 0, 16384, 10, spacing * 0.3)
             if (sensorValues[i]> threshold) {
                 if (this.Notes[i].trigger()) {
-                        console.log(i)
+                        //console.log(i)
                         this.checkSequence(i)
                 }
             } else {
@@ -134,9 +134,9 @@ class Game_01_View extends View {
         if (this.SimonSequence.length > 0) {
                 // checking last note
                 if (i === this.SimonSequence[this.SimonSequenceIndex]) {
-                    console.log('correct_' + this.SimonSequenceIndex + ' of' + this.SimonSequence.length)
+                    //console.log('correct_' + this.SimonSequenceIndex + ' of' + this.SimonSequence.length)
                 } else {
-                    console.log( i +'incorrect' + this.SimonSequenceIndex + "index:" + this.SimonSequence)
+                    //console.log( i +'incorrect' + this.SimonSequenceIndex + "index:" + this.SimonSequence)
                     // repeat
                     this.sequenceCorrectSofar = false
                     // this.Timer.event = setTimeout(function () { this.sequenceLost() }.bind(this), 1000)
@@ -146,13 +146,13 @@ class Game_01_View extends View {
             if (this.SimonSequenceIndex >= this.SimonSequenceLength)  {
                 // sequence won
                 if (this.sequenceCorrectSofar === true) {
-                    console.log('sequence won')
+                    //console.log('sequence won')
                     let state = this.statesMachineNew.value
                     this.statesMachineNew.transition(state, 'won')
                 }
             }
         } else {
-            console.log('no sequence')
+            //console.log('no sequence')
         }
     }
 

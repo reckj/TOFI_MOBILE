@@ -3,17 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/config.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parameters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parameters.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Stats.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stats.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/utils/Wave.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/Wave.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Game_01_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_01_View.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/graph.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/graph.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/stats.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/graph.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +110,7 @@
       <workItem from="1631271256999" duration="17708000" />
       <workItem from="1631866991011" duration="1457000" />
       <workItem from="1632298619893" duration="1987000" />
-      <workItem from="1632480066839" duration="832000" />
+      <workItem from="1632480066839" duration="15899000" />
     </task>
     <servers />
   </component>
@@ -148,16 +143,16 @@
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="430" y="387" key="SettingsEditor/2560.540.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1631271694450" />
-    <state x="895" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1631285723433">
+    <state x="895" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1632489229038">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
     <state x="503" y="400" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.0.1440.900@0.0.1440.900" timestamp="1631214809592" />
     <state x="671" y="480" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/1920.0.1440.900/0.0.1920.1080@0.0.1920.1080" timestamp="1626794150832" />
-    <state x="895" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2560.540.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1631285723433" />
-    <state x="699" y="314" width="1192" height="1082" key="search.everywhere.popup" timestamp="1626976733794">
+    <state x="895" y="640" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/2560.540.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1632489229038" />
+    <state x="699" y="314" width="1192" height="1082" key="search.everywhere.popup" timestamp="1632482790302">
       <screen x="0" y="0" width="2560" height="1440" />
     </state>
-    <state x="699" y="314" width="1192" height="1082" key="search.everywhere.popup/2560.540.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1626976733794" />
+    <state x="699" y="314" width="1192" height="1082" key="search.everywhere.popup/2560.540.1440.900/0.0.2560.1440@0.0.2560.1440" timestamp="1632482790302" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

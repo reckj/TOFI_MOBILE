@@ -55,31 +55,30 @@ const CHART_COLORS = ['rgb(255, 99, 132)', 'rgb(255, 159, 64)',  'rgb(255, 205, 
 
 
 class Stats {
-    constructor (ctx, params) {
+    constructor (ctx, params, index) {
+        let data = params.loadLocal(index)
         const dsColor = 'rgb(255, 99, 132)'
-        let data = params.loadLocal()
-        // show most resent data only:
-        let timeStamps = data[data.length-1].time
-        let sensor = data[data.length-1].log
+        let timeStamps = data.time
+
+       /* let timeStamps = []
+        for (let i = 0; i< data.duration; i++) {
+            timeStamps.push(i)
+            if (data.log)
+        }
+        */
+        let sensor = data.log
         let sensorValues = []
-        let sensor0 = []
-        let sensor1 = []
-        let sensor2 = []
-        let sensor3 = []
-        let sensor4 = []
         let noSensors  = sensor[0].length
+
         for (let i = 0; i < noSensors; i++) {
             let singleSensorLog = []
-            console.log(i)
+           // console.log(i)
             for (let t = 0; t < sensor.length; t++) {
-
                 singleSensorLog.push(sensor[t][i])
-                //sensorValues[i].push(sensor[i][i])
-                // sensor1.push(sensor[i][0])
             }
             sensorValues[i] = singleSensorLog
         }
-        console.log(sensorValues)
+
         let sensorDatasets = []
         for (let i = 0; i < noSensors; ++i) {
           sensorDatasets[i] = {

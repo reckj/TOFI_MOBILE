@@ -13,6 +13,7 @@ ons.disableIconAutoPrefix() // Disable adding fa- prefix automatically to ons-ic
 let blehandler
 let currentView = 1
 let calibrationGUI
+let currentPage
 let params
 let PFIVE
 let userStats
@@ -26,10 +27,9 @@ class GUIInterface {
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
 
-
 function onDeviceReady() {
 
-    // Cordova is now initialized. Have fun!
+    // Cordova is now initialized.
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
     // add gui
     createBLEDialog()
@@ -38,9 +38,9 @@ function onDeviceReady() {
     calibrationGUI = new CalibrationGUI(params)
     calibrationGUI.toggle(false)
     console.log('handling sounds')
-    //document.addEventListener("mouseClick", RunToneConext, false);
     document.addEventListener("click", RunToneConext, false);
-    // document.addEventListener("touchstart", RunToneConext, false);
+    // populate statitics menu
+    statisticsMenu()
 }
 // user keyboard for debuging when device not connected
 document.addEventListener('keydown', function(event) {
@@ -65,14 +65,16 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// Game /////////////////////////////////////////////////////////////
+//////////////////////////////////////////// Games /////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //
 document.addEventListener("init", DOMContentLoadedEvent, false)
 function DOMContentLoadedEvent() {
-    // check for p5-container after onsen UI dom change
+    // check for  p5-containerafter onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
         PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone}), containerElement)
@@ -80,26 +82,13 @@ function DOMContentLoadedEvent() {
             calibrationGUI.toggle(true)
         }
     }
-    // add chart to canvas
-    let ctx = document.getElementById('myChart')
-    if (ctx) {
-        console.log("userStats")
-        userStats = new Stats(ctx, params)
-    }
-    // populate stats menu
-    let stats = document.getElementById('statsMenu')
-    if (stats) {
-        console.log("userStats menu")
-    }
+
+        let ctx = document.getElementById('myChart')
+        if (ctx) {
+            console.log("found graph")
+            userStats = new Stats(ctx, params, currentPage.index)
+        }
 }
-
-// populate stats menu
-
-function popStatsMenu(){
-}
-
-
-
 
 // sound
 function RunToneConext() {
@@ -151,13 +140,16 @@ export function pushPage(page, anim) {
         console.log(document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title } }));
     }
     currentView = page.view;
+    currentPage = page
     console.log("set view" + page.title)
-    console.log("set view" + page.view)
+    //
+    statisticsMenu()
 }
 export function backButton() {
     document.querySelector('#myNavigator').popPage()
     calibrationGUI.toggle(false)
     defineSketch({"remove" : true})
+    statisticsMenu()
 }
 export function changeButton() {
     document.getElementById('segment').setActiveButton(1)
@@ -175,6 +167,28 @@ export function createBLEDialog() {
             })
     }
 }
+
+export function statisticsMenu() {
+    // populate statiticsMenu with Items
+    const menu = document.querySelector('#statsList')
+    let data = params.getSessionKeys()
+    if (data !== null) {
+        let sliceIndex = data.length - menu.childElementCount
+        if (sliceIndex > 0) {
+            // add missing menu items
+            for (let i = data.length - sliceIndex; i < data.length; i++) {
+                console.log("item" + i)
+                const dateObject = new Date(data[i])
+                let title = dateObject.toLocaleString() //2019-12-9 10:30:15
+                const menuItem = ons.createElement(`<ons-button modifier="large" style="margin-bottom: 10px;" onclick="EntryPoint.pushPage({'id':'graph.html', 'title':'graph', 'index':'${i}'})">${title}</ons-button>`)
+                menu.appendChild(menuItem)
+            }
+        }
+    } else {
+        //TODO: add message that there is no data recorded yet
+    }
+}
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////

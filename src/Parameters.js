@@ -90,55 +90,96 @@ class Parameters {
 
   newLogSession(view) {
     if (logingData) {
+      this.timeElapsed = Date.now()
       let n = Date.now()
       let key = this.cookieID
-      let Storage = window.localStorage
-      this.thisSession = {'start': n, 'viewNumber': view, 'log': [], 'time': []}
-      // create a list of all previous sessions
-      if (this.sessionKeys !== null && this.sessionKeys !== '' && this.sessionKeys !== 'undefined') {
-        this.sessionKeys.push(this.thisSession.start)
-      } else {
-        this.sessionKeys = [1]
-        this.sessionKeys[0] = this.thisSession.start
-      }
-      Storage.setItem(key, JSON.stringify(this.sessionKeys))
+      this.thisSession = {'start': n,'duration': 0, 'viewNumber': view, 'log': [], 'time': []}
       //
       // console.log("local storage" + this.sessionKeys)
     }
   }
 
+  saveSessionKeys() {
+    let Storage = window.localStorage
+    let key = this.cookieID
+    // create a list of all previous sessions
+    if (this.sessionKeys !== null && this.sessionKeys !== '' && this.sessionKeys !== 'undefined') {
+      this.sessionKeys.push(this.thisSession.start)
+    } else {
+      this.sessionKeys = [1]
+      this.sessionKeys[0] = this.thisSession.start
+    }
+    // add new sessionkey
+    Storage.setItem(key, JSON.stringify(this.sessionKeys))
+  }
+
   logdata(sensorValues) {
     if (logingData) {
-      let millis = Date.now() - this.thisSession.start
+      let millis = this.timeElapsed - this.thisSession.start
+      this.thisSession.duration = millis
       let data = Array.from(sensorValues)
       this.thisSession.log.push(data)
-      /*
-      for (let i = 0; i < this.sensorValues.length; i++) {
-        this.thisSession.log[i].push(data)
-      }
-       */
       this.thisSession.time.push(millis)
     }
+  }
+
+    detectPeaks(data, windowWidth, threshold) {
+    const peaks = [];
+    for (let i = 0; i < data.length; i++) {
+      const start = Math.max(0, i - windowWidth);
+      const end = Math.min(data.length, i + windowWidth);
+      let deltaAcc = 0;
+      for (let a = start; a < end; a++) {
+        deltaAcc += Math.abs(data[a - 1] - data[a]);
+      }
+      if (deltaAcc > threshold) {
+        peaks.push(i);
+      }
+    }
+    return peaks;
   }
 
   getSessionKeys() {
     let key = this.cookieID
     let Storage = window.localStorage
     this.sessionKeys = JSON.parse(Storage.getItem(key))
-  }
-  saveLocal() {
-    let Storage = window.localStorage;
-    Storage.setItem(this.thisSession.start, JSON.stringify(this.thisSession))
+    return this.sessionKeys
   }
 
-  loadLocal() {
+  saveLocal() {
     let Storage = window.localStorage;
-    this.getSessionKeys()
+    if (this.thisSession.log.length>0) {
+      this.saveSessionKeys()
+      Storage.setItem(this.thisSession.start, JSON.stringify(this.thisSession))
+    }
+    this.thisSession = null
+  }
+
+  loadLocal(index) {
+    if (index) {
+      let Storage = window.localStorage;
+      this.getSessionKeys()
       let data = []
-      for (let i = 0; i < this.sessionKeys.length; i++) {
-        data.push(JSON.parse(Storage.getItem(this.sessionKeys[i])))
+      if (this.sessionKeys[index] != null) {
+          let  data = JSON.parse(Storage.getItem(this.sessionKeys[index]))
+          return data
+      } else {
+          let  data = JSON.parse(Storage.getItem(this.sessionKeys[0]))
+          return data
       }
-   return data
+
+    } else {
+      // return all local data
+      let Storage = window.localStorage;
+      this.getSessionKeys()
+      let data = []
+      if (this.sessionKeys != null) {
+        for (let i = 0; i < this.sessionKeys.length; i++) {
+          data.push(JSON.parse(Storage.getItem(this.sessionKeys[i])))
+        }
+      }
+      return data
+    }
   }
 
 //////
@@ -168,20 +209,23 @@ class Parameters {
     return this.params[Object.keys(this.params)[i]].max
   }
 
+
   setSensorValues(sensorValues) {
     this.sensorValues = sensorValues;
     if ( this.sensorValues != null) {
       let checkThreshold = false
-      let normalisedValues = this.getNormalisedValues()
+      let percentValues = this.getPercentValues()
       for (let i = 0; i < this.sensorValues.length; i++) {
-        // console.log(this.getNormalisedValues(i))
-        if (normalisedValues[i] >= 0.4) {
+        if (percentValues[i] >= 30) {
          checkThreshold = true
         }
       }
-      if (checkThreshold) {
+      // log data if we reach peak of sensor press and 80 milis elapsed
+      const millis = Date.now()
+      if (checkThreshold && millis>this.timeElapsed+80) {
         // log data if threshold reached
-        this.logdata(normalisedValues)
+        this.logdata(percentValues)
+        this.timeElapsed = millis
       }
     }
   }
@@ -192,6 +236,14 @@ class Parameters {
 
   getSensorValues() {
     return this.sensorValues
+  }
+
+  getPercentValues() {
+    let Values = []
+    for (let i = 0; i < this.sensorValues.length; i++) {
+      Values[i] = Math.floor(this.getNormalisedValue(i)*100)
+    }
+    return Values;
   }
 
   getNormalisedValues() {
@@ -255,7 +307,6 @@ class Parameters {
   }
 
 
-
   getActiveAtThreshold (i) {
     if (this.sensorValues[this.activeChanels[i]]> this.getThreshold(this.activeChanels[i])) {
       return true
@@ -304,5 +355,5 @@ class Parameters {
     this.params[Object.keys(this.params)[index]].max = value
   }
 }
-const instance = new Parameters(6);
+const instance = new Parameters(4265345);
 export default instance
