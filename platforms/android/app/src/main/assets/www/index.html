@@ -31,10 +31,9 @@
    </div>  -->
    <div id="app">
    </div>
-   <ons-navigator swipeable id="myNavigator" page="statistics.html">
+   <ons-navigator swipeable id="myNavigator"s>
        <ons-page>
        <ons-tabbar swipeable position="auto">
-           <!-- <ons-tab page="statistics.html" label="Settings and Statistics" class="stats-icon"></ons-tab> -->
             <ons-tab page="profile.html" label="Settings" icon="icon-equalizer" active-icon="icon-equalizer"></ons-tab>
             <ons-tab page="training.html" label="Training" icon="icon-tofi" active-icon="icon-tofi"></ons-tab>
             <ons-tab page="statistics.html" label="Statistics" icon="icon-stats-bars" active-icon="icon-stats-bars"></ons-tab>
@@ -55,8 +54,8 @@
                 </section>
             </ons-page>
         </template>
-    <template id="training.html">
 
+    <template id="training.html">
         <ons-page id="training">
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':2, 'title':'training'})">
                 <div class="title">Sonic Simon</div>
@@ -76,15 +75,13 @@
             </ons-card>
         </ons-page>
     </template>
-
-        <template id="statistics.html">
-            <ons-page>
-                <ons-card tappable onclick="EntryPoint.pushPage({'id':'stats.html', 'title':'training'})">
-                    <div class="title">Training statistics</div>
-                </ons-card>
-            </ons-page>
-        </template>
-
+    <template id="statistics.html">
+        <ons-page id="statsMenu">
+            <ons-card tappable onclick="EntryPoint.pushPage({'id':'graph.html', 'title':'statistics'})">
+                <div class="title">Training statistics</div>
+            </ons-card>
+        </ons-page>
+    </template>
     <template id="ble-alert-dialog.html">
         <ons-alert-dialog id="my-alert-dialog" modifier="rowfooter">
             <div class="alert-dialog-title">Alert</div>

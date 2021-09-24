@@ -58,6 +58,7 @@ class Stats {
     constructor (ctx, params) {
         const dsColor = 'rgb(255, 99, 132)'
         let data = params.loadLocal()
+        // show most resent data only:
         let timeStamps = data[data.length-1].time
         let sensor = data[data.length-1].log
         let sensorValues = []

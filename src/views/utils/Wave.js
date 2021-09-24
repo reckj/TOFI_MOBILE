@@ -64,6 +64,7 @@ class Wave {
       UniformArray.push(points.y)
       UniformArray.push(points.z)
     }
+
     this.waveShader.setUniform("u_points",UniformArray);
     this.waveShader.setUniform("u_tex0Resolution",[this.img.width,this.img.height]);
     this.waveShader.setUniform("u_resolution",[this.img.width,this.img.height]);

@@ -2,32 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/Game_04_View.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/utils/Wave.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/utils/shader1.frag" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/utils/shader1.vert" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/utils/shaders.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/ios/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/config.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/CalibrationView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/CalibrationView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Canvas.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Canvas.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/ExamView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ExamView.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Game_01_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_01_View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Game_02_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_02_View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Game_03_View.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Game_03_View.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Sensor.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/Sensor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/SensorHistogram.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/SensorHistogram.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/tofiVisualiser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/tofiVisualiser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/utils/Ball.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/Ball.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/utils/Meta.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/Meta.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Stats.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Stats.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/utils/Wave.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/utils/Wave.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/www/stats.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/graph.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,25 +44,25 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/views/utils" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/www" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/views/utils" />
-      <recent name="$PROJECT_DIR$/src/views" />
-      <recent name="$PROJECT_DIR$/www/img" />
-      <recent name="$PROJECT_DIR$/docs" />
-      <recent name="$PROJECT_DIR$/www/js" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/www/img" />
       <recent name="$PROJECT_DIR$/src/views/utils" />
       <recent name="$PROJECT_DIR$/www/shaders" />
       <recent name="$PROJECT_DIR$/static/images" />
       <recent name="$PROJECT_DIR$/src/views/utilis" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/www" />
+      <recent name="$PROJECT_DIR$/src/views/utils" />
+      <recent name="$PROJECT_DIR$/src/views" />
+      <recent name="$PROJECT_DIR$/www/img" />
+      <recent name="$PROJECT_DIR$/docs" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -126,7 +112,10 @@
       <workItem from="1626768357793" duration="74874000" />
       <workItem from="1627486076454" duration="12807000" />
       <workItem from="1631116484015" duration="13987000" />
-      <workItem from="1631271256999" duration="13328000" />
+      <workItem from="1631271256999" duration="17708000" />
+      <workItem from="1631866991011" duration="1457000" />
+      <workItem from="1632298619893" duration="1987000" />
+      <workItem from="1632480066839" duration="832000" />
     </task>
     <servers />
   </component>
@@ -181,7 +170,6 @@
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/src/views/utils/shaders.js</url>
           <line>66</line>
-          <properties lambdaOrdinal="-1" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

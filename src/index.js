@@ -80,12 +80,27 @@ function DOMContentLoadedEvent() {
             calibrationGUI.toggle(true)
         }
     }
+    // add chart to canvas
     let ctx = document.getElementById('myChart')
     if (ctx) {
         console.log("userStats")
         userStats = new Stats(ctx, params)
     }
+    // populate stats menu
+    let stats = document.getElementById('statsMenu')
+    if (stats) {
+        console.log("userStats menu")
+    }
 }
+
+// populate stats menu
+
+function popStatsMenu(){
+}
+
+
+
+
 // sound
 function RunToneConext() {
     if (Tone.context.state !== 'running') {
@@ -151,7 +166,6 @@ export function changeButton() {
 
 export function createBLEDialog() {
     var dialog = document.getElementById('my-alert-dialog')
-
     if (dialog) {
         dialog.show();
     } else {
