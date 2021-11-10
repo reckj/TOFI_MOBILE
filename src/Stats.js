@@ -22,7 +22,7 @@ import {
     Filler,
     Legend,
     Title,
-    Tooltip
+    Tooltip,
 } from 'chart.js';
 
 Chart.register(
@@ -66,21 +66,17 @@ class Stats {
             if (data.log)
         }
         */
-        let sensor = data.log
-        let sensorValues = []
-        let noSensors  = sensor[0].length
-
-        for (let i = 0; i < noSensors; i++) {
-            let singleSensorLog = []
-           // console.log(i)
-            for (let t = 0; t < sensor.length; t++) {
-                singleSensorLog.push(sensor[t][i])
-            }
-            sensorValues[i] = singleSensorLog
-        }
+        let sensorValues = data.log
+        let noSensors  = sensorValues.length
 
         let sensorDatasets = []
         for (let i = 0; i < noSensors; ++i) {
+         /*   for (let j = 0; j < sensorValues[i].length; ++j) {
+                if (sensorValues[i] == null) {
+                    sensorValues[i] = 0
+                }
+                }
+          */
           sensorDatasets[i] = {
                 label: 'channel '+i+'',
                 data: sensorValues[i],
@@ -88,6 +84,12 @@ class Stats {
                 borderWidth: 1
             }
        }
+
+        const totalDuration = 2000;
+        const delayBetweenPoints = totalDuration / sensorValues[0].length;
+        const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+
+
     let myChart = new Chart(ctx, {
         type: 'line',
         data: {
@@ -96,6 +98,12 @@ class Stats {
         },
         options: {
             maintainAspectRatio: false,
+            interaction: {
+                intersect: false
+            },
+            plugins: {
+                legend: false
+            },
             scales: {
                 y: {
                     beginAtZero: true

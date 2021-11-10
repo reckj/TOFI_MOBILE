@@ -23,15 +23,17 @@ class GUIInterface {
         this.object = object;
     }
 }
+
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
 
 function onDeviceReady() {
-
     // Cordova is now initialized.
     console.log('Running cordova-' + cordova.platformId + '@' + cordova.version)
     // add gui
+    // show connect device dialog
+    console.log("new dialog")
     createBLEDialog()
     params = Parameters // myBLE.id // handles storage for paremeters for interpreting sensor values
     blehandler = new BleSimulator(params)
@@ -39,9 +41,24 @@ function onDeviceReady() {
     calibrationGUI.toggle(false)
     console.log('handling sounds')
     document.addEventListener("click", RunToneConext, false);
-    // populate statitics menu
+    // populate statistics menu
     statisticsMenu()
 }
+
+// splash and loading screen
+
+const wait = (delay = 0) =>
+    new Promise(resolve => setTimeout(resolve, delay));
+
+const setVisible = (elementOrSelector, visible) =>
+    (typeof elementOrSelector === 'string'
+            ? document.querySelector(elementOrSelector)
+            : elementOrSelector
+    ).style.display = visible ? 'block' : 'none';
+
+//setVisible('.page', false);
+setVisible('#loading', true);
+
 // user keyboard for debuging when device not connected
 document.addEventListener('keydown', function(event) {
     if (blehandler instanceof BleSimulator) {
@@ -68,12 +85,21 @@ document.addEventListener('keydown', function(event) {
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////// Games /////////////////////////////////////////////////////////////
+//////////////////////////////////////////// Initial Setup ///////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//
+// loading / splash screen
+document.addEventListener('DOMContentLoaded', () =>
+    wait(2000).then(() => {
+        //setVisible('.page', true);
+        setVisible('#loading', false);
+    }));
+
+
 document.addEventListener("init", DOMContentLoadedEvent, false)
+
 function DOMContentLoadedEvent() {
+    // run function after every dom content load
     // check for  p5-containerafter onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
@@ -82,7 +108,6 @@ function DOMContentLoadedEvent() {
             calibrationGUI.toggle(true)
         }
     }
-
         let ctx = document.getElementById('myChart')
         if (ctx) {
             console.log("found graph")
@@ -143,7 +168,6 @@ export function pushPage(page, anim) {
     currentPage = page
     console.log("set view" + page.title)
     //
-    statisticsMenu()
 }
 export function backButton() {
     document.querySelector('#myNavigator').popPage()

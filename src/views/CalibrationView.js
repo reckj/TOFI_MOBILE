@@ -1,7 +1,7 @@
 import P5 from 'p5'
 require('../index.js')
 import View from './View'
-import TextBox from './TextBox'
+import TextBox from './utils/TextBox'
 import tofi from './utils/tofiVisualiser'
 import * as EntryPoint from "../index"
 import { createMachine } from './StateMachine.js'
@@ -50,11 +50,11 @@ class CalibrationView extends View {
 
     intro() {
         this.p.fill(255);
-        this.textBox.display(this.p.width/2, this.p.height*.2)
+        this.textBox.display(this.p.width/2, this.p.height*.1)
         this.tofiTrainer.display()
     }
     calibrating() {
-        this.textBox.display(this.p.width/2, this.p.height*.2)
+        this.textBox.display(this.p.width/2, this.p.height*.1)
         let countdown = this.counter-Math.floor(this.p.millis()/1000)
             if (countdown>=0) {
                 this.counterTextBox.setText(countdown)
@@ -78,13 +78,13 @@ class CalibrationView extends View {
     }
 
     nextCalibration() {
-        this.textBox.display(this.p.width/2, this.p.height*.2)
+        this.textBox.display(this.p.width/2, this.p.height*.1)
         this.tofiTrainer.display(this.currentSensor)
     }
     
     finished() {
-        this.textBox.display(this.p.width/2, this.p.height*.2)
-        this.tofiTrainer.display(this.currentSensor)
+        this.textBox.display(this.p.width/2, this.p.height*.1)
+        this.tofiTrainer.display()
     }
 
     addBtn(callback, label) {

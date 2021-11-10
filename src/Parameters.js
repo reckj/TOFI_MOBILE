@@ -1,5 +1,6 @@
 //import {boolean, int8Array} from "@sindresorhus/is";
 let logingData = true
+let threshold = 30 // only record data when above 30 pressure on sensor
 class Parameters {
   //
   // handles setting, saving and retrival of calibration settings
@@ -93,7 +94,7 @@ class Parameters {
       this.timeElapsed = Date.now()
       let n = Date.now()
       let key = this.cookieID
-      this.thisSession = {'start': n,'duration': 0, 'viewNumber': view, 'log': [], 'time': []}
+      this.thisSession = {'start': n,'duration': 0, 'totalMovements': 0, 'viewNumber': view, 'log': [[],[],[],[],[],[],[],[]], 'time': []}
       //
       // console.log("local storage" + this.sessionKeys)
     }
@@ -116,9 +117,17 @@ class Parameters {
   logdata(sensorValues) {
     if (logingData) {
       let millis = this.timeElapsed - this.thisSession.start
-      this.thisSession.duration = millis
-      let data = Array.from(sensorValues)
-      this.thisSession.log.push(data)
+      sensorValues.forEach((value, index) => {
+        this.thisSession.log[index].push(sensorValues[index])
+        // todo: find more effiecient way of storing empty values
+        /*
+        if (sensorValues[index]>0) {
+          this.thisSession.log[index].push(sensorValues[index])
+        } else {
+          this.thisSession.log[index].push(null)
+        }
+         */
+      })
       this.thisSession.time.push(millis)
     }
   }
@@ -148,11 +157,17 @@ class Parameters {
 
   saveLocal() {
     let Storage = window.localStorage;
-    if (this.thisSession.log.length>0) {
-      this.saveSessionKeys()
-      Storage.setItem(this.thisSession.start, JSON.stringify(this.thisSession))
+    if (this.thisSession != null) {
+      let millis = this.timeElapsed - this.thisSession.start
+      this.thisSession.duration = millis
+      //todo: add count of total activations and maximum preasure
+      if (this.thisSession.log[0].length > 20) {
+        //only save session if there are at least 20 entries in log
+        this.saveSessionKeys()
+        Storage.setItem(this.thisSession.start, JSON.stringify(this.thisSession))
+      }
+      this.thisSession = null
     }
-    this.thisSession = null
   }
 
   loadLocal(index) {

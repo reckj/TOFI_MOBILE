@@ -1,4 +1,4 @@
-import P5 from 'p5'
+//import P5 from 'p5'
 //import TextBox from './TextBox'
 
 class Sensor {
@@ -31,22 +31,22 @@ class Sensor {
         let acivationRate = Math.floor(normalisedValue*100)
         this.p.ellipse(x,y,newRadius,newRadius)
 
-         // this.textBox.setText(Math.floor(normalisedValue*100)+" %")
-        //this.textBox.display(x,y)
         if (acivationRate>0 && !this.hiden) {
-            this.p.fill(255);
+            this.p.fill(255)
+            /*
             this.p.noStroke();
             this.p.textSize(this.radius / 3);
             this.p.rectMode(this.p.CENTER)
             this.p.text(acivationRate, x, y);
+             */
         }
     }
     hide(bool) {
         this.hiden = bool
         if(bool) {
-            this.color = this.p.color(255,255,255);
+            this.color = this.p.color(255,255,255)
         } else {
-            this.color = this.p.color(100, 255, 120);
+            this.color = this.p.color(100, 255, 120)
         }
     }
     tone(normalisedValue) {

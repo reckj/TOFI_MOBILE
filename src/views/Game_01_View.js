@@ -2,7 +2,7 @@
 import Note from './Note'
 import View from './View'
 import Tofi from './utils/tofiVisualiser'
-import TextBox from './TextBox'
+import TextBox from './utils/TextBox'
 import { createMachine } from './StateMachine.js'
 import * as EntryPoint from "../index";
 

@@ -53,6 +53,10 @@ class tofiVisualiser {
                         this.sensorDisplays[arguments[i]].hide(false)
                     }
                 }
+            } else if (arguments.length == 0) {
+                for (let i = 0; i < this.sensorDisplays.length; i++) {
+                    this.sensorDisplays[i].hide(false)
+                }
             }
             // draw from middle
             this.p.push();

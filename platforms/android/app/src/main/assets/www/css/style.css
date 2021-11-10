@@ -50,7 +50,7 @@ backButton:hover {
 }
 
 #p5-container {
-    background: linear-gradient(180deg, #00205b 0%, #FF3F6D 100%);
+    background: linear-gradient(180deg, #2D2D64 0%, #000000 100%);
 }
 
 .chart-container {
@@ -60,3 +60,47 @@ backButton:hover {
     width: 80vw;
 }
 
+.page__background {
+    background-color: #0F0D31;
+    /*background: linear-gradient(180deg, #2D2D64 0%, #000000 100%); !important;*/
+}
+
+.tabbar {
+    background-color: #0F0D31;
+    height: auto;
+}
+
+
+.tabbar__button {
+    color: #ffffff;
+    height: 100%;
+}
+
+
+.button {
+   background-color: #2E297C;
+    /*background-color: #0F0D31*/
+}
+
+.responsiveMenu{
+    padding: 10px; !important;
+}
+
+.circle-icon {
+    background: #2E297C;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 60px;
+    font-stretch: 100%;
+    vertical-align: middle;
+    padding: 15px;
+}
+
+.card {
+    background-color: #2E297C;
+    /*background-color: #0F0D31*/
+}
+
+@media only screen and (min-width: 768px) {
+    .responsiveMenu { padding: 10px; padding-top: 15px;  width: 50%; margin: auto;}
+}

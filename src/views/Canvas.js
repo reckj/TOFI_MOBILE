@@ -1,8 +1,10 @@
+
 import Game_01_View from './Game_01_View.js'
 import Game_02_View from './Game_02_View.js'
 import Game_03_View from './Game_03_View.js'
 import Game_04_View from './Game_04_View.js'
-import FitnesTest from './ExamView.js'
+import SpeedTest from './SpeedTestView.js'
+import StrengthTestView from './StrengthTestView.js'
 import SensorHistogram from './SensorHistogram.js'
 import CalibrationView from './CalibrationView.js'
 let viewNumber
@@ -14,7 +16,7 @@ let Tone
 let removeSketch = false;
 let Timer = {"event":null, "envelopes":[]} // timeout object for game timing
 const Canvas = (p) => {
-    let Views = [SensorHistogram, CalibrationView, Game_01_View, Game_02_View, FitnesTest, Game_03_View, Game_04_View]
+    let Views = [SensorHistogram, CalibrationView, Game_01_View, Game_02_View, SpeedTest, Game_03_View, Game_04_View, StrengthTestView]
     let myFont
     let sensorValues = []
     p.preload = function () {
@@ -49,6 +51,7 @@ const Canvas = (p) => {
         p.resizeCanvas(p.windowWidth, p.windowHeight)
         p.width = p.windowWidth // correcting for bug in p5js
         p.height = p.windowHeight // correcting for bug in p5js
+        View.windowResized();
         console.log("resize")
     }
 
@@ -62,6 +65,7 @@ const Canvas = (p) => {
 function defineSketch(options) {
     removeSketch = false
     if (options.remove == null) {
+        // return new object
         params = options.params
         blehandler = options.blehandler
         Tone = options.tone
@@ -78,10 +82,14 @@ function defineSketch(options) {
         Timer.envelopes.forEach(
             item => item.dispose()
         );
+
         if (Tone !== undefined) {
             Tone.Transport.stop()
         }
-        params.saveLocal()
+        // save data if the params object exists
+        if (typeof params != "undefined") {
+                params.saveLocal()
+        }
         removeSketch = true
     }
 }

@@ -15,7 +15,7 @@ class SensorHistogram extends View {
     this.p.textSize(15)
   }
   draw () {
-    this.p.background(50);
+    this.p.clear()
     let normalisedValues = this.params.getNormalisedValues();
     let spacing = this.p.windowHeight / normalisedValues.length
     this.p.translate((this.p.windowWidth / 2), (spacing / 2))
