@@ -88,17 +88,6 @@ h1 {
     display:none;
 }
 
-#loading {
-    display: flex;
-    position: fixed;
-    z-index: 100;
-    width: 100%;
-    height: 100%;
-    background-color: #333333;
-    background-image: url("../img/MnyxU.gif");
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
 #deviceready.ready .event.listening { display: none; }
 #deviceready.ready .event.received { display: block; }

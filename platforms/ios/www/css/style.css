@@ -78,7 +78,8 @@ backButton:hover {
 
 
 .button {
-   background-color: #2E297C;
+    background-color: #2E297C;
+    cursor: pointer;
     /*background-color: #0F0D31*/
 }
 
@@ -101,6 +102,28 @@ backButton:hover {
     /*background-color: #0F0D31*/
 }
 
+.tabbar__button {
+    cursor: pointer;
+}
+.ons-fab {
+    cursor: pointer;
+}
+
+
+#loading {
+    display: flex;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #2D2D64 0%, #000000 100%);
+    /*background-image: url("../img/MnyxU.gif");*/
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+
 @media only screen and (min-width: 768px) {
     .responsiveMenu { padding: 10px; padding-top: 15px;  width: 50%; margin: auto;}
 }
+

@@ -17,7 +17,7 @@ setup ssl proxy for testing BLE in browser
 
 * Run `cordova prepare -- --livereload`
 
-In seperate termal window:
+To start a htps proxy, type in a seperate terminal window:
 
 * Run `local-ssl-proxy --source 9000 --target 8080`
 
@@ -41,6 +41,6 @@ Open at https://localhost:9000/
 integrate with https://github.com/don/cordova-plugin-ble-central
 integrate with https://www.npmjs.com/package/cordova-plugin-webpack
 
-Modify status bar apearance on different platforms
+Modify status bar appearance on different platforms
 https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-statusbar/
 

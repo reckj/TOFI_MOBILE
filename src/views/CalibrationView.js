@@ -196,8 +196,8 @@ class CalibrationView extends View {
                         binding.textBox.setText('Callibration complete!')
                         for (let i = 0; i<binding.totalSensors;i++) {
                             let buffer = binding.maxValues[i]-binding.minValues[i]
-                            // add 5% to min
-                            binding.minValues[i] += (buffer*0.05)
+                            // add 10% to min values
+                            binding.minValues[i] += (buffer*0.10)
                             // add 15% to max
                             binding.maxValues[i] +=  (buffer * 0.15)
                             if (binding.minValues[i]<binding.maxValues[i]) {

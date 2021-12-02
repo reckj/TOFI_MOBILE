@@ -51,7 +51,7 @@ class CalibrationGUI {
           }
           folder.add(obj, key, min, limit).step(step).onChange(function () {
             bindCallback()
-          })// add the value to your GUI folder
+          })// add the value to GUI folder
         } else if (typeof val === 'boolean') {
           folder.add(obj, key).onChange(function () {
             bindCallback()

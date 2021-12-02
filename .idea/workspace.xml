@@ -3,8 +3,25 @@
   <component name="ChangeListManager">
     <list default="true" id="d6cf0d72-aea2-43f5-a18e-7aa5b5629e69" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/assets/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/android/app/src/main/res/xml/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/browser/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/browser/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/HelloWorld/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/config.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.bundle.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/platforms/ios/www/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/platforms/ios/www/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/BleSimulator.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/BleSimulator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CalibrationGUI.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CalibrationGUI.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Parameters.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Parameters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/CalibrationView.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/CalibrationView.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -110,7 +127,11 @@
       <workItem from="1632817207701" duration="18073000" />
       <workItem from="1633099982402" duration="950000" />
       <workItem from="1634206219557" duration="13696000" />
-      <workItem from="1636470508878" duration="7637000" />
+      <workItem from="1636470508878" duration="7942000" />
+      <workItem from="1636733615282" duration="3329000" />
+      <workItem from="1637082545723" duration="1404000" />
+      <workItem from="1637684147127" duration="3673000" />
+      <workItem from="1638439996174" duration="408000" />
     </task>
     <servers />
   </component>

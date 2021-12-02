@@ -1,6 +1,5 @@
-let that
-
 class BleSimulator {
+  // this class acts as a dummy BLE device when none is available. For debuging purposes.
   constructor (params) {
     this.params = params
     this.noChannels = 8
@@ -13,7 +12,6 @@ class BleSimulator {
       this.keyControl[i] = this.params.getMin(i);
       this.filters[i] = 0
     }
-    that = this
   }
 
   setSensorFake(i) {
@@ -38,7 +36,6 @@ class BleSimulator {
     // apply filtering
     let filters = this.params.getFilters();
     for (let i = 0; i < this.noChannels; i++) {
-      // let filter = that.chanelOptions[Object.keys(that.chanelOptions)[i]].filter
       let filter = filters[i]
      // let noise  =  Math.floor(Math.random() * 10)
       if (filter > 0) {

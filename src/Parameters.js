@@ -22,7 +22,16 @@ class Parameters {
   setupCookie(key){
     this.cookieID = key
     this.noChannels = 8
-    this.sensorLocations = [/*bat*/{"x": 0, "y": 0}, /*ref*/{"x": 0, "y": 0},/*Ch 6*/{"x": 0.3, "y": 0.8}, /*Ch 5*/{"x": 0.5, "y": 0.8}, /*Ch 4*/{"x": 0.5, "y": 0.33}, /*Ch 3*/{"x": 0.5, "y": 0.55}, /*Ch 2*/{"x": 0.7, "y": 0.8}, /*Ch 1*/{"x": 0.9, "y": 0.8}]; // todo: make these configurable in front end
+    this.sensorLocationsV1 = [/*Ch 6*/{"x": 0.3, "y": 0.8},
+                            /*Ch 5*/{"x": 0.5, "y": 0.8},
+                            /*Ch 4*/{"x": 0.5, "y": 0.33},
+                            /*Ch 3*/{"x": 0.5, "y": 0.55},
+                            /*Ch 2*/{"x": 0.7, "y": 0.8},]; // todo: make these configurable in front end
+    this.sensorLocationsV2 = [/*Ch 5*/{"x": 0.7, "y": 0.8},
+                            /*Ch 4*/{"x": 0.5, "y": 0.55},
+                            /*Ch 3*/{"x": 0.5, "y": 0.33},
+                            /*Ch 2*/{"x": 0.5, "y": 0.8},
+                            /*Ch 1*/{"x": 0.3, "y": 0.8}]; // todo: make these configurable in front end
     this.activeChanels = [] // array of indexes for retrieving active chanels only
     this.activeSensorLocations = [] //
     this.chanelNames = ['Battery', 'Reference', 'Ch 6', 'Ch 5', 'Ch  4', 'Ch 3', 'Ch 2', 'Ch 1']
@@ -279,7 +288,7 @@ class Parameters {
     let min = this.getMin(i)
     let max = this.getMax(i)
     if (active) {
-      normaliseValue =  this.constrain(this.sensorValues[i], min, max)
+      normaliseValue = this.constrain(this.sensorValues[i], min, max)
       normaliseValue = this.map(normaliseValue, min, max, 0.0, 1.0)
     } else {
       normaliseValue = 0;
@@ -345,16 +354,19 @@ class Parameters {
   }
 
   getActiveSensorLocations() {
+    // this checks if sensors are configured for 1st of 2nd generation sensors
     this.checkNoActive()
-    let noActive = 0;
-    for (let i = 0; i < this.noChannels; ++i) {
-      let active = this.getIsActive(i)
-      if (active) {
-        this.activeSensorLocations[noActive] = this.sensorLocations[i]
-        noActive++
-      }
+    let sensorPositions
+    if (this.getIsActive(2) && !this.getIsActive(7)){
+     sensorPositions = this.sensorLocationsV1 // 1st generation
+    } else if (!this.getIsActive(2) && this.getIsActive(7)){
+        sensorPositions = this.sensorLocationsV2 // 2nd generation
+    } else {
+        sensorPositions = this.sensorLocationsV1
+        sensorPositions.push({"x": 0.9, "y": 0.9}) // add another sensor location for new chanel
+        console.log("more sensors active then alowed!")
     }
-    return this.activeSensorLocations
+    return sensorPositions;
   }
 
   getNoActive() {

@@ -57,13 +57,12 @@
         <template id="profile.html" >
             <ons-page id="profile">
                 <section class="responsiveMenu">
+                    <p style="text-align: center;">
+                        The settings menu provides access for the calibration and connectivity of your Tofi trainer.
+                    </p>
                     <ons-button modifier="large" style="margin-bottom: 10px;" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':0, 'title':'Sensor Histogram'})" id="push-button-00" >Sensor Histogram</ons-button>
 
                     <ons-button modifier="large" style="margin-bottom: 10px;" onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':1, 'title':'calibration'})" id="push-button-01" >Calibrate Trainer</ons-button>
-
-                    <ons-button modifier="large" style="margin-bottom: 10px;"  onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':4, 'title':'Speed Test'})" id="push-button-02" >Speed Test</ons-button>
-
-                    <ons-button modifier="large" style="margin-bottom: 10px;"  onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':7, 'title':'Strength Test'})" id="push-button-03" >Strength Test</ons-button>
 
                     <ons-button modifier="large" style="margin-bottom: 10px;" onclick="EntryPoint.connectBLE()" id="push-button-03" >Reconnect to Device</ons-button>
                 </section>
@@ -73,6 +72,9 @@
     <template id="training.html" class="responsiveMenu">
         <ons-page id="training">
             <section class="responsiveMenu">
+                <p style="text-align: center;">
+                    The training menu provides activities for the training your tongue to reduce snoring
+                </p>
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':2, 'title':'training'})">
                 <div class="title">Sonic Simon</div>
                 <div class="content">A simple game for getting to know the TOFI Trainer</div>
@@ -81,10 +83,20 @@
                 <div class="title">Meditation</div>
                 <div class="content">Free flowing play</div>
             </ons-card>
-            <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':6, 'title':'training'})">
+
+                <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':4, 'title':'Speed Test'})">
+                    <div class="title">Speed Test</div>
+                    <div class="content">A test for assessing the speed of your tongue muscle control</div>
+                </ons-card>
+                <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':7, 'title':'Strength Test\''})">
+                    <div class="title">Strength Test</div>
+                    <div class="content">A test for assessing the strength of your tongue muscles</div>
+                </ons-card>
+           <!-- <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':6, 'title':'training'})">
                 <div class="title">Ripples</div>
-                <div class="content">A sandbox for trying the TOFI Trainer</div>
+                <div class="content">A meditative free flow exercise</div>
             </ons-card>
+            -->
             <ons-card tappable onclick="EntryPoint.pushPage({'id':'canvas.html', 'view':3, 'title':'training'})">
                 <div class="title">Sandbox</div>
                 <div class="content">A sandbox for trying the TOFI Trainer</div>
