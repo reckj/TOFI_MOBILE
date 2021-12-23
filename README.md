@@ -36,6 +36,10 @@ Open at https://localhost:9000/
 * Run `cordova emulate android`
 * Run `cordova emulate IOS`
 
+## GitHub Pages
+Live Demo: 
+https://iad-zhdk.github.io/TOFI_MOBILE/
+
 ##  TODO
 
 integrate with https://github.com/don/cordova-plugin-ble-central
