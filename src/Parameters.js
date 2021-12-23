@@ -180,15 +180,15 @@ class Parameters {
   }
 
   loadLocal(index) {
-    if (index) {
+    if (index >= 0) {
       let Storage = window.localStorage;
       this.getSessionKeys()
       let data = []
       if (this.sessionKeys[index] != null) {
-          let  data = JSON.parse(Storage.getItem(this.sessionKeys[index]))
+          let data = JSON.parse(Storage.getItem(this.sessionKeys[index]))
           return data
       } else {
-          let  data = JSON.parse(Storage.getItem(this.sessionKeys[0]))
+          let data = JSON.parse(Storage.getItem(this.sessionKeys[0]))
           return data
       }
 
@@ -232,7 +232,6 @@ class Parameters {
   getMax (i) {
     return this.params[Object.keys(this.params)[i]].max
   }
-
 
   setSensorValues(sensorValues) {
     this.sensorValues = sensorValues;

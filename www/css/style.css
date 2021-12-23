@@ -1,5 +1,11 @@
 @import url("./icomoon/style.css");
 
+@font-face {
+    font-family: barlow_condensed;
+    src: url(fonts/barlow_condensed.otf);
+}
+
+
 /* basic set up for p5js full screen */
 canvas {
   display: block;
@@ -12,6 +18,7 @@ body {
    height: 100%;
    margin: 0;
    padding: 0;
+
  }
 
 .dg.ac {

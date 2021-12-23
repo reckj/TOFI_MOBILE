@@ -68,4 +68,4 @@ class SensorHistogram extends View {
     }
   }
 }
-export default SensorHistogram
+export {SensorHistogram}

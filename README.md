@@ -39,7 +39,6 @@ Open at https://localhost:9000/
 ##  TODO
 
 integrate with https://github.com/don/cordova-plugin-ble-central
-integrate with https://www.npmjs.com/package/cordova-plugin-webpack
 
 Modify status bar appearance on different platforms
 https://cordova.apache.org/docs/en/10.x/reference/cordova-plugin-statusbar/

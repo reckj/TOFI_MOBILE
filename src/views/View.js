@@ -9,5 +9,7 @@ class View {
   }
   draw () {
   }
+  windowResized(){
+  }
 }
 export default View

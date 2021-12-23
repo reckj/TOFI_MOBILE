@@ -1,5 +1,5 @@
 class BleSimulator {
-  // this class acts as a dummy BLE device when none is available. For debuging purposes.
+  // this class acts as a dummy BLE device when none is available. For debugging purposes.
   constructor (params) {
     this.params = params
     this.noChannels = 8

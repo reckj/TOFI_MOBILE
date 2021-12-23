@@ -1,10 +1,11 @@
 import P5 from 'p5'
-import defineSketch from './views/Canvas.js'
+import defineSketch from './Canvas.js'
 import BLEhandler from './BLEhandler.js'
 import Parameters from './Parameters'
 import BleSimulator from './BleSimulator'
 import CalibrationGUI from './CalibrationGUI'
 import Stats from './Stats.js'
+
 import * as Tone from 'tone'
 let ons = require('onsenui')
 //
@@ -200,7 +201,6 @@ export function statisticsMenu() {
         if (sliceIndex > 0) {
             // add missing menu items
             for (let i = data.length - sliceIndex; i < data.length; i++) {
-                console.log("item" + i)
                 const dateObject = new Date(data[i])
                 let title = dateObject.toLocaleString() //2019-12-9 10:30:15
                 const menuItem = ons.createElement(`<ons-button modifier="large" style="margin-bottom: 10px;" onclick="EntryPoint.pushPage({'id':'graph.html', 'title':'graph', 'index':'${i}'})">${title}</ons-button>`)
