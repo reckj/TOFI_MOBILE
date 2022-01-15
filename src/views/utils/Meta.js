@@ -110,6 +110,18 @@ class Meta {
     this.metaballsShader.setUniform(`balls`, ballsUniformArray)
     this.render()
     this.p.image(this.pg, 0,0)
+
+    /////////////////////////////////////
+    ///--DRIVER BALLS VISUALISATION--///
+    this.p.push();
+    this.p.translate(this.p.width / 2, this.p.height / 2);
+    for (let i = 0; i < this.balls.length; i++) {
+      this.p.circle(this.balls[i].x, -this.balls[i].y, this.balls[i].r);
+    }
+    this.p.pop();
+    /////////////////////////////////////
+    ///--DRIVER BALLS VISUALISATION--///
+
   }
 
 
