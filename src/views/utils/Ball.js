@@ -25,7 +25,7 @@ class Ball {
     this.notes2 = ["C3", "D3", "F3", "G3", "A3"];
     this.notes3 = ["D4", "F4", "G4", "A4"];
     this.notes4 = ["A4", "C5", "D5", "F5"];
-    this.soundSetup(Tone,envelopes)
+    //this.soundSetup(Tone,envelopes);
   }
 
   update (p) {
@@ -41,21 +41,26 @@ class Ball {
     this.Xamp *= 0.99
     this.Xamp += (Xamp * 0.01)
     //this.FX1.delayTime = Xamp*10
+    //this.volFX.volume.value = (-50*this.Xamp) - 30;
   }
   addYamp(Yamp) {
     this.Yamp *= 0.99
     this.Yamp += (Yamp * 0.01)
     //this.FX1.depth = Yamp*10
+    //this.synth3.volume.value = (-50*this.Yamp) - 30;
+    //this.synth4.volume.value = (-50*this.Yamp) - 30;
   }
   addSpeed(speed) {
     this.speed *= 0.99
     this.speed += (speed * 0.01)
+    //this.Tone.Transport.bpm.rampTo(50 + this.speed * 20);
   }
   addRadius(r) {
     this.rad *= 0.99
     this.rad += (r * 0.01)
     this.r = 30 + (this.rad * 400)
     //this.synth.volume.value = (-50*this.rad) -30
+    //this.filter.frequency.value = this.rad * 7000 + 300;
   }
   draw (p) {
     p.noFill()
@@ -65,6 +70,7 @@ class Ball {
   }
 
   soundSetup(Tone, envelopes) {
+    /*
     ////--Sound Setup Johannes--////
     //Control Variables
     //1
@@ -73,7 +79,7 @@ class Ball {
     let chorus1Depth = 0.05;
     let reverb1Decay = 4;
     let reverb1Wet = 0.2;
-    let distortion1Wet = 0;
+    let distortion1Wet = 0.1;
     let stereoWidth = 0;
 
     //2
@@ -141,7 +147,7 @@ class Ball {
 
 
     //set parameters for synths and FX's
-    this.Tone.Transport.bpm.value = bpmValue;
+    Tone.Transport.bpm.value = bpmValue;
 
     this.filter.Q.value = filterResonance;
 
@@ -161,7 +167,7 @@ class Ball {
     this.synth1.envelope.attackCurve = "linear";
     this.synth1.envelope.release = 0.8;
     this.synth1.oscillator.type = "triangle";
-    this.synth1.volume.value = -0;
+    this.synth1.volume.value = -0.8;
 
     this.synth2.filterEnvelope.attack = 0.1;
     //this.synth2.filter.frequency = 400;
@@ -181,7 +187,7 @@ class Ball {
     this.synth3.envelope.attackCurve = "linear";
     this.synth3.envelope.release = 1.2;
     this.synth3.oscillator.type = "sawtooth";
-    this.synth3.volume.value = -13;
+    this.synth3.volume.value = -14;
 
     this.synth4.filterEnvelope.attack = 0.2;
     //this.synth4.filter.frequency = 400;
@@ -190,8 +196,8 @@ class Ball {
     this.synth4.envelope.sustain = 0;
     this.synth4.envelope.attackCurve = "linear";
     this.synth4.envelope.release = 0.1;
-    this.synth4.oscillator.type = "square";
-    this.synth4.volume.value = -16;
+    this.synth4.oscillator.type = "triangle";
+    this.synth4.volume.value = -18;
 
 
     //route signals
@@ -258,11 +264,10 @@ class Ball {
     this.arp3.start("0:0:0");
     this.arp4.start("0:0:0");
 
-    this.Tone.start();
-    this.Tone.Transport.start();
+    Tone.start();
+    Tone.Transport.start();
+    */
 
-    //this.reverb = new Tone.Reverb().toDestination().start();
-    
     
     /*
     // SYNTH
