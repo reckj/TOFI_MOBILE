@@ -125,12 +125,16 @@ class Meta {
 
     /////////////////////////////////////
     ///--Sound Control Parameters--///
-    console.log(averagePos);
+    //console.log(averagePos);
     this.filter.frequency.value = 800 + modifier[1] * 4000;
 
     this.volArp.volume.value = -40 + modifier[2] * 40;
+    //this.volArp.volume.value = -80 - averagePos.y * 190;
+    //-0.4
 
-    this.volFX.volume.value = - 65 + modifier[3] * 60;
+    //this.volFX.volume.value = - 65 + modifier[3] * 60;
+    this.volFX.volume.value = -80 + averagePos.x * 155;
+    //0.5
 
     //this.Tone.Transport.bpm.rampTo(50 + modifier[0] * 20);
     //console.log(modifier[2]);
@@ -353,7 +357,6 @@ class Meta {
 
     Tone.start();
     Tone.Transport.start();
-    //this.testTone = new Tone.Oscillator(440).toDestination().start();
   }
 
   draw (p) {
