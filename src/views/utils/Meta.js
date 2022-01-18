@@ -126,15 +126,21 @@ class Meta {
     /////////////////////////////////////
     ///--Sound Control Parameters--///
     //console.log(averagePos);
-    this.filter.frequency.value = 800 + modifier[1] * 4000;
+    //this.filter.frequency.value = 800 + modifier[1] * 4000;
+    this.filter.frequency.value = this.balls[1].r * 20 + 200;
+    this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.balls[1].r / 2000, 0, 0.2);
 
-    this.volArp.volume.value = -40 + modifier[2] * 40;
-    //this.volArp.volume.value = -80 - averagePos.y * 190;
-    //-0.4
+    //this.volArp.volume.value = -40 + modifier[2] * 40;
+    this.volArp.volume.value = -50 + this.balls[1].Yamp / 900 * 50;
+    //this.widener1.width.value = modifier[2]/2;
+    this.widener1.width.value = this.balls[1].Yamp / 1400; 
+    this.reverb2.wet.value = 0.1 + this.balls[1].Yamp / 1200;
+    
+    //this.volFX.volume.value = -80 + averagePos.x * 155;
+    this.volFX.volume.value = -50 + this.balls[1].Xamp / 700 * 50;
 
-    //this.volFX.volume.value = - 65 + modifier[3] * 60;
-    this.volFX.volume.value = -80 + averagePos.x * 155;
-    //0.5
+    //console.log(this.balls[1].r * 20 + 200);
+    //console.log(this.balls[1].Xamp + " - " + this.balls[1].Yamp);
 
     //this.Tone.Transport.bpm.rampTo(50 + modifier[0] * 20);
     //console.log(modifier[2]);
@@ -172,8 +178,8 @@ class Meta {
     let chorus2Speed = "16n";
     let chorus2DelayInterval = 4;
     let chorus2Depth = 0.05;
-    let reverb2Decay = 4;
-    let reverb2Wet = 0.4;
+    let reverb2Decay = 5;
+    let reverb2Wet = 0.7;
 
     //3
     let chorus3Speed = "16n";
@@ -205,6 +211,16 @@ class Meta {
 
 
     //initialize synths and FX's
+   /*
+    this.sampler = new Tone.Sampler({
+      urls: {
+        "F3": "Bass_F.mp3"
+      },
+      release: 1,
+      baseUrl: "../../../static/samples/",
+    });
+    */
+
     this.synth1 = new Tone.MonoSynth();
     this.synth2 = new Tone.MonoSynth();
     this.synth3 = new Tone.MonoSynth();
@@ -240,6 +256,8 @@ class Meta {
 
     this.filter.Q.value = filterResonance;
 
+    this.widener1.wet.value = 1;
+
     this.pingpongDelay3.wet.value = delay3Wet;
     this.pingpongDelay4.wet.value = delay4Wet;
 
@@ -256,17 +274,17 @@ class Meta {
     this.synth1.envelope.attackCurve = "linear";
     this.synth1.envelope.release = 0.8;
     this.synth1.oscillator.type = "triangle";
-    this.synth1.volume.value = -0.8;
+    this.synth1.volume.value = -1.8;
 
     this.synth2.filterEnvelope.attack = 0.1;
     //this.synth2.filter.frequency = 400;
-    this.synth2.envelope.attack = 1.2;
-    this.synth2.envelope.decay = 0.0;
-    this.synth2.envelope.sustain = 1;
+    this.synth2.envelope.attack = 1.6;
+    this.synth2.envelope.decay = 0.2;
+    this.synth2.envelope.sustain = 0.8;
     this.synth2.envelope.attackCurve = "linear";
-    this.synth2.envelope.release = 0.8;
+    this.synth2.envelope.release = 2.8;
     this.synth2.oscillator.type = "sine";
-    this.synth2.volume.value = -2;
+    this.synth2.volume.value = -5;
 
     this.synth3.filterEnvelope.attack = 0.2;
     //this.synth3.filter.frequency = 400;
@@ -290,17 +308,18 @@ class Meta {
 
 
     //route signals
+    //this.sampler.connect(this.volDry);
     this.synth1.chain(this.chorus1, this.distortion1, this.reverb1, this.widener1, this.filter1, this.volDry);
 
     this.synth2.chain(this.chorus2, this.reverb2, this.filter);
 
-    this.synth3.chain(this.chorus3, this.reverb3, this.filter);
+    this.synth3.chain(this.chorus3, this.reverb3, this.volArp);
     this.synth3.chain(this.pingpongDelay3, this.volFX);
 
-    this.synth4.chain(this.chorus4, this.reverb4, this.filter);
+    this.synth4.chain(this.chorus4, this.reverb4, this.volArp);
     this.synth4.chain(this.pingpongDelay4, this.volFX);
 
-    this.filter.connect(this.volArp);
+    this.filter.connect(this.volDry);
 
     this.volArp.connect(this.volDry);
 
@@ -354,6 +373,7 @@ class Meta {
     this.arp2.start("0:0:0");
     this.arp3.start("0:0:0");
     this.arp4.start("0:0:0");
+    //this.sampler.triggerAttack("F3");
 
     Tone.start();
     Tone.Transport.start();
