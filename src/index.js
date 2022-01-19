@@ -15,6 +15,7 @@ let blehandler
 let currentView = 1
 let calibrationGUI
 let currentPage
+let WEBGL = false
 let params
 let PFIVE
 let userStats
@@ -103,7 +104,7 @@ function DOMContentLoadedEvent() {
     // check for  p5-containerafter onsen UI dom change
     const containerElement = document.getElementById('p5-container')
     if (containerElement) {
-        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone}), containerElement)
+        PFIVE = new P5(defineSketch({"viewNumber" : currentView, "blehandler":blehandler, "params" : params, "tone":Tone, "WEGL3D" : WEBGL }), containerElement)
         if (currentView == 0) {
             calibrationGUI.toggle(true)
         }
@@ -163,6 +164,11 @@ export function pushPage(page, anim) {
         document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title }, animation: anim });
     } else {
         console.log(document.getElementById('myNavigator').pushPage(page.id, { data: { title: page.title } }));
+    }
+    if (page.WEBGL) {
+    WEBGL = page.WEBGL;
+    } else {
+        WEBGL = false
     }
     currentView = page.view;
     currentPage = page

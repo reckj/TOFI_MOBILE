@@ -110,6 +110,12 @@ class Meta {
     this.metaballsShader.setUniform(`balls`, ballsUniformArray)
     this.render()
     this.p.image(this.pg, 0,0)
+    this.p.push()
+    this.p.translate(this.p.width/2,this.p.height/2)
+    for (let i = 0; i < this.balls.length; i++) {
+      this.p.rect(this.balls[i].x,this.balls[i].y,10,10)
+    }
+    this.p.pop()
   }
 
 

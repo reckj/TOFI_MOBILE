@@ -103,7 +103,7 @@ class Parameters {
       this.timeElapsed = Date.now()
       let n = Date.now()
       let key = this.cookieID
-      this.thisSession = {'start': n,'duration': 0, 'totalMovements': 0, 'viewNumber': view, 'log': [[],[],[],[],[],[],[],[]], 'time': []}
+        this.thisSession = {'start': n,'duration': 0, 'totalMovements': 0, 'viewNumber': view, 'log': [[],[],[],[],[],[],[],[]], 'time': []}
       //
       // console.log("local storage" + this.sessionKeys)
     }
