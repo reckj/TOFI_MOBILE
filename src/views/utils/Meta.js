@@ -70,6 +70,11 @@ class Meta {
     this.t = 0;
     this.u = 0;
     this.o = 0;
+
+    this.notes1 = ["F2"];
+    this.notes2 = ["C3", "D3", "F3", "G3", "A3"];
+    this.notes3 = ["D4", "F4", "G4", "A4"];
+    this.notes4 = ["A4", "C5", "D5", "F5"];
     //
   }
 
@@ -114,12 +119,12 @@ class Meta {
 
     /////////////////////////////////////
     ///--DRIVER BALLS VISUALISATION--///
-    this.p.push();
+    /* this.p.push();
     this.p.translate(this.p.width / 2, this.p.height / 2);
     for (let i = 0; i < this.balls.length; i++) {
       this.p.circle(this.balls[i].x, -this.balls[i].y, this.balls[i].r);
     }
-    this.p.pop();
+    this.p.pop(); */
     /////////////////////////////////////
     
 
@@ -142,7 +147,7 @@ class Meta {
     //console.log(this.balls[1].r * 20 + 200);
     //console.log(this.balls[1].Xamp + " - " + this.balls[1].Yamp);
 
-    //this.Tone.Transport.bpm.rampTo(50 + modifier[0] * 20);
+    //Tone.Transport.bpm.rampTo(50 + modifier[0] * 20,1);
     //console.log(modifier[2]);
 
   }
