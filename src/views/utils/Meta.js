@@ -1,3 +1,4 @@
+import { Tone } from 'tone/build/esm/core/Tone';
 import Ball from './Ball.js'
 // metaball example based on work by Richard Bourne
 // https://openprocessing.org/sketch/1229865
@@ -62,13 +63,18 @@ class Meta {
     this.density = 4 //p.displayDensity()
     this.pg = p.createGraphics(width, height, p.WEBGL)
     this.metaballsShader = this.pg.createShader(vertexShader, fragmentShader);
-    //this.soundSetup(Tone,envelopes)
+    this.soundSetup(Tone,envelopes);
     // sound paramaters
     this.i = 0;
     this.j = 0;
     this.t = 0;
     this.u = 0;
     this.o = 0;
+
+    this.notes1 = ["F2"];
+    this.notes2 = ["C3", "D3", "F3", "G3", "A3"];
+    this.notes3 = ["D4", "F4", "G4", "A4"];
+    this.notes4 = ["A4", "C5", "D5", "F5"];
     //
   }
 
@@ -110,12 +116,40 @@ class Meta {
     this.metaballsShader.setUniform(`balls`, ballsUniformArray)
     this.render()
     this.p.image(this.pg, 0,0)
-    this.p.push()
-    this.p.translate(this.p.width/2,this.p.height/2)
+
+    /////////////////////////////////////
+    ///--DRIVER BALLS VISUALISATION--///
+    /* this.p.push();
+    this.p.translate(this.p.width / 2, this.p.height / 2);
     for (let i = 0; i < this.balls.length; i++) {
-      this.p.rect(this.balls[i].x,this.balls[i].y,10,10)
+      this.p.circle(this.balls[i].x, -this.balls[i].y, this.balls[i].r);
     }
-    this.p.pop()
+    this.p.pop(); */
+    /////////////////////////////////////
+    
+
+    /////////////////////////////////////
+    ///--Sound Control Parameters--///
+    //console.log(averagePos);
+    //this.filter.frequency.value = 800 + modifier[1] * 4000;
+    this.filter.frequency.value = this.balls[1].r * 20 + 200;
+    this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.balls[1].r / 2000, 0, 0.2);
+
+    //this.volArp.volume.value = -40 + modifier[2] * 40;
+    this.volArp.volume.value = -50 + this.balls[1].Yamp / 900 * 50;
+    //this.widener1.width.value = modifier[2]/2;
+    this.widener1.width.value = this.balls[1].Yamp / 1400; 
+    this.reverb2.wet.value = 0.1 + this.balls[1].Yamp / 1200;
+    
+    //this.volFX.volume.value = -80 + averagePos.x * 155;
+    this.volFX.volume.value = -50 + this.balls[1].Xamp / 700 * 50;
+
+    //console.log(this.balls[1].r * 20 + 200);
+    //console.log(this.balls[1].Xamp + " - " + this.balls[1].Yamp);
+
+    //Tone.Transport.bpm.rampTo(50 + modifier[0] * 20,1);
+    //console.log(modifier[2]);
+
   }
 
 
@@ -130,6 +164,224 @@ class Meta {
     const MAX = max || 20
     const parsed = parseInt(num)
     return Math.min(Math.max(parsed, MIN), MAX)
+  }
+
+  soundSetup(Tone, envelopes) {
+    ////--Sound Setup Johannes--////
+    //Control Variables
+    //1
+    let chorus1Speed = "16n";
+    let chorus1DelayInterval = 4;
+    let chorus1Depth = 0.05;
+    let reverb1Decay = 4;
+    let reverb1Wet = 0.2;
+    let distortion1Wet = 0.1;
+    let stereoWidth = 0;
+    let filter1Cutoff = 300;
+
+    //2
+    let chorus2Speed = "16n";
+    let chorus2DelayInterval = 4;
+    let chorus2Depth = 0.05;
+    let reverb2Decay = 5;
+    let reverb2Wet = 0.7;
+
+    //3
+    let chorus3Speed = "16n";
+    let chorus3DelayInterval = 4;
+    let chorus3Depth = 0.05;
+    let reverb3Decay = 4;
+    let reverb3Wet = 0.9;
+    let delay3Interval = "8n";
+    let delay3Feedback = 0.3;
+    let delay3Wet = 1;
+
+    //4
+    let chorus4Speed = "16n";
+    let chorus4DelayInterval = 4;
+    let chorus4Depth = 0.05;
+    let reverb4Decay = 5;
+    let reverb4Wet = 0.9;
+    let delay4Interval = "2n";
+    let delay4Feedback = 0.4;
+    let delay4Wet = 1;
+
+    //General
+    let filterCutoff = 8000;
+    let filterResonance = 0;
+    let volumeDry = -8;
+    let volumeArp = -1;
+    let volumeFX = -180;
+    let bpmValue = 50;
+
+
+    //initialize synths and FX's
+   /*
+    this.sampler = new Tone.Sampler({
+      urls: {
+        "F3": "Bass_F.mp3"
+      },
+      release: 1,
+      baseUrl: "../../../static/samples/",
+    });
+    */
+
+    this.synth1 = new Tone.MonoSynth();
+    this.synth2 = new Tone.MonoSynth();
+    this.synth3 = new Tone.MonoSynth();
+    this.synth4 = new Tone.MonoSynth();
+
+    this.chorus1 = new Tone.Chorus(chorus1Speed, chorus1DelayInterval, chorus1Depth);
+    this.chorus2 = new Tone.Chorus(chorus2Speed, chorus2DelayInterval, chorus2Depth);
+    this.chorus3 = new Tone.Chorus(chorus3Speed, chorus3DelayInterval, chorus3Depth);
+    this.chorus4 = new Tone.Chorus(chorus4Speed, chorus4DelayInterval, chorus4Depth);
+
+    this.reverb1 = new Tone.Reverb(reverb1Decay);
+    this.reverb2 = new Tone.Reverb(reverb2Decay);
+    this.reverb3 = new Tone.Reverb(reverb3Decay);
+    this.reverb4 = new Tone.Reverb(reverb4Decay);
+
+    this.pingpongDelay3 = new Tone.PingPongDelay(delay3Interval, delay3Feedback);
+    this.pingpongDelay4 = new Tone.PingPongDelay(delay4Interval, delay4Feedback);
+
+    this.filter = new Tone.Filter(filterCutoff, "lowpass");
+    this.filter1 = new Tone.Filter(filter1Cutoff, "lowpass");
+
+    this.distortion1 = new Tone.Distortion(distortion1Wet);
+
+    this.widener1 = new Tone.StereoWidener(stereoWidth);
+
+    this.volDry = new Tone.Volume(volumeDry);
+    this.volArp = new Tone.Volume(volumeArp);
+    this.volFX = new Tone.Volume(volumeFX);
+
+
+    //set parameters for synths and FX's
+    Tone.Transport.bpm.value = bpmValue;
+
+    this.filter.Q.value = filterResonance;
+
+    this.widener1.wet.value = 1;
+
+    this.pingpongDelay3.wet.value = delay3Wet;
+    this.pingpongDelay4.wet.value = delay4Wet;
+
+    this.reverb1.wet.value = reverb1Wet;
+    this.reverb2.wet.value = reverb2Wet;
+    this.reverb3.wet.value = reverb3Wet;
+    this.reverb4.wet.value = reverb4Wet;
+
+    this.synth1.filterEnvelope.attack = 0.1;
+    //this.synth1.filter.frequency = 1000;
+    this.synth1.envelope.attack = 0.5;
+    this.synth1.envelope.decay = 0.0;
+    this.synth1.envelope.sustain = 1;
+    this.synth1.envelope.attackCurve = "linear";
+    this.synth1.envelope.release = 0.8;
+    this.synth1.oscillator.type = "triangle";
+    this.synth1.volume.value = -1.8;
+
+    this.synth2.filterEnvelope.attack = 0.1;
+    //this.synth2.filter.frequency = 400;
+    this.synth2.envelope.attack = 1.6;
+    this.synth2.envelope.decay = 0.2;
+    this.synth2.envelope.sustain = 0.8;
+    this.synth2.envelope.attackCurve = "linear";
+    this.synth2.envelope.release = 2.8;
+    this.synth2.oscillator.type = "sine";
+    this.synth2.volume.value = -5;
+
+    this.synth3.filterEnvelope.attack = 0.2;
+    //this.synth3.filter.frequency = 400;
+    this.synth3.envelope.attack = 0.5;
+    this.synth3.envelope.decay = 0.0;
+    this.synth3.envelope.sustain = 0;
+    this.synth3.envelope.attackCurve = "linear";
+    this.synth3.envelope.release = 1.2;
+    this.synth3.oscillator.type = "sawtooth";
+    this.synth3.volume.value = -2;
+
+    this.synth4.filterEnvelope.attack = 0.2;
+    //this.synth4.filter.frequency = 400;
+    this.synth4.envelope.attack = 0.1;
+    this.synth4.envelope.decay = 0.2;
+    this.synth4.envelope.sustain = 0;
+    this.synth4.envelope.attackCurve = "linear";
+    this.synth4.envelope.release = 0.1;
+    this.synth4.oscillator.type = "triangle";
+    this.synth4.volume.value = -2;
+
+
+    //route signals
+    //this.sampler.connect(this.volDry);
+    this.synth1.chain(this.chorus1, this.distortion1, this.reverb1, this.widener1, this.filter1, this.volDry);
+
+    this.synth2.chain(this.chorus2, this.reverb2, this.filter);
+
+    this.synth3.chain(this.chorus3, this.reverb3, this.volArp);
+    this.synth3.chain(this.pingpongDelay3, this.volFX);
+
+    this.synth4.chain(this.chorus4, this.reverb4, this.volArp);
+    this.synth4.chain(this.pingpongDelay4, this.volFX);
+
+    this.filter.connect(this.volDry);
+
+    this.volArp.connect(this.volDry);
+
+    this.volDry.toDestination();
+
+    this.volFX.toDestination();
+
+
+    //set arpeggios
+    this.arp1 = new Tone.Pattern((time, note) => {
+      this.synth1.triggerAttackRelease(note,"1n");
+
+    }, ["F2"], "random");
+
+    this.arp1.humanize = false;
+    this.arp1.playbackRate = 0.25;
+
+   this.arp2 = new Tone.Pattern((time, note) => {
+        this.synth2.triggerAttackRelease(note,"2n");
+
+    }, ["C3", "D3", "F3", "G3", "A3"], "random");
+
+    this.arp2.humanize = false;
+    this.arp2.playbackRate = 0.25;
+
+    this.arp3 = new Tone.Pattern((time, note) => {
+        this.synth3.triggerAttackRelease(note,"16n");
+
+    }, ["D4", "F4", "G4", "A4"], "random");
+
+    this.arp3.humanize = true;
+    this.arp3.playbackRate = 2;
+
+    this.arp4 = new Tone.Pattern((time, note) => {
+        this.synth4.triggerAttackRelease(note,"1n");
+
+    }, ["A4", "C5", "D5", "F5"], "random");  //upDown
+
+    this.arp4.humanize = false;
+    this.arp4.playbackRate = 8;
+
+
+    //start audio Objects
+
+    this.chorus1.start();
+    this.chorus2.start();
+    this.chorus3.start();
+    this.chorus4.start();
+
+    this.arp1.start("0:0:0");
+    this.arp2.start("0:0:0");
+    this.arp3.start("0:0:0");
+    this.arp4.start("0:0:0");
+    //this.sampler.triggerAttack("F3");
+
+    Tone.start();
+    Tone.Transport.start();
   }
 
   draw (p) {
