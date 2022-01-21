@@ -44,9 +44,17 @@ void main() {
 }
 `;
 
-let synthNotes = ["C2", "E2", "G2", "A2",
-  "C3", "D3", "E3", "G3", "A3", "B3",
-  "C4", "D4", "E4", "G4", "A4", "B4", "C5"];
+
+
+let scale1Notes1 = ["F2"];
+let scale1Notes2 = ["C3", "D3", "F3", "G3", "A3"];
+let scale1Notes3 = ["D4", "F4", "G4", "A4"];
+let scale1Notes4 = ["A4", "C5", "D5", "F5"];
+
+let scale2Notes1 = ["F2"];
+let scale2Notes2 = ["C3", "D3", "F3", "G3", "A3"];
+let scale2Notes3 = ["D4", "F4", "G4", "A4"];
+let scale2Notes4 = ["A4", "C5", "D5", "F5"];
 
 
 class Meta {
@@ -57,6 +65,7 @@ class Meta {
     this.balls = []
     this.width = width
     this.height = height
+    this.smoothedInputs = [0, 0, 0, 0, 0];
     for (let i = 0; i < ballCount; i++) {
       this.balls.push(new Ball(p, Math.random()*this.width, p.random(0, height),Tone, envelopes))
     }
@@ -70,12 +79,6 @@ class Meta {
     this.t = 0;
     this.u = 0;
     this.o = 0;
-
-    this.notes1 = ["F2"];
-    this.notes2 = ["C3", "D3", "F3", "G3", "A3"];
-    this.notes3 = ["D4", "F4", "G4", "A4"];
-    this.notes4 = ["A4", "C5", "D5", "F5"];
-    //
   }
 
   //panner.frequency.value = parseFloat(e.target.value));
@@ -119,25 +122,41 @@ class Meta {
 
     /////////////////////////////////////
     ///--Sound Control Parameters--///
-    //this.filter.frequency.value = 800 + modifier[1] * 4000;
+    
+    for (let n = 0; n < this.smoothedInputs.length; n++){
+      this.smoothInputs(modifier[n], n);
+    }
+
+    this.volFX.volume.value = -50 + this.smoothedInputs[3] * 52;
+
+    this.volArp.volume.value = -50 + this.smoothedInputs[2] * 50;
+    this.widener1.width.value = 0.8 * this.smoothedInputs[2]; 
+    this.reverb2.wet.value = 0.1 + this.p.constrain(this.smoothedInputs[2], 0, 0.9);
+
+    this.synth2.volume.value = -7 + this.smoothedInputs[1] * 8;
+
+
     this.filter.frequency.value = this.balls[1].r * 20 + 200;
     this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.balls[1].r / 2000, 0, 0.2);
-
-    //this.volArp.volume.value = -40 + modifier[2] * 40;
-    this.volArp.volume.value = -50 + this.balls[1].Yamp / 900 * 50;
-    //this.widener1.width.value = modifier[2]/2;
-    this.widener1.width.value = this.balls[1].Yamp / 1400; 
-    this.reverb2.wet.value = 0.1 + this.balls[1].Yamp / 1200;
     
-    //this.volFX.volume.value = -80 + averagePos.x * 155;
-    this.volFX.volume.value = -50 + this.balls[1].Xamp / 700 * 50;
+
+    // this.volArp.volume.value = -50 + this.balls[1].Yamp / 900 * 50;
+    // this.widener1.width.value = this.balls[1].Yamp / 1400; 
+    // this.reverb2.wet.value = 0.1 + this.balls[1].Yamp / 1200;
+    
+    // this.volFX.volume.value = -50 + this.balls[1].Xamp / 700 * 50;
 
     //console.log(this.balls[1].r * 20 + 200);
     //console.log(this.balls[1].Xamp + " - " + this.balls[1].Yamp);
 
-    //Tone.Transport.bpm.rampTo(50 + modifier[0] * 20,1);
-    //console.log(modifier[2]);
+    // Tone.Transport.bpm = 50 + modifier[0] * 20;
+    // console.log(this.balls[1].Yamp);
 
+  }
+
+  smoothInputs (inputValue, inputNumber) {
+    this.smoothedInputs[inputNumber] = this.smoothedInputs[inputNumber] * this.balls[0].ballInertia + inputValue * (1 - this.balls[0].ballInertia);
+    this.p.constrain(this.smoothedInputs[inputNumber], 0, 1);
   }
 
 
@@ -198,7 +217,7 @@ class Meta {
     let filterCutoff = 8000;
     let filterResonance = 0;
     let volumeDry = -8;
-    let volumeArp = -1;
+    let volumeArp = -100;
     let volumeFX = -180;
     let bpmValue = 50;
 
@@ -277,7 +296,7 @@ class Meta {
     this.synth2.envelope.attackCurve = "linear";
     this.synth2.envelope.release = 2.8;
     this.synth2.oscillator.type = "sine";
-    this.synth2.volume.value = -5;
+    this.synth2.volume.value = -4;
 
     this.synth3.filterEnvelope.attack = 0.2;
     //this.synth3.filter.frequency = 400;
@@ -287,7 +306,7 @@ class Meta {
     this.synth3.envelope.attackCurve = "linear";
     this.synth3.envelope.release = 1.2;
     this.synth3.oscillator.type = "sawtooth";
-    this.synth3.volume.value = -2;
+    this.synth3.volume.value = -1;
 
     this.synth4.filterEnvelope.attack = 0.2;
     //this.synth4.filter.frequency = 400;
@@ -297,7 +316,7 @@ class Meta {
     this.synth4.envelope.attackCurve = "linear";
     this.synth4.envelope.release = 0.1;
     this.synth4.oscillator.type = "triangle";
-    this.synth4.volume.value = -2;
+    this.synth4.volume.value = -1;
 
 
     //route signals
@@ -328,6 +347,7 @@ class Meta {
     }, ["F2"], "random");
 
     this.arp1.humanize = false;
+    this.arp1.values = scale1Notes1;
     this.arp1.playbackRate = 0.25;
 
    this.arp2 = new Tone.Pattern((time, note) => {
@@ -336,6 +356,7 @@ class Meta {
     }, ["C3", "D3", "F3", "G3", "A3"], "random");
 
     this.arp2.humanize = false;
+    this.arp2.values = scale1Notes2;
     this.arp2.playbackRate = 0.25;
 
     this.arp3 = new Tone.Pattern((time, note) => {
@@ -344,6 +365,7 @@ class Meta {
     }, ["D4", "F4", "G4", "A4"], "random");
 
     this.arp3.humanize = true;
+    this.arp3.values = scale1Notes3;
     this.arp3.playbackRate = 2;
 
     this.arp4 = new Tone.Pattern((time, note) => {
@@ -352,6 +374,7 @@ class Meta {
     }, ["A4", "C5", "D5", "F5"], "random");  //upDown
 
     this.arp4.humanize = false;
+    this.arp4.values = scale1Notes4;
     this.arp4.playbackRate = 8;
 
 
@@ -366,7 +389,6 @@ class Meta {
     this.arp2.start("0:0:0");
     this.arp3.start("0:0:0");
     this.arp4.start("0:0:0");
-    //this.sampler.triggerAttack("F3");
 
     Tone.start();
     Tone.Transport.start();

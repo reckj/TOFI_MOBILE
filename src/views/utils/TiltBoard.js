@@ -102,7 +102,7 @@ class TiltBoard {
         this.p = p;
         this.width = width;
         this.height = height;
-        this.Tone = Tone;
+        // this.Tone = Tone;
         this.gameState = "intro";
         this.objectSetup();
         this.soundSetup(Tone);
@@ -118,7 +118,7 @@ class TiltBoard {
         this.colorObstacle3 = this.p.color(this.colorPallet[5],255,70);
     }
 
-    soundSetup() {
+    soundSetup(Tone) {
       ////--Sound Setup Johannes--////
       //Control Variables
       //1
@@ -153,24 +153,24 @@ class TiltBoard {
       let volumeDry = -8;
       let bpmValue = 80;
       
-      this.Tone.start();
+      Tone.start();
   
-      this.synth1 = new this.Tone.MonoSynth();
-      this.synth2 = new this.Tone.MonoSynth();
-      this.synth3 = new this.Tone.MonoSynth();
-      this.synth4 = new this.Tone.MonoSynth();
+      this.synth1 = new Tone.MonoSynth();
+      this.synth2 = new Tone.MonoSynth();
+      this.synth3 = new Tone.MonoSynth();
+      this.synth4 = new Tone.MonoSynth();
   
-      this.chorus1 = new this.Tone.Chorus(chorus1Speed, chorus1DelayInterval, chorus1Depth).start();
-      this.chorus2 = new this.Tone.Chorus(chorus2Speed, chorus2DelayInterval, chorus2Depth).start();
-      this.chorus3 = new this.Tone.Chorus(chorus3Speed, chorus3DelayInterval, chorus3Depth).start();
-      this.chorus4 = new this.Tone.Chorus(chorus4Speed, chorus4DelayInterval, chorus4Depth).start();
+      this.chorus1 = new Tone.Chorus(chorus1Speed, chorus1DelayInterval, chorus1Depth).start();
+      this.chorus2 = new Tone.Chorus(chorus2Speed, chorus2DelayInterval, chorus2Depth).start();
+      this.chorus3 = new Tone.Chorus(chorus3Speed, chorus3DelayInterval, chorus3Depth).start();
+      this.chorus4 = new Tone.Chorus(chorus4Speed, chorus4DelayInterval, chorus4Depth).start();
   
-      this.reverb1 = new this.Tone.Reverb(reverb1Decay);
-      this.reverb2 = new this.Tone.Reverb(reverb2Decay);
-      this.reverb3 = new this.Tone.Reverb(reverb3Decay);
-      this.reverb4 = new this.Tone.Reverb(reverb4Decay);
+      this.reverb1 = new Tone.Reverb(reverb1Decay);
+      this.reverb2 = new Tone.Reverb(reverb2Decay);
+      this.reverb3 = new Tone.Reverb(reverb3Decay);
+      this.reverb4 = new Tone.Reverb(reverb4Decay);
   
-      this.volDry = new this.Tone.Volume(volumeDry);
+      this.volDry = new Tone.Volume(volumeDry);
   
   
       //set parameters for synths and FX's
@@ -229,7 +229,6 @@ class TiltBoard {
       this.synth4.chain(this.chorus4, this.reverb4, this.volDry);
       this.volDry.toDestination();
 
-      this.Tone.start();
     }
 
     objectSetup () {
