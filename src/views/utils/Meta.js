@@ -118,19 +118,7 @@ class Meta {
     this.p.image(this.pg, 0,0)
 
     /////////////////////////////////////
-    ///--DRIVER BALLS VISUALISATION--///
-    /* this.p.push();
-    this.p.translate(this.p.width / 2, this.p.height / 2);
-    for (let i = 0; i < this.balls.length; i++) {
-      this.p.circle(this.balls[i].x, -this.balls[i].y, this.balls[i].r);
-    }
-    this.p.pop(); */
-    /////////////////////////////////////
-    
-
-    /////////////////////////////////////
     ///--Sound Control Parameters--///
-    //console.log(averagePos);
     //this.filter.frequency.value = 800 + modifier[1] * 4000;
     this.filter.frequency.value = this.balls[1].r * 20 + 200;
     this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.balls[1].r / 2000, 0, 0.2);
