@@ -51,10 +51,10 @@ let scale1Notes2 = ["C3", "D3", "F3", "G3", "A3"];
 let scale1Notes3 = ["D4", "F4", "G4", "A4"];
 let scale1Notes4 = ["A4", "C5", "D5", "F5"];
 
-let scale2Notes1 = ["F2"];
-let scale2Notes2 = ["C3", "D3", "F3", "G3", "A3"];
-let scale2Notes3 = ["D4", "F4", "G4", "A4"];
-let scale2Notes4 = ["A4", "C5", "D5", "F5"];
+let scale2Notes1 = ["D2"];
+let scale2Notes2 = ["D3", "D#3", "G3", "A3", "C3"];
+let scale2Notes3 = ["D#4", "G4", "A4", "C4"];
+let scale2Notes4 = ["C5", "G5", "A5", "D5"];
 
 
 class Meta {
@@ -128,30 +128,22 @@ class Meta {
     }
 
     this.volFX.volume.value = -50 + this.smoothedInputs[3] * 52;
+    this.reverb1.wet.value = 0.2 + this.p.constrain(this.smoothedInputs[3], 0, 0.6);
 
     this.volArp.volume.value = -50 + this.smoothedInputs[2] * 50;
     this.widener1.width.value = 0.8 * this.smoothedInputs[2]; 
     this.reverb2.wet.value = 0.1 + this.p.constrain(this.smoothedInputs[2], 0, 0.9);
 
     this.synth2.volume.value = -7 + this.smoothedInputs[1] * 8;
+    this.filter.frequency.value = this.smoothedInputs[1] * 6000 + 200;
+    this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.smoothedInputs[1], 0, 0.3);
 
-
-    this.filter.frequency.value = this.balls[1].r * 20 + 200;
-    this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.balls[1].r / 2000, 0, 0.2);
+    // fix modifier setting
+    // 
+    // if (typeof this.Tone.Transport.bpm.value !== 'undefined') {
+      // this.Tone.Transport.bpm.value = 50 + this.smoothedInputs[0] * 20;
+    // }
     
-
-    // this.volArp.volume.value = -50 + this.balls[1].Yamp / 900 * 50;
-    // this.widener1.width.value = this.balls[1].Yamp / 1400; 
-    // this.reverb2.wet.value = 0.1 + this.balls[1].Yamp / 1200;
-    
-    // this.volFX.volume.value = -50 + this.balls[1].Xamp / 700 * 50;
-
-    //console.log(this.balls[1].r * 20 + 200);
-    //console.log(this.balls[1].Xamp + " - " + this.balls[1].Yamp);
-
-    // Tone.Transport.bpm = 50 + modifier[0] * 20;
-    // console.log(this.balls[1].Yamp);
-
   }
 
   smoothInputs (inputValue, inputNumber) {
@@ -198,7 +190,7 @@ class Meta {
     let chorus3DelayInterval = 4;
     let chorus3Depth = 0.05;
     let reverb3Decay = 4;
-    let reverb3Wet = 0.9;
+    let reverb3Wet = 0.7;
     let delay3Interval = "8n";
     let delay3Feedback = 0.3;
     let delay3Wet = 1;
@@ -208,7 +200,7 @@ class Meta {
     let chorus4DelayInterval = 4;
     let chorus4Depth = 0.05;
     let reverb4Decay = 5;
-    let reverb4Wet = 0.9;
+    let reverb4Wet = 0.7;
     let delay4Interval = "2n";
     let delay4Feedback = 0.4;
     let delay4Wet = 1;

@@ -5,7 +5,7 @@ const world = {
     friction: 0.02,
     ballhardness: 0.7,
     angleScaling: 20,
-    playerSensitivity: 0.005,
+    playerSensitivity: 0.008,
     collisionBoundary: 1.2,
     perspective: 0.3,
   }
@@ -113,9 +113,9 @@ class TiltBoard {
         this.colorwinningArea = this.p.color(this.colorPallet[4],255,255);
         this.colorWalls = this.p.color(this.colorPallet[6],255,70);
         this.colorBoard = this.p.color(this.colorPallet[0],255,355);
-        this.colorObstacle1 = this.p.color(this.colorPallet[2],255,70);
-        this.colorObstacle2 = this.p.color(this.colorPallet[2],255,100);
-        this.colorObstacle3 = this.p.color(this.colorPallet[5],255,70);
+        this.colorObstacle1 = this.p.color(this.colorPallet[2],255,100)
+        this.colorObstacle2 = this.colorObstacle1;
+        this.colorObstacle3 = this.colorObstacle2;
     }
 
     soundSetup(Tone) {
@@ -243,11 +243,12 @@ class TiltBoard {
 
         player.posX = - board.boardWidth / 200 * 85;
         player.posY = board.boardWidth / 200 * 85;
+        player.radius = board.boardWidth / 38;
 
         winningArea.posX = board.boardWidth / 200 * 0;
         winningArea.posY = -board.boardWidth / 200 * 90;
-        winningArea.width = board.boardWidth / 100 * 5;
-        winningArea.height = board.boardWidth / 100 * 5;
+        winningArea.width = board.boardWidth / 100 * 10;
+        winningArea.height = board.boardWidth / 100 * 10;
         winningArea.thickness = 1;
 
         obstacle1.posX = board.boardWidth / 200 * 50;
@@ -349,8 +350,7 @@ class TiltBoard {
             this.p.push();
             this.p.translate(winningArea.posX, winningArea.posY, board.boardThickness / 20 * 11);
             this.p.fill(this.colorwinningArea);
-            this.p.circle(0,0,winningArea.width * 2);
-            // this.p.box(winningArea.width, winningArea.height, winningArea.thickness);
+            this.p.circle(0,0,winningArea.width);
             this.p.pop();
         this.p.pop();
     }
@@ -364,7 +364,9 @@ class TiltBoard {
         if ((collisionObject.posX + collisionObject.width / 2) > (player.posX + (1 + world.collisionBoundary) * player.speedX - player.radius) && (collisionObject.posX - collisionObject.width / 2) < (player.posX + (1 + world.collisionBoundary) * player.speedX + player.radius)) {
             if ((collisionObject.posY + collisionObject.height / 2) > (player.posY + (1 + world.collisionBoundary) * player.speedY - player.radius) && (collisionObject.posY - collisionObject.height / 2) < (player.posY + (1 + world.collisionBoundary) * player.speedY + player.radius)) {
               if (collisionObject.name == "winningArea"){
-                this.gameState = "intro";
+                if (this.gameState == "maze"){
+                  this.gameState = "won";
+                }
               }
               else {
                 if ((collisionObject.posY - collisionObject.height / 2) > player.posY + player.radius || (collisionObject.posY + collisionObject.height / 2) < player.posY - player.radius) {
@@ -381,8 +383,7 @@ class TiltBoard {
 
     collisionPlacing (collidingObject, collisionObject) {
       if ((collisionObject.posX + collisionObject.width / 2) > (collidingObject.posX - collidingObject.width) && (collisionObject.posX - collisionObject.width / 2) < (collidingObject.posX + collidingObject.width)) {
-        if ((collisionObject.posY + collisionObject.height / 2) > (collidingObject.posY + collidingObject.width) && (collisionObject.posY - collisionObject.height / 2) < (collidingObject.posY + collidingObject.width)) {
-            // console.log("colliding winningArea");
+        if ((collisionObject.posY + collisionObject.height / 2) > (collidingObject.posY - collidingObject.height) && (collisionObject.posY - collisionObject.height / 2) < (collidingObject.posY + collidingObject.height)) {
             return true;
         }
       }
@@ -401,6 +402,52 @@ class TiltBoard {
               player.speedY = - player.speedY * world.ballhardness;
               break;
           }
+    }
+
+    
+
+    generateWinningArea () {
+      winningArea.posX = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
+      winningArea.posY = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
+      while (this.collisionPlacing(obstacle1, winningArea) == true || this.collisionPlacing(obstacle2, winningArea) == true || this.collisionPlacing(obstacle3, winningArea) == true) {
+        winningArea.posX = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
+        winningArea.posY = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
+      }
+    }
+
+    generateObstacles () {
+      obstacle1.width = this.p.random( board.boardWidth / 100 * 25, board.boardWidth / 100 * 38);
+      obstacle1.height = this.p.random( board.boardWidth / 100 * 2, board.boardWidth / 100 * 15);
+      obstacle1.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle1.width), 1 * (board.boardWidth / 2 - obstacle1.width));
+      obstacle1.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle1.height), 1 * (board.boardHeight / 2 - obstacle1.height));
+
+      obstacle2.width = this.p.random( board.boardWidth / 100 * 3, board.boardWidth / 100 * 25);
+      obstacle2.height = this.p.random( board.boardWidth / 100 * 20, board.boardWidth / 100 * 48);
+      obstacle2.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle2.width), 1 * (board.boardWidth / 2 - obstacle2.width));
+      obstacle2.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle2.height), 1 * (board.boardHeight / 2 - obstacle2.height));
+
+      while (this.collisionPlacing(obstacle1, obstacle2) == true) {
+        obstacle2.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle2.width), 1 * (board.boardWidth / 2 - obstacle2.width));
+        obstacle2.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle2.height), 1 * (board.boardHeight / 2 - obstacle2.height));
+      }
+
+      obstacle3.width = this.p.random( board.boardWidth / 100 * 15, board.boardWidth / 100 * 42);
+      obstacle3.height = this.p.random( board.boardWidth / 100 * 6, board.boardWidth / 100 * 18);
+      obstacle3.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle3.width), 1 * (board.boardWidth / 2 - obstacle3.width));
+      obstacle3.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle3.height), 1 * (board.boardHeight / 2 - obstacle3.height));
+
+      while ((this.collisionPlacing(obstacle1, obstacle3) == true) || (this.collisionPlacing(obstacle2, obstacle3) == true)) {
+        obstacle3.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle3.width), 1 * (board.boardWidth / 2 - obstacle3.width));
+        obstacle3.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle3.height), 1 * (board.boardHeight / 2 - obstacle3.height));
+      }
+    }
+
+    initializeGame () {
+      this.objectSetup();
+      //random obstacle generator
+      this.generateObstacles();
+      //random winning area generator - gets sometimes stuck in while loop in generateWinningArea()
+      // this.generateWinningArea();
     }
 
     updateInputs () {
@@ -442,19 +489,6 @@ class TiltBoard {
       }
     }
 
-    generateWinningArea () {
-      winningArea.posX = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
-      winningArea.posY = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
-    }
-
-    initializeGame () {
-      this.objectSetup();
-      this.generateWinningArea();
-      while (this.collisionPlacing(winningArea, obstacle1) == true || this.collisionPlacing(winningArea, obstacle2) == true || this.collisionPlacing(winningArea, obstacle3) == true) {
-        this.generateWinningArea();
-      }
-    }
-
     update () {
       // this.Tone.start();
       this.updateInputs();
@@ -474,8 +508,16 @@ class TiltBoard {
       player.speedY = player.speedY + player.accY;
       player.posX = player.posX + player.speedX;
       player.posY = player.posY + player.speedY;
-      //fix posZ for two simultanious inputs (wont happen on device)
-      player.posZ = -(player.posX * Math.sin(board.angleY * world.angleScaling) + player.posY * Math.sin(board.angleX * world.angleScaling));   
+      if (this.gameState == "next") {
+        player.speedX = 0;
+        player.speedY = 0;
+        player.posZ = player.posZ - 0.3;
+        player.posX = player.posX + (winningArea.posX - player.posX) * 0.1;
+        player.posY = player.posY + (winningArea.posY - player.posY) * 0.1;
+      }
+      else {
+        player.posZ = -(player.posX * Math.sin(board.angleY * world.angleScaling) + player.posY * Math.sin(board.angleX * world.angleScaling));   
+      }
     }
 
 
@@ -484,7 +526,9 @@ class TiltBoard {
       this.p.rotateX(world.perspective);
       this.p.directionalLight(this.colorBoard, 0, 0, -1);
       this.p.ambientLight(255);
-      this.update();
+      if (this.gameState != "won"){
+        this.update();
+      }
       this.drawPlayer();
       this.drawBoard();
     }
