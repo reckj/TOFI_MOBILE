@@ -10,7 +10,6 @@ class Game05 extends View {
     constructor (p, Tone, Timer, params) {
         super(p, Tone, Timer, params);
         this.tiltboard = new TiltBoard(p, p.width, p.height, params, Tone, this.Timer.envelopes);
-    
         this.messageNo = 0;
         this.messages = ['Please put your TOFI - TRAINER on',
                          'Press the buttons to tilt the board and move the ball',

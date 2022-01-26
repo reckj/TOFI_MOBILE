@@ -82,7 +82,7 @@ class Meta {
   }
 
   //panner.frequency.value = parseFloat(e.target.value));
-  update () {
+  update (Tone) {
     let sensorValues = this.params.getNormalisedActiveValues()
     //p.push()
     let centerW = this.width/2
@@ -138,11 +138,7 @@ class Meta {
     this.filter.frequency.value = this.smoothedInputs[1] * 6000 + 200;
     this.pingpongDelay3.feedback.value = 0.3 + this.p.constrain(this.smoothedInputs[1], 0, 0.3);
 
-    // fix modifier setting
-    // 
-    // if (typeof this.Tone.Transport.bpm.value !== 'undefined') {
-      // this.Tone.Transport.bpm.value = 50 + this.smoothedInputs[0] * 20;
-    // }
+    Tone.Transport.bpm.value = 50 + this.smoothedInputs[0] * 100;
     
   }
 
