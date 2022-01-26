@@ -36,27 +36,19 @@ class Ball {
   addXamp(Xamp) {
     this.Xamp *= this.ballInertia
     this.Xamp += (Xamp * (1-this.ballInertia))
-    //this.FX1.delayTime = Xamp*10
-    //this.volFX.volume.value = (-50*this.Xamp) - 30;
   }
   addYamp(Yamp) {
     this.Yamp *= this.ballInertia
     this.Yamp += (Yamp *(1-this.ballInertia))
-    //this.FX1.depth = Yamp*10
-    //this.synth3.volume.value = (-50*this.Yamp) - 30;
-    //this.synth4.volume.value = (-50*this.Yamp) - 30;
   }
   addSpeed(speed) {
     this.speed *= this.ballInertia
     this.speed += (speed * (1-this.ballInertia))
-    //this.Tone.Transport.bpm.rampTo(50 + this.speed * 20);
   }
   addRadius(r) {
     this.rad *= this.ballInertia
     this.rad += (r * (1-this.ballInertia))
     this.r = 30 + (this.rad * 400)
-    //this.synth.volume.value = (-50*this.rad) -30
-    //this.filter.frequency.value = this.rad * 7000 + 300;
   }
   draw (p) {
     p.noFill()

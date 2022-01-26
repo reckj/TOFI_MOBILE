@@ -7,7 +7,7 @@ const world = {
     angleScaling: 20,
     playerSensitivity: 0.008,
     collisionBoundary: 1.2,
-    perspective: 0.3,
+    perspective: 0.0,
   }
   
   const board = {
@@ -111,7 +111,6 @@ class TiltBoard {
         this.p = p;
         this.width = width;
         this.height = height;
-        // this.Tone = Tone;
         this.gameState = "intro";
         this.objectSetup();
         this.soundSetup(Tone);
@@ -128,7 +127,6 @@ class TiltBoard {
     }
 
     soundSetup(Tone) {
-      ////--Sound Setup Johannes--////
       //Control Variables
       //1
       let chorus1Speed = "16n";
@@ -168,7 +166,6 @@ class TiltBoard {
       let volumeDry = -8;
       let bpmValue = 80;
       
-      // Tone.start();
   
       this.synth1 = new Tone.MonoSynth();
       this.synth2 = new Tone.MonoSynth();
@@ -281,7 +278,7 @@ class TiltBoard {
 
         player.posX = startingArea.posX;
         player.posY = startingArea.posY;
-        player.radius = board.boardWidth / 38;
+        player.radius = board.boardWidth / 30;
 
         winningArea.posX = board.boardWidth / 200 * 0;
         winningArea.posY = -board.boardWidth / 200 * 90;
@@ -432,7 +429,7 @@ class TiltBoard {
         switch (axis) {
             case "x":
               player.posX = player.posX - player.speedX * world.collisionBoundary;
-              player.speedX = - player.speedX * world.ballhardness;              
+              player.speedX = - player.speedX * world.ballhardness;            
               break;
             case "y":
               player.posY = player.posY - player.speedY * world.collisionBoundary;
@@ -486,14 +483,13 @@ class TiltBoard {
 
     initializeGame () {
       this.objectSetup();
-      //random obstacle generator
-      this.generateObstacles();
-      //random winning area generator - gets sometimes stuck in while loop in generateWinningArea()
+      //random obstacle generator - gets sometimes stuck in while loop in generateObstacles()
+      // this.generateObstacles();
+      //random winning area generator 
       this.generateWinningArea();
     }
 
     updateInputs () {
-      // this.Tone.start();
       let sensorValues = this.params.getNormalisedActiveValues()
       // todo: this is a very messy fix for cases with less than 5 sensors
       let modifier = [];
@@ -535,7 +531,6 @@ class TiltBoard {
     }
 
     update () {
-      // this.Tone.start();
       this.updateInputs();
       this.calculateFriction();
       this.collisionDetection(obstacle1);
@@ -567,7 +562,6 @@ class TiltBoard {
 
 
     draw() {
-      // this.Tone.start();
       this.p.rotateX(world.perspective);
       this.p.directionalLight(this.colorBoard, 0, 0, -1);
       this.p.ambientLight(255);

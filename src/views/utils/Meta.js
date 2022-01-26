@@ -45,7 +45,7 @@ void main() {
 `;
 
 
-
+// define scales for the arpeggios
 let scale1Notes1 = ["F2"];
 let scale1Notes2 = ["C3", "D3", "F3", "G3", "A3"];
 let scale1Notes3 = ["D4", "F4", "G4", "A4"];
@@ -81,7 +81,6 @@ class Meta {
     this.o = 0;
   }
 
-  //panner.frequency.value = parseFloat(e.target.value));
   update (Tone) {
     let sensorValues = this.params.getNormalisedActiveValues()
     //p.push()
@@ -120,9 +119,9 @@ class Meta {
     this.render()
     this.p.image(this.pg, 0,0)
 
-    /////////////////////////////////////
-    ///--Sound Control Parameters--///
-    
+
+
+    //// Sound Control Parameters
     for (let n = 0; n < this.smoothedInputs.length; n++){
       this.smoothInputs(modifier[n], n);
     }
@@ -161,9 +160,9 @@ class Meta {
     return Math.min(Math.max(parsed, MIN), MAX)
   }
 
+  ////initialize sound objects
   soundSetup(Tone, envelopes) {
-    ////--Sound Setup Johannes--////
-    //Control Variables
+    ////Control Variables for sound objects
     //1
     let chorus1Speed = "16n";
     let chorus1DelayInterval = 4;
@@ -210,16 +209,7 @@ class Meta {
     let bpmValue = 50;
 
 
-    //initialize synths and FX's
-   /*
-    this.sampler = new Tone.Sampler({
-      urls: {
-        "F3": "Bass_F.mp3"
-      },
-      release: 1,
-      baseUrl: "../../../static/samples/",
-    });
-    */
+    ////initialize synths and FX's
 
     this.synth1 = new Tone.MonoSynth();
     this.synth2 = new Tone.MonoSynth();
@@ -251,7 +241,7 @@ class Meta {
     this.volFX = new Tone.Volume(volumeFX);
 
 
-    //set parameters for synths and FX's
+    ////set parameters for synths and FX's
     Tone.Transport.bpm.value = bpmValue;
 
     this.filter.Q.value = filterResonance;
@@ -307,8 +297,7 @@ class Meta {
     this.synth4.volume.value = -1;
 
 
-    //route signals
-    //this.sampler.connect(this.volDry);
+    ////route signals
     this.synth1.chain(this.chorus1, this.distortion1, this.reverb1, this.widener1, this.filter1, this.volDry);
 
     this.synth2.chain(this.chorus2, this.reverb2, this.filter);
@@ -328,7 +317,7 @@ class Meta {
     this.volFX.toDestination();
 
 
-    //set arpeggios
+    ////set arpeggios
     this.arp1 = new Tone.Pattern((time, note) => {
       this.synth1.triggerAttackRelease(note,"1n");
 
@@ -366,7 +355,7 @@ class Meta {
     this.arp4.playbackRate = 8;
 
 
-    //start audio Objects
+    ////start audio Objects
 
     this.chorus1.start();
     this.chorus2.start();
