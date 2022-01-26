@@ -40,6 +40,15 @@ const world = {
     name: "winningArea",
   }
 
+  const startingArea = {
+    posX: 0,
+    posY: 0,
+    width: 1,
+    height: 1,
+    thickness: 1,
+    name: "startingArea",
+  }
+
   const obstacle1 = {
     posX: 0,
     posY: 0,
@@ -125,101 +134,123 @@ class TiltBoard {
       let chorus1Speed = "16n";
       let chorus1DelayInterval = 4;
       let chorus1Depth = 0.05;
-      let reverb1Decay = 1;
-      let reverb1Wet = 0.3;
+      let reverb1Decay = 1.5;
+      let reverb1Wet = 0.6;
   
       //2
       let chorus2Speed = "16n";
       let chorus2DelayInterval = 4;
       let chorus2Depth = 0.05;
-      let reverb2Decay = 1;
-      let reverb2Wet = 0.3;
+      let reverb2Decay = 1.5;
+      let reverb2Wet = 0.6;
   
       //3
       let chorus3Speed = "16n";
       let chorus3DelayInterval = 4;
       let chorus3Depth = 0.05;
-      let reverb3Decay = 1;
-      let reverb3Wet = 0.3;
+      let reverb3Decay = 1.5;
+      let reverb3Wet = 0.6;
   
       //4
       let chorus4Speed = "16n";
       let chorus4DelayInterval = 4;
       let chorus4Depth = 0.05;
-      let reverb4Decay = 1;
-      let reverb4Wet = 0.3;
+      let reverb4Decay = 1.5;
+      let reverb4Wet = 0.6;
+
+      //5
+      let delayInterval = "8n";
+      let delayFeedback = 0.3;
+      let reverb5Decay = 2;
+      let reverb5Wet = 0.7;
   
       //General
       let volumeDry = -8;
       let bpmValue = 80;
       
-      Tone.start();
+      // Tone.start();
   
       this.synth1 = new Tone.MonoSynth();
       this.synth2 = new Tone.MonoSynth();
       this.synth3 = new Tone.MonoSynth();
       this.synth4 = new Tone.MonoSynth();
+      this.synth5 = new Tone.MonoSynth();
   
       this.chorus1 = new Tone.Chorus(chorus1Speed, chorus1DelayInterval, chorus1Depth).start();
       this.chorus2 = new Tone.Chorus(chorus2Speed, chorus2DelayInterval, chorus2Depth).start();
       this.chorus3 = new Tone.Chorus(chorus3Speed, chorus3DelayInterval, chorus3Depth).start();
       this.chorus4 = new Tone.Chorus(chorus4Speed, chorus4DelayInterval, chorus4Depth).start();
+
+      this.pingpongdelay = new Tone.PingPongDelay(delayInterval, delayFeedback);
   
       this.reverb1 = new Tone.Reverb(reverb1Decay);
       this.reverb2 = new Tone.Reverb(reverb2Decay);
       this.reverb3 = new Tone.Reverb(reverb3Decay);
       this.reverb4 = new Tone.Reverb(reverb4Decay);
+      this.reverb5 = new Tone.Reverb(reverb5Decay);
+      
   
       this.volDry = new Tone.Volume(volumeDry);
   
   
       //set parameters for synths and FX's
       // Tone.Transport.bpm.value = bpmValue;
-  
+
       this.reverb1.wet.value = reverb1Wet;
       this.reverb2.wet.value = reverb2Wet;
       this.reverb3.wet.value = reverb3Wet;
       this.reverb4.wet.value = reverb4Wet;
+      this.reverb5.wet.value = reverb5Wet;
   
       this.synth1.filterEnvelope.attack = 0.2;
       //this.synth1.filter.frequency = 1000;
-      this.synth1.envelope.attack = 0.5;
+      this.synth1.envelope.attack = 1;
       this.synth1.envelope.decay = 0.0;
       this.synth1.envelope.sustain = 1;
       this.synth1.envelope.attackCurve = "linear";
       this.synth1.envelope.release = 0.8;
-      this.synth1.oscillator.type = "triangle";
+      this.synth1.oscillator.type = "sine";
       this.synth1.volume.value = -2;
   
       this.synth2.filterEnvelope.attack = 0.2;
       //this.synth2.filter.frequency = 400;
-      this.synth2.envelope.attack = 0.5;
+      this.synth2.envelope.attack = 1;
       this.synth2.envelope.decay = 0.0;
       this.synth2.envelope.sustain = 1;
       this.synth2.envelope.attackCurve = "linear";
       this.synth2.envelope.release = 0.8;
-      this.synth2.oscillator.type = "triangle";
+      this.synth2.oscillator.type = "sine";
       this.synth2.volume.value = -2;
   
       this.synth3.filterEnvelope.attack = 0.2;
       //this.synth3.filter.frequency = 400;
-      this.synth3.envelope.attack = 0.5;
+      this.synth3.envelope.attack = 1;
       this.synth3.envelope.decay = 0.0;
       this.synth3.envelope.sustain = 1;
       this.synth3.envelope.attackCurve = "linear";
       this.synth3.envelope.release = 0.8;
-      this.synth3.oscillator.type = "sawtooth";
+      this.synth3.oscillator.type = "sine";
       this.synth3.volume.value = -2;
   
       this.synth4.filterEnvelope.attack = 0.2;
       //this.synth4.filter.frequency = 400;
-      this.synth4.envelope.attack = 0.5;
+      this.synth4.envelope.attack = 1;
       this.synth4.envelope.decay = 0.0;
       this.synth4.envelope.sustain = 1;
       this.synth4.envelope.attackCurve = "linear";
       this.synth4.envelope.release = 0.8;
-      this.synth4.oscillator.type = "sawtooth";
+      this.synth4.oscillator.type = "sine";
       this.synth4.volume.value = -2;
+
+      this.synth5.filterEnvelope.attack = 0.2;
+      //this.synth5.filter.frequency = 400;
+      this.synth5.envelope.attack = 0.1;
+      this.synth5.envelope.decay = 0.0;
+      this.synth5.envelope.sustain = 1;
+      this.synth5.envelope.attackCurve = "linear";
+      this.synth5.envelope.release = 0.6;
+      this.synth5.oscillator.type = "sawtooth";
+      this.synth5.volume.value = -2;
   
   
       //route signals
@@ -227,6 +258,7 @@ class TiltBoard {
       this.synth2.chain(this.chorus2, this.reverb2, this.volDry);
       this.synth3.chain(this.chorus3, this.reverb3, this.volDry);
       this.synth4.chain(this.chorus4, this.reverb4, this.volDry);
+      this.synth5.chain(this.pingpongdelay, this.reverb5, this.volDry);
       this.volDry.toDestination();
 
     }
@@ -241,8 +273,14 @@ class TiltBoard {
           board.boardHeight = board.boardWidth;
         }
 
-        player.posX = - board.boardWidth / 200 * 85;
-        player.posY = board.boardWidth / 200 * 85;
+        startingArea.posX = board.boardWidth / 200 * 0;
+        startingArea.posY = -board.boardWidth / 200 * 0;
+        startingArea.width = board.boardWidth / 100 * 10;
+        startingArea.height = board.boardWidth / 100 * 10;
+        startingArea.thickness = 1;
+
+        player.posX = startingArea.posX;
+        player.posY = startingArea.posY;
         player.radius = board.boardWidth / 38;
 
         winningArea.posX = board.boardWidth / 200 * 0;
@@ -288,7 +326,6 @@ class TiltBoard {
     }
 
     drawPlayer () {
-        // this.p.normalMaterial();
         this.p.texture(this.sphereTexture);
         this.p.push();
             this.p.translate(player.posX, player.posY, player.posZ + player.radius);
@@ -366,6 +403,8 @@ class TiltBoard {
               if (collisionObject.name == "winningArea"){
                 if (this.gameState == "maze"){
                   this.gameState = "won";
+                  // winning sound
+                  this.synth5.triggerAttackRelease("G5", "16n");
                 }
               }
               else {
@@ -392,12 +431,10 @@ class TiltBoard {
     collisionReaction (axis) {
         switch (axis) {
             case "x":
-              // console.log("collision x axis");
               player.posX = player.posX - player.speedX * world.collisionBoundary;
               player.speedX = - player.speedX * world.ballhardness;              
               break;
             case "y":
-              // console.log("collision y axis");
               player.posY = player.posY - player.speedY * world.collisionBoundary;
               player.speedY = - player.speedY * world.ballhardness;
               break;
@@ -409,7 +446,7 @@ class TiltBoard {
     generateWinningArea () {
       winningArea.posX = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
       winningArea.posY = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
-      while (this.collisionPlacing(obstacle1, winningArea) == true || this.collisionPlacing(obstacle2, winningArea) == true || this.collisionPlacing(obstacle3, winningArea) == true) {
+      while (this.collisionPlacing(obstacle1, winningArea) == true || this.collisionPlacing(obstacle2, winningArea) == true || this.collisionPlacing(obstacle3, winningArea) == true || this.collisionPlacing(startingArea, winningArea) == true) {
         winningArea.posX = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
         winningArea.posY = this.p.random( - board.boardWidth / 200 * 90, board.boardWidth / 200 * 90);
       }
@@ -420,13 +457,18 @@ class TiltBoard {
       obstacle1.height = this.p.random( board.boardWidth / 100 * 2, board.boardWidth / 100 * 15);
       obstacle1.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle1.width), 1 * (board.boardWidth / 2 - obstacle1.width));
       obstacle1.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle1.height), 1 * (board.boardHeight / 2 - obstacle1.height));
+      
+      while (this.collisionPlacing(startingArea, obstacle1) == true) {
+        obstacle1.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle1.width), 1 * (board.boardWidth / 2 - obstacle1.width));
+        obstacle1.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle1.height), 1 * (board.boardHeight / 2 - obstacle1.height));
+      }
 
       obstacle2.width = this.p.random( board.boardWidth / 100 * 3, board.boardWidth / 100 * 25);
       obstacle2.height = this.p.random( board.boardWidth / 100 * 20, board.boardWidth / 100 * 48);
       obstacle2.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle2.width), 1 * (board.boardWidth / 2 - obstacle2.width));
       obstacle2.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle2.height), 1 * (board.boardHeight / 2 - obstacle2.height));
 
-      while (this.collisionPlacing(obstacle1, obstacle2) == true) {
+      while (this.collisionPlacing(obstacle1, obstacle2) == true  || this.collisionPlacing(startingArea, obstacle2) == true) {
         obstacle2.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle2.width), 1 * (board.boardWidth / 2 - obstacle2.width));
         obstacle2.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle2.height), 1 * (board.boardHeight / 2 - obstacle2.height));
       }
@@ -436,7 +478,7 @@ class TiltBoard {
       obstacle3.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle3.width), 1 * (board.boardWidth / 2 - obstacle3.width));
       obstacle3.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle3.height), 1 * (board.boardHeight / 2 - obstacle3.height));
 
-      while ((this.collisionPlacing(obstacle1, obstacle3) == true) || (this.collisionPlacing(obstacle2, obstacle3) == true)) {
+      while ((this.collisionPlacing(obstacle1, obstacle3) == true) || (this.collisionPlacing(obstacle2, obstacle3) == true)  || this.collisionPlacing(startingArea, obstacle3) == true) {
         obstacle3.posX = this.p.random( 1 * (- board.boardWidth / 2 + obstacle3.width), 1 * (board.boardWidth / 2 - obstacle3.width));
         obstacle3.posY = this.p.random( 1 * ( - board.boardHeight / 2 + obstacle3.height), 1 * (board.boardHeight / 2 - obstacle3.height));
       }
@@ -447,7 +489,7 @@ class TiltBoard {
       //random obstacle generator
       this.generateObstacles();
       //random winning area generator - gets sometimes stuck in while loop in generateWinningArea()
-      // this.generateWinningArea();
+      this.generateWinningArea();
     }
 
     updateInputs () {
@@ -466,26 +508,29 @@ class TiltBoard {
       //tilt of two axis only in one direction per axis
       if (modifier[1] >= this.inputThreshold) {
           board.angleX = modifier[1] * world.playerSensitivity;
-          // this.synth2.triggerAttack("D3");
+          this.synth2.triggerAttack("D3");
       }
       else if (modifier[3] >= this.inputThreshold) {
           board.angleX = - modifier[3] * world.playerSensitivity;
-          // this.synth1.triggerAttackRelease("A3","16n");
+          this.synth1.triggerAttack("A3");
       }
       else {
-        // this.synth2.triggerRelease();
-          board.angleX = 0;
+        this.synth2.triggerRelease();
+        this.synth1.triggerRelease();
+        board.angleX = 0;
       }
       if (modifier[0] >= this.inputThreshold) {
           board.angleY = - modifier[0] * world.playerSensitivity;
-          // this.synth4.triggerAttackRelease("F3","16n");
+          this.synth4.triggerAttack("F3");
       }
       else if (modifier[4] >= this.inputThreshold) {
           board.angleY = modifier[4] * world.playerSensitivity;
-          // this.synth3.triggerAttackRelease("G3","16n");
+          this.synth3.triggerAttack("G3");
       }
       else {
-          board.angleY = 0;
+        board.angleY = 0;
+        this.synth4.triggerRelease();
+        this.synth3.triggerRelease();
       }
     }
 
