@@ -303,23 +303,23 @@ class TiltBoard {
 
         wallLeft.posX = -board.boardWidth / 2;
         wallLeft.posY = 0;
-        wallLeft.width = 3;
+        wallLeft.width = 5;
         wallLeft.height = board.boardHeight;
 
         wallRight.posX = board.boardWidth / 2;
         wallRight.posY = 0;
-        wallRight.width = 3;
+        wallRight.width = 5;
         wallRight.height = board.boardHeight;
 
         wallFront.posX = 0;
         wallFront.posY = board.boardHeight / 2;
         wallFront.width = board.boardWidth;
-        wallFront.height = 3;
+        wallFront.height = 5;
 
         wallBack.posX = 0;
         wallBack.posY = -board.boardHeight / 2;
         wallBack.width = board.boardWidth;
-        wallBack.height = 3;
+        wallBack.height = 5;
     }
 
     drawPlayer () {
@@ -504,11 +504,11 @@ class TiltBoard {
       //tilt of two axis only in one direction per axis
       if (modifier[1] >= this.inputThreshold) {
           board.angleX = modifier[1] * world.playerSensitivity;
-          this.synth2.triggerAttack("D3");
+          this.synth2.triggerAttack("G3");
       }
       else if (modifier[3] >= this.inputThreshold) {
           board.angleX = - modifier[3] * world.playerSensitivity;
-          this.synth1.triggerAttack("A3");
+          this.synth1.triggerAttack("D4");
       }
       else {
         this.synth2.triggerRelease();
@@ -521,7 +521,7 @@ class TiltBoard {
       }
       else if (modifier[4] >= this.inputThreshold) {
           board.angleY = modifier[4] * world.playerSensitivity;
-          this.synth3.triggerAttack("G3");
+          this.synth3.triggerAttack("A3");
       }
       else {
         board.angleY = 0;
